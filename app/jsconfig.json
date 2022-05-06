@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      // Enable ctrl-click navigation to aliased module paths
+      "@/*": ["src/*"],
+      "~/*": ["./*"],
+    }
+  }
+}

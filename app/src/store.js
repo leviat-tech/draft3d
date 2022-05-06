@@ -4,6 +4,7 @@ import unset from 'lodash/unset';
 import cloneDeep from 'lodash/cloneDeep';
 import { createStore } from 'vuex';
 import { toRaw } from 'vue';
+import draft3d from 'draft3d';
 import { nanoid } from 'nanoid';
 import isElectron from 'is-electron';
 import VuexPersistence from 'vuex-persist';
@@ -324,9 +325,12 @@ export default createStore({
     draft(state) {
       return null;
     },
+    scene(state) {
+      return draft3d.scene;
+    },
     parameters(state, getters) {
       try {
-        const file = getters.draft.features.sketch[getters.currentFeatureName];
+        const file = getters.scene.features.sketch[getters.currentFeatureName];
         return file && file.parameters.map((p) => ({
           parameter: p,
           id: nanoid(5), // force refresh of parameter input

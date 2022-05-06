@@ -28,26 +28,24 @@ export default {
 </script>
 
 <style lang="scss">
-@import './assets/styles/variables.scss';
-
-html {
-  height: 100%;
-  font-family: "system-ui",
-    "BlinkMacSystemFont",
-    "-apple-system",
-    "Segoe UI",
-    "Roboto",
-    "Oxygen",
-    "Ubuntu",
-    "Cantarell",
-    "Fira Sans",
-    "Droid Sans",
-    "Helvetica Neue",
-    "sans-serif";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  box-sizing: border-box;
-}
+//html {
+//  height: 100%;
+//  font-family: "system-ui",
+//    "BlinkMacSystemFont",
+//    "-apple-system",
+//    "Segoe UI",
+//    "Roboto",
+//    "Oxygen",
+//    "Ubuntu",
+//    "Cantarell",
+//    "Fira Sans",
+//    "Droid Sans",
+//    "Helvetica Neue",
+//    "sans-serif";
+//  -webkit-font-smoothing: antialiased;
+//  -moz-osx-font-smoothing: grayscale;
+//  box-sizing: border-box;
+//}
 
 body {
   padding: 0;

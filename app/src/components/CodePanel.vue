@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="code-panel__container z-30">
     <!-- tool bar -->
     <div class="header-container">
       <div class="header">
@@ -171,7 +171,7 @@ export default {
 <style lang="scss" scoped>
 @import '../assets/styles/variables.scss';
 
-.container {
+.code-panel__container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;

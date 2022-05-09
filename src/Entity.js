@@ -1,24 +1,31 @@
+import { Object3D } from 'three';
+
 class Entity {
   /**
    * @typedef entityConfig
    * @property { string } name
    * @property { object } parameters
+   * @property { function } render
+   * @property { function } [update]
    *
    * @param { entityConfig } entityConfig
-   * @param params
+   * @param { object } params
    */
   constructor(entityConfig, params = {}) {
-    if (typeof entityConfig.render !== 'function') {
-      throw new Error('Entity must have a render function');
+    this.params = Entity.getParams(entityConfig.parameters, params);
+    const { object3d, ...renderProps } = entityConfig.render(this.params);
+
+    if (!(object3d instanceof Object3D)) {
+      throw new Error('render must return an Object3D in the object3d property')
     }
 
-    this.params = Entity.getParams(entityConfig.parameters, params);
-    this.object3d = entityConfig.render(this.params);
+    this.object3d = object3d;
+    this.renderProps = renderProps;
 
     // TODO: not sure if this is needed yet
     // this.object3d.getEntity = () => this;
 
-    if (entityConfig.update) {
+    if (typeof entityConfig.update === 'function') {
       this.onUpdate = entityConfig.update;
     }
   }
@@ -47,17 +54,21 @@ class Entity {
     if (typeof z === 'number') object3d.rotateZ(degToRad(z));
   }
 
-  addTo(scene) {
-    scene.add(this.object3d);
+  addTo(object3d) {
+    object3d.add(this.object3d);
   }
 
   add(object3d) {
     this.object3d.add(object3d);
   }
 
-
   static getParams(definedParameters, userParams) {
     return Object.entries(definedParameters).reduce((params, [name, paramConfig]) => {
+      if (['position', 'rotation'].includes(name)) {
+        console.log(`Cannot overwrite predefined parameter ${name}`);
+        return params;
+      }
+
       return {
         ...params,
         [name]: userParams[name] ?? paramConfig.default,

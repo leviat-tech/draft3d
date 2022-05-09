@@ -2,6 +2,17 @@ import ThreeScene from './ThreeScene';
 import Entity from './Entity'
 import * as entities from './entities';
 
+
+function checkEntityConfig(entityConfig) {
+  if (!entityConfig.parameters) {
+    throw new Error('Entity config must contain parameters');
+  }
+
+  if (typeof entityConfig.render !== 'function') {
+    throw new Error('Entity config must have a render function');
+  }
+}
+
 const draft3d = {
   entities: {},
   features: {},
@@ -17,6 +28,8 @@ const draft3d = {
       console.error(`[Draft3d] - could not register entity - '${name}' does not exist`);
       return;
     }
+
+    checkEntityConfig(entity);
 
     draft3d.entities[name] = (params) => {
       return new Entity(entity, params);

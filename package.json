@@ -9,8 +9,8 @@
     "build-app": "rollup --config && npm install --prefix ./app && npm run build --prefix ./app",
     "build-electron-app": "rollup --config && npm run electron-build --prefix ./app",
     "build:watch": "chokidar \"src/**/*.js\" --initial -c \"rollup --config\"",
-    "test": "mocha \"./test/**/*.spec.js\"",
-    "test:watch": "mocha \"./test/**/*.spec.js\" --reporter min --colors -w --watch-ignore node_modules,.git,app"
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
   "author": "CRH Technology Studio",
   "main": "src/index.js",
@@ -19,14 +19,18 @@
     "three": "^0.139.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.17.10",
+    "babel-jest": "^28.1.0",
     "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-vue": "^7.6.0",
-    "svg-parser": "^2.0.4"
+    "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0",
+    "svg-parser": "^2.0.4",
+    "vue-jest": "^3.0.7"
   },
   "files": [
-    "dist",
     "src"
   ],
   "homepage": "https://github.com/leviat-tech/draft3d#readme",

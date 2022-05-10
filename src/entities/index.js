@@ -1,7 +1,9 @@
-import Box from './Box';
-import AlignedDim from './AlignedDim';
+import box from './box';
+import alignedDim from './alignedDim';
+import polygon3d from './polygon3d'
 
 export {
-  Box,
-  AlignedDim,
+  box,
+  alignedDim,
+  polygon3d
 };

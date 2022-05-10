@@ -41,25 +41,6 @@
         />
       </tool-group>
 
-      <!-- point -->
-
-      <!-- segment -->
-
-      <!-- arc -->
-
-      <!-- polyline -->
-
-
-      <!-- fillet -->
-
-      <!-- split -->
-
-      <!-- trim -->
-
-      <!-- extend -->
-
-      <!-- offset -->
-
       <tool-group>
         <tool
           tool-id="new"
@@ -188,14 +169,14 @@ export default {
     },
   },
   mounted() {
-    Mousetrap.bind('mod+s', () => {
-      this.save();
-      return false;
-    });
-    Mousetrap.bind('mod+o', () => {
-      this.openFolder();
-      return false;
-    });
+    // Mousetrap.bind('mod+s', () => {
+    //   this.save();
+    //   return false;
+    // });
+    // Mousetrap.bind('mod+o', () => {
+    //   this.openFolder();
+    //   return false;
+    // });
   },
   methods: {
     ...mapMutations(['setCurrentTool', 'setShowCodePanel', 'reset']),

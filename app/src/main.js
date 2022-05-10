@@ -5,8 +5,6 @@ import store from './store.js';
 import Layout from './components/Layout.vue';
 import App from './App.vue';
 
-import './draft3d';
-
 import './assets/styles/tailwind.css';
 
 

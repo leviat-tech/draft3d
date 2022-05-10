@@ -4,9 +4,9 @@
     <div v-if="parameters">
       <parameter-input
         v-for="(p, i) in parameters"
-        :key="p.id"
+        :key="i"
         v-model="localOverrides[i]"
-        :parameter="p.parameter"
+        :parameter="p"
       />
     </div>
     <div v-else class="sidebar-list-item no-content">
@@ -18,6 +18,7 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import cloneDeep from 'lodash/cloneDeep';
+import { castParameters } from 'draft3d/utils/helpers';
 import ParameterInput from './ParameterInput.vue';
 
 
@@ -26,40 +27,27 @@ export default {
   components: {
     ParameterInput,
   },
+  props: {
+    parameters: { type: Object, default: {} },
+  },
   data() {
     return {
-      localOverrides: [],
+      localOverrides: this.parameters,
     };
-  },
-  computed: {
-    ...mapState(['overrides']),
-    ...mapGetters(['parameters']),
   },
   watch: {
     parameters: {
       immediate: true,
-      handler(nv) {
-        if (!nv) {
-          this.localOverrides = [];
-        } else {
-          this.localOverrides = nv.map((p) => cloneDeep(p.parameter.default));
-        }
+      handler(newVal) {
+        this.localOverrides = newVal ? castParameters(newVal) : [];
       },
     },
     localOverrides: {
-      handler(nv) {
-        this.setOverrides(nv);
+      deep: true,
+      handler(newVal) {
+        this.$emit('update', newVal);
       },
     },
-    overrides: {
-      immediate: true,
-      handler(nv, ov) {
-        if (nv !== ov) this.localOverrides = nv;
-      },
-    },
-  },
-  methods: {
-    ...mapMutations(['setOverrides']),
   },
 };
 </script>

@@ -1,25 +1,34 @@
-<template>
-
-</template>
+<template />
 
 <script setup>
 
+
+import draft3d from 'draft3d';
+import { computed, ref, watch } from 'vue';
+import { destroyObject } from '../utils/helpers';
+
+
 const props = defineProps({
-  entity: String,
-  params: Object
-})
+  entity: { type: String, default: '' },
+  params: { type: Object, default: {} },
+});
 
-import draft3d from 'draft3d'
-import { watch } from 'vue';
+const params = computed(() => props.params);
+const entityName = computed(() => props.entity);
+let entity = draft3d.entities[props.entity](params);
+entity.addTo(draft3d.scene);
 
-const box = draft3d.entities[props.entity](props.params);
+watch(params, (newParams) => {
+  console.log(newParams);
+  entity.updateParams(newParams);
+}, { deep: true });
 
-box.addTo(draft3d.scene)
+watch(entityName, (name) => {
+  destroyObject(entity.object3d);
+  entity = draft3d.entities[name](props.params);
+  entity.addTo(draft3d.scene);
+});
 
-watch(props.params, (newParams) => {
-  console.log(newParams.dimensions[0]);
-  box.updateParams(newParams)
-})
 </script>
 
 <style scoped>

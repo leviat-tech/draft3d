@@ -5,6 +5,7 @@
       // Enable ctrl-click navigation to aliased module paths
       "@/*": ["src/*"],
       "~/*": ["./*"],
+      "draft3d/*": ["../src"]
     }
   }
 }

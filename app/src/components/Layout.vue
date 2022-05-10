@@ -3,10 +3,11 @@
     <div class="horizontal-container">
       <div class="drawing-container">
         <div class="toolbar-container">
-          <toolbar />
+          <!-- TODO: Toolbar makes animation janky  -->
+          <!--          <toolbar />-->
         </div>
 
-        <div class="viewport-container">
+        <div ref="el" class="viewport-container">
           <viewport />
         </div>
       </div>
@@ -46,6 +47,9 @@ export default {
   },
   computed: {
     ...mapState(['showCodePanel']),
+  },
+  mounted() {
+
   },
 };
 </script>

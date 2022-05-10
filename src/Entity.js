@@ -1,5 +1,6 @@
 import { Object3D } from 'three';
 
+
 class Entity {
   /**
    * @typedef entityConfig
@@ -13,14 +14,13 @@ class Entity {
    */
   constructor(entityConfig, params = {}) {
     this.params = Entity.getParams(entityConfig.parameters, params);
-    const { object3d, ...renderProps } = entityConfig.render(this.params);
+    const object3d = entityConfig.render(this.params);
 
     if (!(object3d instanceof Object3D)) {
-      throw new Error('render must return an Object3D in the object3d property')
+      throw new Error('render must return an Object3D in the object3d property');
     }
 
     this.object3d = object3d;
-    this.renderProps = renderProps;
 
     // TODO: not sure if this is needed yet
     // this.object3d.getEntity = () => this;
@@ -39,7 +39,7 @@ class Entity {
       this.setRotation(newParams.rotation);
     }
 
-    if (this.onUpdate) this.onUpdate(this, newParams);
+    if (this.onUpdate) this.onUpdate(this.object3d, newParams);
   }
 
   setRotation(rotation) {
@@ -63,28 +63,10 @@ class Entity {
   }
 
   static getParams(definedParameters, userParams) {
-    return Object.entries(definedParameters).reduce((params, [name, paramConfig]) => {
-      if (['position', 'rotation'].includes(name)) {
-        console.log(`Cannot overwrite predefined parameter ${name}`);
-        return params;
-      }
-
-      return {
-        ...params,
-        [name]: userParams[name] ?? paramConfig.default,
-      };
-    }, {
-      position: userParams.position ? Entity.validateDims(userParams.position) : [0, 0, 0],
-      rotation: userParams.rotation ? Entity.validateDims(userParams.rotation) : [0, 0, 0],
-    })
-  }
-
-  static validateDims(dims) {
-    if (!(dims instanceof Array)) throw new TypeError('dims is not an array');
-
-    if (dims.length !== 3) throw new RangeError('dims must contain three items');
-
-    return dims;
+    return Object.entries(definedParameters).reduce((params, [name, param]) => ({
+      ...params,
+      [name]: userParams[name] ?? param.default,
+    }), {});
   }
 }
 

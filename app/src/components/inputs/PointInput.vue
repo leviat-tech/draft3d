@@ -55,9 +55,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/variables.scss';
-
-
 .array-container {
   min-width: 0;
   flex: 1 1 0%;

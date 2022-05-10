@@ -95,7 +95,12 @@ export default class ThreeScene {
   }
 
   createRenderer() {
-    const renderer = new WebGLRenderer({ canvas: this.canvas, alpha: true });
+    const rendererConfig = {
+      canvas: this.canvas,
+      alpha: true,
+      antialias: true,
+    };
+    const renderer = new WebGLRenderer(rendererConfig);
     renderer.setPixelRatio(window.devicePixelRatio);
     this.startAnimation(renderer);
 

@@ -18,6 +18,7 @@ import BooleanInput from '../inputs/BooleanInput.vue';
 import ArrayInput from '../inputs/ArrayInput.vue';
 import ObjectInput from '../inputs/ObjectInput.vue';
 import PointInput from '../inputs/PointInput.vue';
+import DimensionsInput from '../inputs/DimensionsInput.vue';
 import GenericParameter from '../inputs/GenericParameter.vue';
 
 
@@ -25,7 +26,7 @@ export default {
   name: 'ParameterInput',
   props: {
     parameter: { type: Object, required: true },
-    modelValue: { type: [Number, String, Boolean, Array, Object], default: undefined },
+    modelValue: { type: [Number, String, Boolean, Array, Object, Function], default: undefined },
   },
   data() {
     return {
@@ -43,11 +44,13 @@ export default {
     dynamicInput() {
       return {
         string: TextInput,
+        color: TextInput,
         number: QuantityInput,
         boolean: BooleanInput,
         array: ArrayInput,
         object: ObjectInput,
         point: PointInput,
+        dimension: DimensionsInput,
         undefined: QuantityInput,
       }[this.type] || GenericParameter;
     },
@@ -56,7 +59,7 @@ export default {
     value: {
       handler: debounce(function update(nv) {
         this.$emit('update:modelValue', nv);
-      }, 500),
+      }, 0),
     },
     modelValue: {
       handler(nv) {

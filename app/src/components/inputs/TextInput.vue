@@ -9,7 +9,7 @@
     <input
       v-model="value"
       class="input"
-      type="text"
+      :type="type"
       placeholder="Enter a value"
       @input="handleUpdate"
       @blur="focused = false"
@@ -23,6 +23,7 @@ export default {
   name: 'TextInput',
   props: {
     parameter: { type: Object, required: true },
+    type: { type: String, default: 'text' },
     label: { type: String, default: null },
     modelValue: { type: String, required: true },
   },

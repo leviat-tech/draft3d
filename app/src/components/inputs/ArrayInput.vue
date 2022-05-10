@@ -62,6 +62,7 @@ export default {
     value: {
       deep: true,
       handler() {
+        console.log(this.value);
         this.$emit('update:modelValue', this.value);
       },
     },

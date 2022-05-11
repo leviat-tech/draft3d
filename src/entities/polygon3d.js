@@ -1,8 +1,6 @@
 import {
-  ExtrudeGeometry,
-  MeshPhongMaterial,
   Mesh,
-  Shape, BoxGeometry,
+  Shape,
 } from 'three';
 import { createMaterial, updateMaterial } from '../utils/material';
 import { createExtrudeGeometry } from '../utils/geometry';

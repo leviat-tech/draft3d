@@ -1,19 +1,9 @@
 import {
   BoxGeometry,
-  DoubleSide,
-  MeshPhongMaterial,
   Mesh,
 } from 'three';
+import { createMaterial, updateMaterial } from '../utils/material';
 
-
-function createMaterial(color, opacity) {
-  return new MeshPhongMaterial({
-    color,
-    transparent: opacity < 1,
-    opacity,
-    side: DoubleSide,
-  });
-}
 
 export default {
   name: 'box',
@@ -35,9 +25,7 @@ export default {
     const { dimensions, color, opacity } = newParams;
 
     if (color) {
-      object3d.material?.dispose();
-      object3d.material.color = color;
-      object3d.material = createMaterial(color, opacity);
+      updateMaterial(object3d, color, opacity);
     }
 
     object3d.geometry?.dispose();

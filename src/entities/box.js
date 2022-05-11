@@ -34,8 +34,6 @@ export default {
   update(object3d, newParams) {
     const { dimensions, color, opacity } = newParams;
 
-    console.log(color);
-
     if (color) {
       object3d.material?.dispose();
       object3d.material.color = color;

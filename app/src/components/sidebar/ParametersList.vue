@@ -4,7 +4,7 @@
     <div v-if="parameters">
       <parameter-input
         v-for="(p, i) in parameters"
-        :key="i"
+        :key="name + i"
         v-model="localOverrides[i]"
         :parameter="p"
       />
@@ -28,6 +28,7 @@ export default {
     ParameterInput,
   },
   props: {
+    name: { type: String, default: 'p' },
     parameters: { type: Object, default: {} },
   },
   data() {

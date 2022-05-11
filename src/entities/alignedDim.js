@@ -22,10 +22,9 @@ function getTextValue({ length, prefix, suffix }) {
 }
 
 function setTextPosition(textObject, textBox, params) {
-  const vPaddingFactor = 0.75;
   const { x, y } = textObject.geometry.boundingSphere.center;
   textObject.position.x = params.length / 2 - x;
-  textObject.position.z = (2 + vPaddingFactor) * y;
+  textObject.position.z = params.textSize * 1.5;
 
   textBox.position.x = x;
   textBox.position.y = y;
@@ -36,9 +35,9 @@ function setTextPosition(textObject, textBox, params) {
 export default {
   name: 'alignedDim',
   parameters: {
-    textSize: { name: 'Text Size', default: 0.1 },
+    textSize: { name: 'Text Size', precision: 0.01, default: 0.1 },
     color: { name: 'Colour', type: 'color', default: '#000000' },
-    length: { name: 'Length', default: 2 },
+    length: { name: 'Length', precision: 0.05, default: 2 },
     prefix: { name: 'Prefix', default: '' },
     suffix: { name: 'Suffix', default: '' },
     onClick: { name: 'onClick', default: () => {} },
@@ -84,8 +83,9 @@ export default {
     line.geometry.dispose();
     line.geometry = createLineGeometry(length);
 
+    const textValue = getTextValue(newParams);
     text.geometry.dispose();
-    text.geometry = createTextGeometry(length, textSize);
+    text.geometry = createTextGeometry(textValue, textSize);
 
     requestAnimationFrame(() => {
       setTextPosition(text, textBox, newParams);

@@ -6,7 +6,7 @@
       <ThreeDevTools :scene="scene" class="pr-4" />
 
 
-      <div class="">
+      <div class="w-48">
         <router-link v-for="i in entities"
                      :to="`/entity/${i.name}`"
                      class="py-2 px-4 block border-t"
@@ -17,10 +17,10 @@
     </div>
 
     <div class="absolute right-0 top-0 px-4 w-[280px] z-10 border-b border-l bg-white">
-      <parameter-list v-if="entity" :parameters="parameterConfig" @update="onUpdate" />
+      <parameter-list v-if="entity" :name="entity" :parameters="parameterConfig" @update="onUpdate" />
     </div>
   </div>
-</template>+
+</template>
 
 <script setup>
 import { onMounted, computed, ref, reactive, watch } from 'vue';
@@ -52,7 +52,6 @@ onMounted(() => {
 });
 
 const onUpdate = (val) => {
-  console.log(val);
   params.value = val;
 };
 

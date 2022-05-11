@@ -19,9 +19,11 @@
 </template>
 
 <script>
+import cloneDeep from 'lodash/cloneDeep';
 import QuantityInput from './QuantityInput.vue';
 import TextInput from './TextInput.vue';
 import BooleanInput from './BooleanInput.vue';
+import PointInput from './PointInput.vue';
 
 
 export default {
@@ -43,6 +45,7 @@ export default {
     },
     itemComponent() {
       return {
+        point: PointInput,
         string: TextInput,
         number: QuantityInput,
         boolean: BooleanInput,
@@ -62,16 +65,16 @@ export default {
     value: {
       deep: true,
       handler() {
-        console.log(this.value);
         this.$emit('update:modelValue', this.value);
       },
     },
   },
   methods: {
     addItem() {
-      this.value.push(this.itemDefault);
+      this.value.push(cloneDeep(this.itemDefault));
     },
     removeItem() {
+      if (this.value.length === 1) return;
       this.value.pop();
     },
   },

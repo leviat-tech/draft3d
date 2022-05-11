@@ -1,14 +1,14 @@
 <template>
-  <div class="array-container">
+  <div class="flex space-x-3">
     <quantity-input
       v-model="value[0]"
       label="x"
-      :parameter="xParam"
+      :parameter="parameter"
     />
     <quantity-input
       v-model="value[1]"
       label="y"
-      :parameter="yParam"
+      :parameter="parameter"
     />
   </div>
 </template>
@@ -30,18 +30,6 @@ export default {
     return {
       value: this.modelValue,
     };
-  },
-  computed: {
-    xParam() {
-      return {
-        default: this.parameter.default && this.parameter.default[0],
-      };
-    },
-    yParam() {
-      return {
-        default: this.parameter.default && this.parameter.default[1],
-      };
-    },
   },
   watch: {
     value: {

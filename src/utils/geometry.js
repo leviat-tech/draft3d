@@ -1,4 +1,6 @@
-import { BufferGeometry, Line, LineBasicMaterial, Mesh, Vector3 } from 'three';
+import {
+  BufferGeometry, ExtrudeGeometry, Line, LineBasicMaterial, Mesh, Vector3,
+} from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { Font } from 'three/examples/jsm/loaders/FontLoader';
 import fontData from '../fonts/helvetiker_regular.typeface.json';
@@ -28,17 +30,20 @@ export function createTextGeometry(text, size = 0.1) {
     height: 0,
     curveSegments: 12,
     bevelEnabled: false,
-    bevelThickness: 0,
-    bevelSize: 0,
-    bevelOffset: 0,
-    bevelSegments: 0,
+  });
+}
+
+export function createExtrudeGeometry(shape, depth) {
+  return new ExtrudeGeometry(shape, {
+    bevelEnabled: false,
+    depth,
   });
 }
 
 
-export function createText(text, color) {
+export function createText(text, color, size = 0.1) {
   const material = new LineBasicMaterial({ color });
-  const geometry = createTextGeometry(text);
+  const geometry = createTextGeometry(text, size);
 
   return new Mesh(geometry, material);
 }

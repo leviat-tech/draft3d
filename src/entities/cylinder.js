@@ -1,19 +1,13 @@
 import {
   CylinderGeometry,
-  DoubleSide,
-  MeshPhongMaterial,
   Mesh,
 } from 'three';
 
+import {
+  createMaterial,
+  updateMaterial,
+} from '../utils/material';
 
-function createMaterial(color, opacity) {
-  return new MeshPhongMaterial({
-    color,
-    transparent: opacity < 1,
-    opacity,
-    side: DoubleSide,
-  });
-}
 
 const radialAccuracy = 24;
 
@@ -38,11 +32,7 @@ export default {
   update(object3d, newParams) {
     const { raduisTop, raduisBottom, length, color, opacity } = newParams;
 
-    if (color) {
-      object3d.material?.dispose();
-      object3d.material.color = color;
-      object3d.material = createMaterial(color, opacity);
-    }
+    updateMaterial(object3d, color, opacity);
 
     object3d.geometry?.dispose();
     object3d.geometry = new CylinderGeometry(raduisTop, raduisBottom, length, radialAccuracy);

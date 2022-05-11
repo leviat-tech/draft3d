@@ -1,24 +1,9 @@
 import {
-  ExtrudeGeometry,
-  MeshPhongMaterial,
   Mesh,
-  Shape, BoxGeometry,
 } from 'three';
 import { createMaterial, updateMaterial } from '../utils/material';
-import { createExtrudeGeometry } from '../utils/geometry';
+import { createExtrudeGeometry, createPolygon } from '../utils/geometry';
 
-
-function createPolygon(path) {
-  const shape = new Shape();
-
-  shape.moveTo(...path[0]);
-
-  path.slice(1).forEach((point) => {
-    shape.lineTo(...point);
-  });
-
-  return shape;
-}
 
 export default {
   name: 'polygon3d',

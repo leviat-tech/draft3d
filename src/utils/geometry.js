@@ -1,5 +1,11 @@
 import {
-  BufferGeometry, ExtrudeGeometry, Line, LineBasicMaterial, Mesh, Vector3,
+  BufferGeometry,
+  ExtrudeGeometry,
+  Line,
+  LineBasicMaterial,
+  Mesh,
+  Shape,
+  Vector3,
 } from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { Font } from 'three/examples/jsm/loaders/FontLoader';
@@ -46,6 +52,19 @@ export function createText(text, color, size = 0.1) {
   const geometry = createTextGeometry(text, size);
 
   return new Mesh(geometry, material);
+}
+
+
+export function createPolygon(path) {
+  const shape = new Shape();
+
+  shape.moveTo(...path[0]);
+
+  path.slice(1).forEach((point) => {
+    shape.lineTo(...point);
+  });
+
+  return shape;
 }
 
 

@@ -1,0 +1,40 @@
+import {
+  CylinderGeometry,
+  Mesh,
+} from 'three';
+
+import {
+  createMaterial,
+  updateMaterial,
+} from '../utils/material';
+
+
+const radialAccuracy = 24;
+
+export default {
+  name: 'cylinder',
+  parameters: {
+    radiusTop: { name: 'radius Top', type: 'number', default: 2 },
+    radiusBottom: { name: 'radius Bottom', type: 'number', default: 2 },
+    length: { name: 'Length', type: 'number', default: 5 },
+    color: { name: 'Colour', type: 'color', default: '#6666cc' },
+    opacity: { name: 'Opacity', type: 'number', precision: 0.05, default: 1 },
+  },
+  render(params) {
+    const { radiusTop, radiusBottom, length, color, opacity } = params;
+
+    const material = createMaterial(color, opacity);
+
+    const geometry = new CylinderGeometry(radiusTop, radiusBottom, length, radialAccuracy);
+
+    return new Mesh(geometry, material);
+  },
+  update(object3d, newParams) {
+    const { radiusTop, radiusBottom, length, color, opacity } = newParams;
+
+    updateMaterial(object3d, color, opacity);
+
+    object3d.geometry?.dispose();
+    object3d.geometry = new CylinderGeometry(radiusTop, radiusBottom, length, radialAccuracy);
+  },
+};

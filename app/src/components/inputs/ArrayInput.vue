@@ -24,6 +24,7 @@ import QuantityInput from './QuantityInput.vue';
 import TextInput from './TextInput.vue';
 import BooleanInput from './BooleanInput.vue';
 import PointInput from './PointInput.vue';
+import CurveInput from './CurveInput.vue';
 
 
 export default {
@@ -49,6 +50,7 @@ export default {
         string: TextInput,
         number: QuantityInput,
         boolean: BooleanInput,
+        curve: CurveInput,
         undefined: QuantityInput,
       }[this.itemType];
     },

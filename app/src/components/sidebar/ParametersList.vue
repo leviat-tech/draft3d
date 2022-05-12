@@ -1,7 +1,7 @@
 <template>
-  <div class="sidebar-section">
+  <div class="sidebar-section" style="height: calc(100vh - 2rem);">
     <h2>Parameters</h2>
-    <div v-if="parameters">
+    <div v-if="parameters" class="overflow-y-auto h-full mb-2">
       <parameter-input
         v-for="(p, i) in parameters"
         :key="name + i"

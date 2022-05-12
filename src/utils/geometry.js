@@ -83,3 +83,19 @@ export function dim2(width = 0, height = 0) {
 export function dim3(width = 0, height = 0, depth = 1) {
   return { width, height, depth };
 }
+
+
+export function createPolyCurve(path) {
+  const shape = new Shape();
+
+  shape.moveTo(...path[0]);
+
+  path.slice(1).forEach((point) => {
+    if (point[2] === undefined) {
+      shape.lineTo(...point);
+    } else {
+      shape.quadraticCurveTo(point[2], point[3], point[0], point[1]);
+    }
+  });
+  return shape;
+}

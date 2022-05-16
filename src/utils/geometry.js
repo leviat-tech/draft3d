@@ -91,10 +91,15 @@ export function createPolyCurve(path) {
   shape.moveTo(...path[0]);
 
   path.slice(1).forEach((point) => {
-    if (point[2] === undefined) {
-      shape.lineTo(...point);
+    const x = point[0];
+    const y = point[1];
+    const cx = point[2];
+    const cy = point[3];
+
+    if (cx === undefined) {
+      shape.lineTo(x, y);
     } else {
-      shape.quadraticCurveTo(point[2], point[3], point[0], point[1]);
+      shape.quadraticCurveTo(cx, cy, x, y);
     }
   });
   return shape;

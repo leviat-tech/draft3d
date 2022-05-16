@@ -51,17 +51,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.array-container {
-  min-width: 0;
-  flex: 1 1 0%;
-  width: 100%;
-  position: relative;
-}
-
-.array-container > * + * {
-  margin-top: 0.25rem;
-}
-
-</style>

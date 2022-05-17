@@ -91,10 +91,7 @@ export function createPolyCurve(path) {
   shape.moveTo(...path[0]);
 
   path.slice(1).forEach((point) => {
-    const x = point[0];
-    const y = point[1];
-    const cx = point[2];
-    const cy = point[3];
+    const [x, y, cx, cy] = point;
 
     if (cx === undefined) {
       shape.lineTo(x, y);

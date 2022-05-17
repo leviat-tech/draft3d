@@ -6,6 +6,7 @@ import {
   Mesh,
   Shape,
   Vector3,
+  CatmullRomCurve3,
 } from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { Font } from 'three/examples/jsm/loaders/FontLoader';
@@ -82,4 +83,25 @@ export function dim2(width = 0, height = 0) {
 
 export function dim3(width = 0, height = 0, depth = 1) {
   return { width, height, depth };
+}
+
+// approximate circleGeometry but as a shape so extrusion works properly
+export function createCircle(radius) {
+  const shape = new Shape();
+  shape.moveTo(0, 0);
+  shape.absarc(0, 0, radius, 0, Math.PI * 1.75, false);
+  shape.moveTo(0, 0);
+  return shape;
+}
+
+export function create3dPath(path, closed) {
+  const points = [];
+
+  path.forEach((point) => {
+    points.push(new Vector3(...point));
+  });
+  const curve = new CatmullRomCurve3(points);
+  curve.curveType = 'catmullrom';
+  curve.closed = closed;
+  return curve;
 }

@@ -33,7 +33,7 @@ export default {
 
     const route = create3dPath(path, closed);
     const extrudeSettings = {
-      steps: steps,
+      steps,
       extrudePath: route,
     };
     const shape = createCircle(radius);

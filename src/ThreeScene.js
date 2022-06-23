@@ -7,7 +7,7 @@ import {
   Vector2,
   WebGLRenderer,
 } from 'three';
-
+import { createCamera, createOrthographicCamera } from './utils/camera'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 
@@ -28,14 +28,19 @@ export default class ThreeScene {
 
     this.el = el;
     this.canvas = ThreeScene.createCanvas(el);
-    this.camera = ThreeScene.createCamera(camera);
+
+    //this.camera = createCamera(camera);
+    this.camera = createOrthographicCamera(camera);
+    
+    
     this.lights = this.createLight();
     this.controls = ThreeScene.createControls(this.camera, this.canvas);
     this.renderer = this.createRenderer();
     this.mouse = new Vector2();
     this.raycaster = new Raycaster();
-
     this.bindEvents();
+    //this.camera.position.set(20,0,0)
+    //this.camera.lookAt(0,0,0)
     this.onResize();
   }
 
@@ -49,16 +54,6 @@ export default class ThreeScene {
     parent.appendChild(canvas);
 
     return canvas;
-  }
-
-  static createCamera(cameraConfig) {
-    const { fov, position } = cameraConfig;
-
-    const camera = new PerspectiveCamera(fov, position);
-
-    if (position) Object.assign(camera.position, position);
-
-    return camera;
   }
 
   static createControls(camera, canvas) {
@@ -141,8 +136,9 @@ export default class ThreeScene {
     this.canvas.width = this.width;
     this.canvas.height = this.height;
 
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
+    //TODO reimplement in a way that covers either camera type
+    //this.camera.aspect = width / height;
+    //this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
   }
 

@@ -1,13 +1,12 @@
 import {
   AmbientLight,
   DirectionalLight as Light,
-  PerspectiveCamera,
   Raycaster,
   Scene,
   Vector2,
   WebGLRenderer,
 } from 'three';
-import { createCamera, createOrthographicCamera } from './utils/camera'
+import { createCamera, createOrthographicCamera, calculatePlanView, planControls, freeControls} from './utils/camera'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 
@@ -29,19 +28,40 @@ export default class ThreeScene {
     this.el = el;
     this.canvas = ThreeScene.createCanvas(el);
 
-    //this.camera = createCamera(camera);
-    this.camera = createOrthographicCamera(camera);
-    
+    this.perspectiveCamera = createCamera(camera);
+    this.perspectiveControls = freeControls(this.perspectiveCamera, this.canvas);
+    this.orthoCamera = createOrthographicCamera(camera);
+    this.planControls = planControls(this.orthoCamera, this.canvas);
+        
+    this.camera = this.perspectiveCamera;
     
     this.lights = this.createLight();
-    this.controls = ThreeScene.createControls(this.camera, this.canvas);
+    
     this.renderer = this.createRenderer();
     this.mouse = new Vector2();
     this.raycaster = new Raycaster();
     this.bindEvents();
-    //this.camera.position.set(20,0,0)
-    //this.camera.lookAt(0,0,0)
     this.onResize();
+  }
+
+  setView(view){
+    switch (view){
+    case 'planX':
+      this.camera = this.orthoCamera;
+      calculatePlanView(this.camera,this.originalScene,'x');
+      break;
+    case 'planY':
+      this.camera = this.orthoCamera;
+      calculatePlanView(this.camera,this.originalScene,'y');
+      break;
+    case 'planZ':
+      this.camera = this.orthoCamera;
+      calculatePlanView(this.camera,this.originalScene,'z');
+      break;
+    case 'free':
+    default:
+      this.camera = this.perspectiveCamera;
+    }
   }
 
   static createCanvas(parent) {
@@ -56,27 +76,19 @@ export default class ThreeScene {
     return canvas;
   }
 
-  static createControls(camera, canvas) {
-    const controls = new OrbitControls(camera, canvas);
-    // controls.enableDamping = true;
-    controls.target.set(0, 0, 0);
-    // controls.panSpeed = 0.5;
-    // controls.rotateSpeed = 0.5;
-
-    return controls;
-  }
-
   createLight() {
     const lightColor = 0xffffff;
 
     const ambientLight = new AmbientLight(lightColor, 0.5);
     this.originalScene.add(ambientLight);
-
+    
     return [
       this.createDirectionalLight(2, 3, 1),
       this.createDirectionalLight(-2, 3, -1),
     ];
   }
+
+  
 
   createDirectionalLight(x1 = 0, y1 = 5, z1 = 1, x2 = 0, y2 = 0, z2 = 0) {
     const lightColor = 0xffffff;
@@ -106,7 +118,6 @@ export default class ThreeScene {
     const animate = () => {
       this.animationFrame = requestAnimationFrame(animate);
       renderer.render(this.originalScene, this.camera);
-      this.controls.update();
     };
 
     animate();
@@ -136,12 +147,13 @@ export default class ThreeScene {
     this.canvas.width = this.width;
     this.canvas.height = this.height;
 
-    //TODO reimplement in a way that covers either camera type
-    //this.camera.aspect = width / height;
-    //this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
+    this.perspectiveCamera.aspect = this.width / this.height
+
+    this.camera.updateProjectionMatrix();
   }
 
+  
   onMouseDown(e) {
     const { left, top } = this.el.getBoundingClientRect();
 

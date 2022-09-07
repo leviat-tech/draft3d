@@ -7,6 +7,7 @@ import {
   WebGLRenderer,
 } from 'three';
 import { createCamera, createOrthographicCamera, calculatePlanView, planControls, freeControls} from './utils/camera'
+import LayerSet from './utils/LayerSet'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 
@@ -37,6 +38,10 @@ export default class ThreeScene {
     
     this.lights = this.createLight();
     
+    this.layers = new LayerSet()
+    this.layers.addCamera(this.orthoCamera)
+    this.layers.addCamera(this.perspectiveCamera)
+
     this.renderer = this.createRenderer();
     this.mouse = new Vector2();
     this.raycaster = new Raycaster();
@@ -80,6 +85,7 @@ export default class ThreeScene {
     const lightColor = 0xffffff;
 
     const ambientLight = new AmbientLight(lightColor, 0.5);
+    ambientLight.layers.enableAll()
     this.originalScene.add(ambientLight);
     
     return [

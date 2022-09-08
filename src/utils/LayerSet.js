@@ -7,10 +7,18 @@ export default class LayerSet {
   }
 
   addCamera(camera) {
+    if (this.cameras.filter((c) => c.uuid === camera.uuid).length > 0) {
+      console.log("Camera " + camera.uuid + " already added to layerset")
+      return;
+    }
     this.cameras.push(camera);
   }
 
   addLayer(name) {
+    if (this.layers.filter((l) => l.name === name).length > 0) {
+      console.log("Layer named " + name + " already exists")
+      return;
+    }
     const newLayer = { id: this.layers.length, name, visible: false };
     this.layers.push(newLayer);
   }

@@ -4,7 +4,7 @@ import {
 } from 'three';
 import { createMaterial, updateMaterial } from '../utils/material';
 import { create3dPath, createCircle } from '../utils/geometry';
-
+import LayerSet from '../utils/LayerSet';
 
 export default {
   name: 'cylindricalPath',
@@ -26,9 +26,10 @@ export default {
     },
     closed: { name: 'Closed', type: 'boolean', default: true },
     steps: { name: 'steps', precision: 10, default: 100, min: 10 },
+    layer: { name: 'Layer', type: 'string', default: 'default' },
   },
   render(params) {
-    const { radius, color, opacity, path, closed, steps } = params;
+    const { radius, color, opacity, path, closed, steps, layer } = params;
     const material = createMaterial(color, opacity);
 
     const route = create3dPath(path, closed);
@@ -39,10 +40,12 @@ export default {
     const shape = createCircle(radius);
     const geometry = new ExtrudeGeometry(shape, extrudeSettings);
 
-    return new Mesh(geometry, material);
+    const mesh = new Mesh(geometry, material);
+    LayerSet.addToLayer(layer, mesh);
+    return mesh;
   },
   update(object3d, newParams) {
-    const { radius, color, opacity, path, closed, steps } = newParams;
+    const { radius, color, opacity, path, closed, steps, layer } = newParams;
 
     updateMaterial(object3d, color, opacity);
 
@@ -53,6 +56,7 @@ export default {
     };
     const shape = createCircle(radius);
     const geometry = new ExtrudeGeometry(shape, extrudeSettings);
+    LayerSet.addToLayer(layer, object3d);
 
     object3d.geometry?.dispose();
     object3d.geometry = geometry;

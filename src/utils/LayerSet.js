@@ -99,6 +99,11 @@ const LayerSet = {
       });
     });
   },
+
+  reset() {
+    this.layers = [{ id: 0, name:'default', visible: true }];
+    this.cameras = [];
+  },
 };
 
 export default LayerSet;

@@ -1,5 +1,6 @@
 
 
+
 const LayerSet = {
   layers: [{ id: 0, name:'default', visible: true }],
   cameras: [],
@@ -88,6 +89,7 @@ const LayerSet = {
     }
     this.applyToCameras();
   },
+
 
   applyToCameras() {
     this.cameras.forEach((c) => c.layers.disableAll());

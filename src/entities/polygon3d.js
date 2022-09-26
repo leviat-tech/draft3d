@@ -3,7 +3,7 @@ import {
 } from 'three';
 import { createMaterial, updateMaterial } from '../utils/material';
 import { createExtrudeGeometry, createPolygon } from '../utils/geometry';
-
+import LayerSet from '../utils/LayerSet';
 
 export default {
   name: 'polygon3d',
@@ -23,22 +23,26 @@ export default {
         [0, 0],
       ],
     },
+    layer: { name: 'Layer', type: 'string', default: 'default' },
   },
   render(params) {
-    const { depth, color, opacity, path } = params;
+    const { depth, color, opacity, path, layer } = params;
 
     const shape = createPolygon(path);
     const material = createMaterial(color, opacity);
     const geometry = createExtrudeGeometry(shape, depth);
 
-    return new Mesh(geometry, material);
+    const mesh = new Mesh(geometry, material);
+    LayerSet.addToLayer(layer, mesh);
+    return mesh;
   },
   update(object3d, newParams) {
-    const { path, depth, color, opacity } = newParams;
+    const { path, depth, color, opacity, layer } = newParams;
 
     updateMaterial(object3d, color, opacity);
 
     const newShape = createPolygon(path);
+    LayerSet.addToLayer(layer, object3d);
 
     object3d.geometry?.dispose();
     object3d.geometry = createExtrudeGeometry(newShape, depth);

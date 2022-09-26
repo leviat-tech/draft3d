@@ -38,9 +38,10 @@ export default class ThreeScene {
     
     this.lights = this.createLight();
     
-    this.layers = new LayerSet()
-    this.layers.addCamera(this.orthoCamera)
-    this.layers.addCamera(this.perspectiveCamera)
+    LayerSet.addCamera(this.orthoCamera)
+    LayerSet.addCamera(this.perspectiveCamera)
+
+    LayerSet.showOnly('default')
 
     this.renderer = this.createRenderer();
     this.mouse = new Vector2();

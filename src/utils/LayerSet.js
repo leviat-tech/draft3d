@@ -1,5 +1,4 @@
 
-
 const LayerSet = {
   layers: [{ id: 0, name:'default', visible: true }],
   cameras: [],

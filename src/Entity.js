@@ -15,8 +15,7 @@ class Entity {
    */
   constructor(entityConfig, params = {}) {
     this.params = Entity.getParams(entityConfig.parameters, params);
-    this.features = [];
-    this.object3d = new Object3D();
+    this.features = {};
 
     const object3d = entityConfig.render.call(this, this.params);
     if ((object3d instanceof Object3D)) {
@@ -59,22 +58,36 @@ class Entity {
   }
 
   addTo(object3d) {
+    if (this.object3d === undefined) {
+      this.object3d = new Object3D();
+    }
+
     object3d.add(this.object3d);
   }
 
   add(object3d) {
+    if (this.object3d === undefined) {
+      this.object3d = new Object3D();
+    }
+
     this.object3d.add(object3d);
   }
 
   addFeature(name, type, params) {
+    if (this.features[name] !== undefined) {
+      throw new Error('Feature Name already in use');
+    }
+
     const feat = this.isEntity(type) ? draft3d.entities[type](params) : draft3d.features[type](params);
     this.features[name] = feat;
     this.add(feat.object3d);
   }
 
   addFeatureTo(arrayName, type, params) {
-    if (!(this.features[arrayName] instanceof Array)) {
+    if (this.features[arrayName] === undefined) {
       this.features[arrayName] = [];
+    } else if (!(this.features[arrayName] instanceof Array)) {
+      throw new Error('Feature Name already in use for non-itterable feature');
     }
     const feat = this.isEntity(type) ? draft3d.entities[type](params) : draft3d.features[type](params);
     this.features[arrayName].push(feat);

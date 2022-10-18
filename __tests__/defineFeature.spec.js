@@ -10,7 +10,7 @@ const twoCubesParams = {
     this.addFeature('cube2', 'box', { position: [params.distance, 0, 0] });
   },
   update(obj3d, newParams) {
-    this.features['cube2'].updateParams({ position: [newParams.distance, 0, 0] });
+    this.features.cube2.updateParams({ position: [newParams.distance, 0, 0] });
   }
 };
 
@@ -22,8 +22,8 @@ const fourCubesParams = {
     this.addFeature('cubes2', 'TwoCubes', { distance: params.factor * 3 });
   },
   update(obj3d, newParams) {
-    this.features['cubes1'].updateParams({ distance: newParams.factor * 1 });
-    this.features['cubes2'].updateParams({ distance: newParams.factor * 3 });
+    this.features.cubes1.updateParams({ distance: newParams.factor * 1 });
+    this.features.cubes2.updateParams({ distance: newParams.factor * 3 });
   }
 };
 
@@ -47,7 +47,28 @@ const stringOfCubes = {
     params.positions.forEach((pos) => this.addFeatureTo('cubes', 'box', { position: pos }));
   },
   update(obj3d, newParams) {
+  }
+};
 
+const nameError = {
+  name: 'NameError',
+  parameters: { positions: { name: 'positions', type: 'number', default: [[0, 0, 0]] } },
+  render(params) {
+    this.addFeature('cube', 'box', { position: [0, 0, 0] });
+    this.addFeature('cube', 'box', { position: [0, 0, 0] });
+  },
+  update(obj3d, newParams) {
+  }
+};
+
+const itterbleError = {
+  name: 'ItterableError',
+  parameters: { positions: { name: 'positions', type: 'number', default: [[0, 0, 0]] } },
+  render(params) {
+    this.addFeature('cubes', 'box', { position: [0, 0, 0] });
+    params.positions.forEach((pos) => this.addFeatureTo('cubes', 'box', { position: pos }));
+  },
+  update(obj3d, newParams) {
   }
 };
 
@@ -83,7 +104,7 @@ describe('featureStore', () => {
     draft3d.registerFeature(fourCubesParams);
     const instance1 = draft3d.features.FourCubes({ factor: ourFactor });
 
-    expect(instance1 != undefined).toBe(true);
+    expect(instance1).not.toBe(undefined);
     expect(instance1.features).toMatchObject({ cubes1: {}, cubes2: {} });
 
     expect(instance1.params.factor).toBe(ourFactor);
@@ -133,6 +154,28 @@ describe('featureStore', () => {
     expect(instance2.features.cubes[2].params).toMatchObject({ position: [0, 0, 3] });
     expect(instance2.object3d.children[2].position).toMatchObject({ "x": 0, "y": 0, "z": 3 });
 
+  });
+
+  test('warns if subFeature names are reused', () => {
+
+    draft3d.registerFeature(nameError);
+
+    const doit = () => {
+      const instance1 = draft3d.features.NameError({ positions: [[0, 0, 0], [0, 0, 2]] });
+    };
+
+    expect(() => doit()).toThrowError();
+  });
+
+  test('warns if itterable subFeatures are crossed with non itterable ', () => {
+
+    draft3d.registerFeature(itterbleError);
+
+    const doit = () => {
+      const instance1 = draft3d.features.ItterableError({ positions: [[0, 0, 0], [0, 0, 2]] });
+    };
+
+    expect(() => doit()).toThrowError();
   });
 
 });

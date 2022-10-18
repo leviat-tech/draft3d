@@ -54,7 +54,7 @@ class Entity {
 
     const { object3d } = this;
     const degToRad = (deg) => deg * (Math.PI / 180);
-    const [ x, y, z ] = rotation;
+    const [x, y, z] = rotation;
     object3d.rotation.set(degToRad(x), degToRad(y), degToRad(z));
   }
 
@@ -72,9 +72,8 @@ class Entity {
     this.add(feat.object3d);
   }
 
-  addFeatureTo(arrayName, type , params ) {
-    if (!(this.features[arrayName] instanceof Array))
-    {
+  addFeatureTo(arrayName, type, params) {
+    if (!(this.features[arrayName] instanceof Array)) {
       this.features[arrayName] = [];
     }
     const feat = this.isEntity(type) ? draft3d.entities[type](params) : draft3d.features[type](params);

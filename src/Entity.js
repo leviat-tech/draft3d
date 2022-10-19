@@ -87,7 +87,7 @@ class Entity {
     if (this.features[arrayName] === undefined) {
       this.features[arrayName] = [];
     } else if (!(this.features[arrayName] instanceof Array)) {
-      throw new Error('Feature Name already in use for non-itterable feature');
+      throw new Error('Feature Name already in use for non-iterable feature');
     }
     const feat = this.isEntity(type) ? draft3d.entities[type](params) : draft3d.features[type](params);
     this.features[arrayName].push(feat);

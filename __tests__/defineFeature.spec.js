@@ -35,6 +35,7 @@ const paramTest = {
     three: { name: 'three', type: 'number', default: 3 },
   },
   render(params) {
+    return new Object3D();
   },
   update(obj3d, newParams) {
   }
@@ -61,8 +62,8 @@ const nameError = {
   }
 };
 
-const itterbleError = {
-  name: 'ItterableError',
+const iterbleError = {
+  name: 'IterableError',
   parameters: { positions: { name: 'positions', type: 'number', default: [[0, 0, 0]] } },
   render(params) {
     this.addFeature('cubes', 'box', { position: [0, 0, 0] });
@@ -164,18 +165,18 @@ describe('featureStore', () => {
       const instance1 = draft3d.features.NameError({ positions: [[0, 0, 0], [0, 0, 2]] });
     };
 
-    expect(() => doit()).toThrowError();
+    expect(() => doit()).toThrowError('Feature Name already in use');
   });
 
-  test('warns if itterable subFeatures are crossed with non itterable ', () => {
+  test('warns if Iterable subFeatures are crossed with non Iterable ', () => {
 
-    draft3d.registerFeature(itterbleError);
+    draft3d.registerFeature(iterbleError);
 
     const doit = () => {
-      const instance1 = draft3d.features.ItterableError({ positions: [[0, 0, 0], [0, 0, 2]] });
+      const instance1 = draft3d.features.IterableError({ positions: [[0, 0, 0], [0, 0, 2]] });
     };
 
-    expect(() => doit()).toThrowError();
+    expect(() => doit()).toThrowError('Feature Name already in use for non-iterable feature');
   });
 
 });

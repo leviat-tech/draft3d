@@ -7,8 +7,8 @@ import {
 } from 'three';
 
 import {
-  createLine,
-  createLineGeometry,
+  createPolyLine,
+  createPolyLineGeometry,
   createText,
   createTextGeometry,
 } from '../utils/geometry';
@@ -27,7 +27,7 @@ function setTextPosition(textObject, textBox, params) {
   }
   const { x, y } = textObject.geometry.boundingSphere.center;
   textObject.position.x = params.length / 2 - x;
-  textObject.position.z = params.textSize * 1.5;
+  textObject.position.z = params.extension + params.textSize * 1.5;
 
   textBox.position.x = x;
   textBox.position.y = y;
@@ -43,16 +43,23 @@ export default {
     length: { name: 'Length', precision: 0.05, default: 2 },
     prefix: { name: 'Prefix', default: '' },
     suffix: { name: 'Suffix', default: '' },
-    onClick: { name: 'onClick', default: () => {} },
+    onClick: { name: 'onClick', default: () => { } },
     layer: { name: 'Layer', type: 'string', default: 'test' },
+    extension: { name: 'Extension', precision: 0.05, default: 0.2 },
   },
   render(params) {
     const root = new Object3D();
 
-    const { length, color, layer } = params;
+    const { length, color, layer, extension } = params;
 
     // Render line
-    const lineObject = createLine(length, color);
+    const points = [
+      [0, 0, 0],
+      [0, 0, extension],
+      [length, 0, extension],
+      [length, 0, 0],
+    ];
+    const lineObject = createPolyLine(points, color);
     root.add(lineObject);
 
     // Render text
@@ -84,16 +91,21 @@ export default {
     return root;
   },
   update(root, newParams) {
-    const { length, textSize, layer } = newParams;
+    const { length, textSize, layer, extension } = newParams;
     const [line, text, textBox] = root.children;
 
     line.geometry.dispose();
-    line.geometry = createLineGeometry(length);
+    const points = [
+      [0, 0, 0],
+      [0, 0, extension],
+      [length, 0, extension],
+      [length, 0, 0],
+    ];
+    line.geometry = createPolyLineGeometry(points);
 
     const textValue = getTextValue(newParams);
     text.geometry.dispose();
     text.geometry = createTextGeometry(textValue, textSize);
-    console.log(root)
     LayerSet.addToLayer(layer, root.children);
 
     requestAnimationFrame(() => {

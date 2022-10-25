@@ -22,9 +22,19 @@ export function createLineGeometry(length) {
   return new BufferGeometry().setFromPoints([lineFrom, lineTo]);
 }
 
-
 export function createLine(length, color = '#000000') {
   const lineGeometry = createLineGeometry(length);
+  const lineMaterial = new LineBasicMaterial({ color });
+  return new Line(lineGeometry, lineMaterial);
+}
+
+export function createPolyLineGeometry(points) {
+  const vectors = points.map((point) => new Vector3(...point));
+  return new BufferGeometry().setFromPoints(vectors);
+}
+
+export function createPolyLine(points, color = '#000000') {
+  const lineGeometry = createPolyLineGeometry(points);
   const lineMaterial = new LineBasicMaterial({ color });
   return new Line(lineGeometry, lineMaterial);
 }

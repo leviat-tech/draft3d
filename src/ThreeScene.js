@@ -6,7 +6,7 @@ import {
   Vector2,
   WebGLRenderer,
 } from 'three';
-import { createCamera, createOrthographicCamera, calculatePlanView, planControls, freeControls} from './utils/camera'
+import { createCamera, createOrthographicCamera, calculatePlanView, planControls, freeControls } from './utils/camera'
 import LayerSet from './utils/LayerSet'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
@@ -33,11 +33,11 @@ export default class ThreeScene {
     this.perspectiveControls = freeControls(this.perspectiveCamera, this.canvas);
     this.orthoCamera = createOrthographicCamera(camera);
     this.planControls = planControls(this.orthoCamera, this.canvas);
-        
+
     this.camera = this.perspectiveCamera;
-    
+
     this.lights = this.createLight();
-    
+
     LayerSet.addCamera(this.orthoCamera)
     LayerSet.addCamera(this.perspectiveCamera)
 
@@ -50,23 +50,23 @@ export default class ThreeScene {
     this.onResize();
   }
 
-  setView(view){
-    switch (view){
-    case 'planX':
-      this.camera = this.orthoCamera;
-      calculatePlanView(this.camera,this.originalScene,'x');
-      break;
-    case 'planY':
-      this.camera = this.orthoCamera;
-      calculatePlanView(this.camera,this.originalScene,'y');
-      break;
-    case 'planZ':
-      this.camera = this.orthoCamera;
-      calculatePlanView(this.camera,this.originalScene,'z');
-      break;
-    case 'free':
-    default:
-      this.camera = this.perspectiveCamera;
+  setView(view) {
+    switch (view) {
+      case 'planX':
+        this.camera = this.orthoCamera;
+        calculatePlanView(this.camera, this.originalScene, 'x');
+        break;
+      case 'planY':
+        this.camera = this.orthoCamera;
+        calculatePlanView(this.camera, this.originalScene, 'y');
+        break;
+      case 'planZ':
+        this.camera = this.orthoCamera;
+        calculatePlanView(this.camera, this.originalScene, 'z');
+        break;
+      case 'free':
+      default:
+        this.camera = this.perspectiveCamera;
     }
   }
 
@@ -88,14 +88,14 @@ export default class ThreeScene {
     const ambientLight = new AmbientLight(lightColor, 0.5);
     ambientLight.layers.enableAll()
     this.originalScene.add(ambientLight);
-    
+
     return [
       this.createDirectionalLight(2, 3, 1),
       this.createDirectionalLight(-2, 3, -1),
     ];
   }
 
-  
+
 
   createDirectionalLight(x1 = 0, y1 = 5, z1 = 1, x2 = 0, y2 = 0, z2 = 0) {
     const lightColor = 0xffffff;
@@ -160,7 +160,6 @@ export default class ThreeScene {
     this.camera.updateProjectionMatrix();
   }
 
-  
   onMouseDown(e) {
     const { left, top } = this.el.getBoundingClientRect();
 
@@ -169,22 +168,28 @@ export default class ThreeScene {
 
     this.raycaster.setFromCamera(this.mouse, this.camera);
 
-    const interactiveObjects = this.getInteractiveObjects();
+    const interactiveObjects = this.getInteractiveChildren(this.originalScene);
     const intersects = this.raycaster.intersectObjects(interactiveObjects);
 
     if (intersects.length > 0) {
       const { object } = intersects[0];
-      if (object.onClick) object.onClick();
+      if (object.onClick) object.onClick(e);
     }
   }
 
-  getInteractiveObjects() {
-    return this.originalScene.children.reduce((interactiveChildren, obj) => {
-      if (!obj.isInteractive) return interactiveChildren;
+  getInteractiveChildren(arg) {
+    if (!arg.children.length) {
+      return [];
+    }
 
-      return [...interactiveChildren, ...obj.getInteractiveObjects()];
-    }, []);
-  }
+    return arg.children.reduce((interactiveChildren, child) => {
+      if (child?.isInteractive) {
+        interactiveChildren.push(child)
+      }
+
+      return [...interactiveChildren, ...this.getInteractiveChildren(child)];
+    }, [])
+  };
 
   add(obj) {
     this.originalScene.add(obj);

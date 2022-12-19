@@ -14,6 +14,7 @@ import {
 } from '../utils/geometry';
 import LayerSet from '../utils/LayerSet';
 
+
 function getTextValue({ length, prefix, suffix }) {
   const lengthAsString = length.toFixed(2);
   return [prefix, lengthAsString, suffix]
@@ -26,12 +27,15 @@ function setTextPosition(textObject, textBox, params) {
     return;
   }
   const { x, y } = textObject.geometry.boundingSphere.center;
-  textObject.position.x = params.length / 2 - x;
-  textObject.position.z = params.extension + params.textSize * 1.5;
 
-  textBox.position.x = x;
-  textBox.position.y = y;
+  textObject.position.x = params.length / 2 - x;
+  textObject.position.z = params.extension + params.textSize;
+
+  textBox.position.x = params.length / 2;
+  textBox.position.z = params.extension + params.textSize / 2;
+
   textBox.geometry.dispose();
+
   textBox.geometry = new BoxGeometry(x * 2, y * 2, 0.06);
 }
 
@@ -43,14 +47,15 @@ export default {
     length: { name: 'Length', precision: 0.05, default: 2 },
     prefix: { name: 'Prefix', default: '' },
     suffix: { name: 'Suffix', default: '' },
-    onClick: { name: 'onClick', default: () => { } },
+    interactive: { name: 'Interactive', default: true },
+    onClick: { name: 'onClick', default: (e) => { console.log('Text Clicked'); } },
     layer: { name: 'Layer', type: 'string', default: 'test' },
-    extension: { name: 'Extension', precision: 0.05, default: 0.2 },
+    extension: { name: 'Extension', precision: 0.05, default: 0.1 },
   },
   render(params) {
     const root = new Object3D();
 
-    const { length, color, layer, extension } = params;
+    const { length, color, layer, extension, interactive } = params;
 
     // Render line
     const points = [
@@ -73,10 +78,13 @@ export default {
     const boxGeometry = new BoxGeometry(0, 0);
     const boxMaterial = new MeshBasicMaterial({ opacity: 0, transparent: true });
     const textBox = new Mesh(boxGeometry, boxMaterial);
+    textBox.isInteractive = interactive;
+    textBox.setRotationFromAxisAngle(new Vector3(1, 0, 0), Math.PI / -2);
+
     root.add(textBox);
 
     if (params.onClick) {
-      textBox.onClick = () => params.onClick();
+      textBox.onClick = (e) => params.onClick(e);
     }
 
     // Let the text render before using its dimensions

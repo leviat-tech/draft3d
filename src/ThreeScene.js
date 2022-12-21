@@ -177,12 +177,12 @@ export default class ThreeScene {
     }
   }
 
-  getInteractiveChildren(arg) {
-    if (!arg.children.length) {
+  getInteractiveChildren(object3d) {
+    if (!object3d.children.length) {
       return [];
     }
 
-    return arg.children.reduce((interactiveChildren, child) => {
+    return object3d.children.reduce((interactiveChildren, child) => {
       if (child?.isInteractive) {
         interactiveChildren.push(child)
       }

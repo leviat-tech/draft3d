@@ -47,15 +47,15 @@ export default {
     length: { name: 'Length', precision: 0.05, default: 2 },
     prefix: { name: 'Prefix', default: '' },
     suffix: { name: 'Suffix', default: '' },
-    interactive: { name: 'Interactive', default: true },
-    onClick: { name: 'onClick', default: (e) => { console.log('Text Clicked'); } },
+    onClick: { name: 'onClick', default: () => { } },
+    isInteractive: { name: 'Interactive', default: true },
     layer: { name: 'Layer', type: 'string', default: 'test' },
     extension: { name: 'Extension', precision: 0.05, default: 0.1 },
   },
   render(params) {
     const root = new Object3D();
 
-    const { length, color, layer, extension, interactive } = params;
+    const { length, color, layer, extension, isInteractive } = params;
 
     // Render line
     const points = [
@@ -78,7 +78,7 @@ export default {
     const boxGeometry = new BoxGeometry(0, 0);
     const boxMaterial = new MeshBasicMaterial({ opacity: 0, transparent: true });
     const textBox = new Mesh(boxGeometry, boxMaterial);
-    textBox.isInteractive = interactive;
+    textBox.isInteractive = isInteractive;
     textBox.setRotationFromAxisAngle(new Vector3(1, 0, 0), Math.PI / -2);
 
     root.add(textBox);

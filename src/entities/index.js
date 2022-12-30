@@ -1,16 +1,18 @@
 import box from './box';
-import alignedDim from './alignedDim';
+import axises from './axises';
+import cylinder from './cylinder';
 import polygon3d from './polygon3d';
-import cylinder from './cylinder'
-import polycurve3d from './polycurve3d'
+import alignedDim from './alignedDim';
+import polycurve3d from './polycurve3d';
 import cylindricalPath from './cylindricalPath';
 
 
 export {
   box,
-  alignedDim,
-  polygon3d,
+  axises,
   cylinder,
+  polygon3d,
+  alignedDim,
   polycurve3d,
   cylindricalPath,
 };

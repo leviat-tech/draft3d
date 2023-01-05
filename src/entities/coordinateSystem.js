@@ -70,145 +70,95 @@ const createZAxis = (zAxisLength) => {
   return { zAxis, zAxisLabel };
 };
 
-const createXForce = (xLoads) => {
-  const xForceArrow = cylindricalArrow.render({ length: FORCE_ARROW_LENGTH, color: COLORS.GREEN });
-  const xForceText = createLabel(`Vx = ${xLoads.force.value}`);
-  const xForceTextBox = createTextBox(xLoads.force.onClick);
-
-  return { xForceArrow, xForceText, xForceTextBox };
-};
-
-const createYForce = (yLoads) => {
-  const yForceArrow = cylindricalArrow.render({ length: FORCE_ARROW_LENGTH, color: COLORS.BLUE });
-  const yForceText = createLabel(`Vy = ${yLoads.force.value}`);
-  const yForceTextBox = createTextBox(yLoads.force.onClick);
-
-  return { yForceArrow, yForceText, yForceTextBox };
-};
-
-const createZForce = (zLoads) => {
-  const zForceArrow = cylindricalArrow.render({ length: FORCE_ARROW_LENGTH, color: COLORS.RED });
-  const zForceText = createLabel(`Vz = ${zLoads.force.value}`);
-  const zForceTextBox = createTextBox(zLoads.force.onClick);
-
-  return { zForceArrow, zForceText, zForceTextBox };
-};
-
 const createXMoment = (xLoads) => {
-  const xMomentArrow = roundedCylindricalArrow.render({ color: COLORS.GREEN });
+  const xMomentArrow = cylindricalArrow.render({ length: FORCE_ARROW_LENGTH, color: COLORS.GREEN });
   const xMomentText = createLabel(`Mx = ${xLoads.moment.value}`);
   const xMomentTextBox = createTextBox(xLoads.moment.onClick);
 
   return { xMomentArrow, xMomentText, xMomentTextBox };
 };
 
+const createYMoment = (yLoads) => {
+  const yMomentArrow = cylindricalArrow.render({ length: FORCE_ARROW_LENGTH, color: COLORS.BLUE });
+  const yMomentText = createLabel(`My = ${yLoads.moment.value}`);
+  const yMomentTextBox = createTextBox(yLoads.moment.onClick);
+
+  return { yMomentArrow, yMomentText, yMomentTextBox };
+};
+
 const createZMoment = (zLoads) => {
-  const zMomentArrow = roundedCylindricalArrow.render({ color: COLORS.RED });
+  const zMomentArrow = cylindricalArrow.render({ length: FORCE_ARROW_LENGTH, color: COLORS.RED });
   const zMomentText = createLabel(`Mz = ${zLoads.moment.value}`);
   const zMomentTextBox = createTextBox(zLoads.moment.onClick);
 
   return { zMomentArrow, zMomentText, zMomentTextBox };
 };
 
-const positionXForce = ({ xForceArrow, xAxisLength, xForceText, xForceTextBox, xLoads }) => {
-  const { x, y } = xForceText.geometry.boundingSphere.center;
+const createXShear = (xLoads) => {
+  const xShearArrow = roundedCylindricalArrow.render({ color: COLORS.GREEN });
+  const xShearText = createLabel(`Vx = ${xLoads.shear.value}`);
+  const xShearTextBox = createTextBox(xLoads.shear.onClick);
 
-  xForceText.rotation.set(0, 0, 0);
-  xForceArrow.rotation.set(0, 0, 0);
-  xForceTextBox.rotation.set(0, 0, 0);
-
-  const isNegativeLoad = xLoads.force < 0;
-
-  xForceArrow.position.x = -(xAxisLength - (isNegativeLoad ? 0.5 : 0.7));
-  xForceArrow.rotateZ(isNegativeLoad ? -halfPI : halfPI);
-
-  xForceText.position.x = -(xAxisLength - 0.35);
-  xForceText.position.z = -0.1;
-  xForceText.rotateX(-halfPI);
-
-  xForceTextBox.geometry.dispose();
-  xForceTextBox.geometry = new BoxGeometry(x * 2, y * 2, 0.01);
-
-  xForceTextBox.position.x = -(xAxisLength - 0.35 - x);
-  xForceTextBox.position.z = -0.1 - y;
-  xForceTextBox.rotateX(halfPI);
+  return { xShearArrow, xShearText, xShearTextBox };
 };
 
-const positionYForce = ({ yForceArrow, yAxisLength, yForceTextBox, yForceText, yLoads }) => {
-  yForceText.geometry.computeBoundingBox();
+const createYShear = (yLoads) => {
+  const yShearArrow = roundedCylindricalArrow.render({ color: COLORS.BLUE });
+  const yShearText = createLabel(`Vy = ${yLoads.shear.value}`);
+  const yShearTextBox = createTextBox(yLoads.shear.onClick);
 
-  const { x, y } = yForceText.geometry.boundingBox.max;
-
-  yForceText.rotation.set(0, 0, 0);
-  yForceArrow.rotation.set(0, 0, 0);
-  yForceTextBox.rotation.set(0, 0, 0);
-
-  const isNegativeLoad = yLoads.force < 0;
-
-  if (isNegativeLoad) {
-    yForceArrow.rotateX(-Math.PI);
-  }
-  yForceArrow.position.y = yAxisLength - (isNegativeLoad ? 0.5 : 0.7);
-
-  yForceText.position.x = -0.1;
-  yForceText.position.y = yAxisLength - 0.8;
-  yForceText.rotateZ(halfPI);
-
-  yForceTextBox.geometry.dispose();
-  yForceTextBox.geometry = new BoxGeometry(x, y + 0.05, 0.01); // Add 0.05 to cover 'y' letter fully
-  yForceTextBox.position.y = yAxisLength - 0.8 + (x / 2);
-  yForceTextBox.position.x = -0.1 - y / 2;
-  yForceTextBox.rotateZ(halfPI);
+  return { yShearArrow, yShearText, yShearTextBox };
 };
 
-const positionZForce = ({ zForceArrow, zForceText, zForceTextBox, zAxisLength, zLoads }) => {
-  const { x, y } = zForceText.geometry.boundingSphere.center;
-
-  zForceText.rotation.set(0, 0, 0);
-  zForceArrow.rotation.set(0, 0, 0);
-  zForceTextBox.rotation.set(0, 0, 0);
-
-  const isNegativeLoad = zLoads.force < 0;
-
-  zForceText.position.x = -0.1;
-  zForceArrow.rotateX(zLoads.force < 0 ? halfPI : -halfPI);
-
-  zForceArrow.position.z = -(zAxisLength - (isNegativeLoad ? 0.5 : 0.7));
-  zForceText.position.z = -(zAxisLength - 0.8);
-  zForceText.rotateX(-halfPI);
-  zForceText.rotateZ(halfPI);
-
-  zForceTextBox.geometry.dispose();
-  zForceTextBox.geometry = new BoxGeometry(x * 2, y * 2, 0.01);
-
-  zForceTextBox.position.z = -(zAxisLength - 0.8) - x;
-  zForceTextBox.position.x = -0.1 - y;
-  zForceTextBox.rotateX(-halfPI);
-  zForceTextBox.rotateZ(halfPI);
-};
-
-const positionXMoment = ({ xMomentArrow, xMomentText, xMomentTextBox, xAxisLength, xLoads }) => {
+const positionXMoment = ({ xMomentArrow, xAxisLength, xMomentText, xMomentTextBox, xLoads }) => {
   const { x, y } = xMomentText.geometry.boundingSphere.center;
 
-  xMomentArrow.rotation.set(0, 0, 0);
   xMomentText.rotation.set(0, 0, 0);
+  xMomentArrow.rotation.set(0, 0, 0);
   xMomentTextBox.rotation.set(0, 0, 0);
 
-  const isNegativeLoad = xLoads.moment < 0;
+  const isNegativeLoad = xLoads.moment.value < 0;
 
-  xMomentArrow.position.x = -(xAxisLength - 1);
-  xMomentArrow.rotateY(isNegativeLoad ? halfPI : -halfPI);
+  xMomentArrow.position.x = -(xAxisLength - (isNegativeLoad ? 0.5 : 0.7));
+  xMomentArrow.rotateZ(isNegativeLoad ? -halfPI : halfPI);
+
+  xMomentText.position.x = -(xAxisLength - 0.35);
+  xMomentText.position.z = -0.1;
   xMomentText.rotateX(-halfPI);
-  xMomentText.rotateZ(halfPI);
-  xMomentText.position.z = 0.2;
-  xMomentText.position.x = -(xAxisLength - 1.2);
 
   xMomentTextBox.geometry.dispose();
   xMomentTextBox.geometry = new BoxGeometry(x * 2, y * 2, 0.01);
 
-  xMomentTextBox.position.x = -(xAxisLength - 1.2) - y;
+  xMomentTextBox.position.x = -(xAxisLength - 0.35 - x);
+  xMomentTextBox.position.z = -0.1 - y;
   xMomentTextBox.rotateX(halfPI);
-  xMomentTextBox.rotateZ(halfPI);
+};
+
+const positionYMoment = ({ yMomentArrow, yAxisLength, yMomentTextBox, yMomentText, yLoads }) => {
+  yMomentText.geometry.computeBoundingBox();
+
+  const { x, y } = yMomentText.geometry.boundingBox.max;
+
+  yMomentText.rotation.set(0, 0, 0);
+  yMomentArrow.rotation.set(0, 0, 0);
+  yMomentTextBox.rotation.set(0, 0, 0);
+
+  const isNegativeLoad = yLoads.moment.value < 0;
+
+  if (isNegativeLoad) {
+    yMomentArrow.rotateX(-Math.PI);
+  }
+  yMomentArrow.position.y = yAxisLength - (isNegativeLoad ? 0.5 : 0.7);
+
+  yMomentText.position.x = -0.1;
+  yMomentText.position.y = yAxisLength - 0.8;
+  yMomentText.rotateZ(halfPI);
+
+  yMomentTextBox.geometry.dispose();
+  yMomentTextBox.geometry = new BoxGeometry(x, y + 0.05, 0.01); // Add 0.05 to cover 'y' letter fully
+  yMomentTextBox.position.y = yAxisLength - 0.8 + (x / 2);
+  yMomentTextBox.position.x = -0.1 - y / 2;
+  yMomentTextBox.rotateZ(halfPI);
 };
 
 const positionZMoment = ({ zMomentArrow, zMomentText, zMomentTextBox, zAxisLength, zLoads }) => {
@@ -218,22 +168,72 @@ const positionZMoment = ({ zMomentArrow, zMomentText, zMomentTextBox, zAxisLengt
   zMomentArrow.rotation.set(0, 0, 0);
   zMomentTextBox.rotation.set(0, 0, 0);
 
-  const isNegativeLoad = zLoads.moment < 0;
+  const isNegativeLoad = zLoads.moment.value < 0;
 
-  if (!isNegativeLoad) {
-    zMomentArrow.rotateY(Math.PI);
-  }
+  zMomentText.position.x = -0.1;
+  zMomentArrow.rotateX(isNegativeLoad ? halfPI : -halfPI);
 
-  zMomentArrow.position.z = -(zAxisLength - 1.1);
-  zMomentText.position.z = -(zAxisLength - 1.3);
-  zMomentText.position.x = -0.2;
+  zMomentArrow.position.z = -(zAxisLength - (isNegativeLoad ? 0.5 : 0.7));
+  zMomentText.position.z = -(zAxisLength - 0.8);
   zMomentText.rotateX(-halfPI);
+  zMomentText.rotateZ(halfPI);
 
   zMomentTextBox.geometry.dispose();
   zMomentTextBox.geometry = new BoxGeometry(x * 2, y * 2, 0.01);
 
-  zMomentTextBox.position.z = -(zAxisLength - 1.3) - y;
+  zMomentTextBox.position.z = -(zAxisLength - 0.8) - x;
+  zMomentTextBox.position.x = -0.1 - y;
   zMomentTextBox.rotateX(-halfPI);
+  zMomentTextBox.rotateZ(halfPI);
+};
+
+const positionXShear = ({ xShearArrow, xShearText, xShearTextBox, xAxisLength, xLoads }) => {
+  const { x, y } = xShearText.geometry.boundingSphere.center;
+
+  xShearArrow.rotation.set(0, 0, 0);
+  xShearText.rotation.set(0, 0, 0);
+  xShearTextBox.rotation.set(0, 0, 0);
+
+  const isNegativeLoad = xLoads.shear.value < 0;
+
+  xShearArrow.position.x = -(xAxisLength - 1);
+  xShearArrow.rotateY(isNegativeLoad ? halfPI : -halfPI);
+  xShearText.rotateX(-halfPI);
+  xShearText.rotateZ(halfPI);
+  xShearText.position.z = 0.2;
+  xShearText.position.x = -(xAxisLength - 1.2);
+
+  xShearTextBox.geometry.dispose();
+  xShearTextBox.geometry = new BoxGeometry(x * 2, y * 2, 0.01);
+
+  xShearTextBox.position.x = -(xAxisLength - 1.2) - y;
+  xShearTextBox.rotateX(halfPI);
+  xShearTextBox.rotateZ(halfPI);
+};
+
+const positionYShear = ({ yShearArrow, yShearText, yShearTextBox, yAxisLength, yLoads }) => {
+  const { x, y } = yShearText.geometry.boundingSphere.center;
+
+  yShearText.rotation.set(0, 0, 0);
+  yShearArrow.rotation.set(0, 0, 0);
+  yShearTextBox.rotation.set(0, 0, 0);
+
+  const isNegativeLoad = yLoads.shear.value < 0;
+
+  if (isNegativeLoad) {
+    yShearArrow.rotateZ(Math.PI);
+  }
+  yShearArrow.rotateX(halfPI);
+  yShearArrow.position.y = yAxisLength - 0.9;
+
+  yShearText.position.y = yAxisLength - 1.1;
+  yShearText.position.x = -0.2;
+
+  yShearTextBox.geometry.dispose();
+  yShearTextBox.geometry = new BoxGeometry(x * 2, y * 2, 0.01);
+
+  yShearTextBox.position.y = yAxisLength - 1.1 + y;
+  yShearTextBox.position.x = 0.2 - x;
 };
 
 export default {
@@ -245,32 +245,32 @@ export default {
     xLoads: {
       name: 'xLoads',
       default: {
-        force: {
-          value: 0,
-          onClick: () => { console.log('x force clicked'); },
-        },
         moment: {
           value: 0,
-          onClick: () => { console.log('x moment clicked'); },
+          onClick: () => { },
+        },
+        shear: {
+          value: 0,
+          onClick: () => { },
         },
       },
     },
     yLoads: {
       name: 'yLoads',
       default: {
-        force: {
+        moment: {
           value: 0,
-          onClick: () => { console.log('y force clicked'); },
+          onClick: () => { },
+        },
+        shear: {
+          value: 0,
+          onClick: () => { },
         },
       },
     },
     zLoads: {
       name: 'zLoads',
       default: {
-        force: {
-          value: 0,
-          onClick: () => { },
-        },
         moment: {
           value: 0,
           onClick: () => { },
@@ -289,12 +289,12 @@ export default {
     const { yAxis, yAxisLabel } = createYAxis(yAxisLength);
     const { zAxis, zAxisLabel } = createZAxis(zAxisLength);
 
-    const { xForceArrow, xForceText, xForceTextBox } = createXForce(xLoads);
-    const { yForceArrow, yForceText, yForceTextBox } = createYForce(yLoads);
-    const { zForceArrow, zForceText, zForceTextBox } = createZForce(zLoads);
-
     const { xMomentArrow, xMomentText, xMomentTextBox } = createXMoment(xLoads);
+    const { yMomentArrow, yMomentText, yMomentTextBox } = createYMoment(yLoads);
     const { zMomentArrow, zMomentText, zMomentTextBox } = createZMoment(zLoads);
+
+    const { xShearArrow, xShearText, xShearTextBox } = createXShear(xLoads);
+    const { yShearArrow, yShearText, yShearTextBox } = createYShear(yLoads);
 
 
     requestAnimationFrame(() => {
@@ -308,16 +308,16 @@ export default {
       zAxisLabel.position.x -= zAxisLabel.geometry.boundingSphere.center.x;
 
       // FORCES
-      positionXForce({ xForceArrow, xForceText, xForceTextBox, xAxisLength, xLoads });
-
-      positionYForce({ yForceArrow, yForceText, yForceTextBox, yAxisLength, yLoads });
-
-      positionZForce({ zForceArrow, zForceText, zForceTextBox, zAxisLength, zLoads });
-
-      // MOMENTS
       positionXMoment({ xMomentArrow, xMomentText, xMomentTextBox, xAxisLength, xLoads });
 
+      positionYMoment({ yMomentArrow, yMomentText, yMomentTextBox, yAxisLength, yLoads });
+
       positionZMoment({ zMomentArrow, zMomentText, zMomentTextBox, zAxisLength, zLoads });
+
+      // MOMENTS
+      positionXShear({ xShearArrow, xShearText, xShearTextBox, xAxisLength, xLoads });
+
+      positionYShear({ yShearArrow, yShearText, yShearTextBox, yAxisLength, yLoads });
     });
 
 
@@ -329,12 +329,12 @@ export default {
     root.add(yAxisLabel);
     root.add(zAxisLabel);
 
-    root.add(new Object3D().add(xForceArrow).add(xForceText).add(xForceTextBox));
-    root.add(new Object3D().add(yForceArrow).add(yForceText).add(yForceTextBox));
-    root.add(new Object3D().add(zForceArrow).add(zForceText).add(zForceTextBox));
-
     root.add(new Object3D().add(xMomentArrow).add(xMomentText).add(xMomentTextBox));
+    root.add(new Object3D().add(yMomentArrow).add(yMomentText).add(yMomentTextBox));
     root.add(new Object3D().add(zMomentArrow).add(zMomentText).add(zMomentTextBox));
+
+    root.add(new Object3D().add(xShearArrow).add(xShearText).add(xShearTextBox));
+    root.add(new Object3D().add(yShearArrow).add(yShearText).add(yShearTextBox));
 
     return root;
   },
@@ -349,46 +349,46 @@ export default {
       xAxisLabel,
       yAxisLabel,
       zAxisLabel,
-      { children: [xForceArrow, xForceText, xForceTextBox] },
-      { children: [yForceArrow, yForceText, yForceTextBox] },
-      { children: [zForceArrow, zForceText, zForceTextBox] },
       { children: [xMomentArrow, xMomentText, xMomentTextBox] },
+      { children: [yMomentArrow, yMomentText, yMomentTextBox] },
       { children: [zMomentArrow, zMomentText, zMomentTextBox] },
+      { children: [xShearArrow, xShearText, xShearTextBox] },
+      { children: [yShearArrow, yShearText, yShearTextBox] },
     ] = root.children;
 
     xAxis.setLength(xAxisLength, HEAD_LENGTH, HEAD_WIDTH);
     yAxis.setLength(yAxisLength, HEAD_LENGTH, HEAD_WIDTH);
     zAxis.setLength(zAxisLength, HEAD_LENGTH, HEAD_WIDTH);
 
-    xForceText.geometry.dispose();
-    xForceText.geometry = createTextGeometry(`Vx = ${xLoads.force.value}`, LABEL_TEXT_SIZE);
-
-    yForceText.geometry.dispose();
-    yForceText.geometry = createTextGeometry(`Vy = ${yLoads.force.value}`, LABEL_TEXT_SIZE);
-
-    zForceText.geometry.dispose();
-    zForceText.geometry = createTextGeometry(`Vz = ${zLoads.force.value}`, LABEL_TEXT_SIZE);
-
     xMomentText.geometry.dispose();
     xMomentText.geometry = createTextGeometry(`Mx = ${xLoads.moment.value}`, LABEL_TEXT_SIZE);
 
+    yMomentText.geometry.dispose();
+    yMomentText.geometry = createTextGeometry(`My = ${yLoads.moment.value}`, LABEL_TEXT_SIZE);
+
     zMomentText.geometry.dispose();
     zMomentText.geometry = createTextGeometry(`Mz = ${zLoads.moment.value}`, LABEL_TEXT_SIZE);
+
+    xShearText.geometry.dispose();
+    xShearText.geometry = createTextGeometry(`Vx = ${xLoads.shear.value}`, LABEL_TEXT_SIZE);
+
+    yShearText.geometry.dispose();
+    yShearText.geometry = createTextGeometry(`Vy = ${yLoads.shear.value}`, LABEL_TEXT_SIZE);
 
     requestAnimationFrame(() => {
       xAxisLabel.position.x = -calculeLength(xAxisLength);
       yAxisLabel.position.y = calculeLength(yAxisLength);
       zAxisLabel.position.z = -calculeLength(zAxisLength);
 
-      positionXForce({ xForceArrow, xForceText, xForceTextBox, xAxisLength, xLoads });
-
-      positionYForce({ yForceArrow, yForceText, yForceTextBox, yAxisLength, yLoads });
-
-      positionZForce({ zForceArrow, zForceText, zForceTextBox, zAxisLength, zLoads });
-
       positionXMoment({ xMomentArrow, xMomentText, xMomentTextBox, xAxisLength, xLoads });
 
+      positionYMoment({ yMomentArrow, yMomentText, yMomentTextBox, yAxisLength, yLoads });
+
       positionZMoment({ zMomentArrow, zMomentText, zMomentTextBox, zAxisLength, zLoads });
+
+      positionXShear({ xShearArrow, xShearText, xShearTextBox, xAxisLength, xLoads });
+
+      positionYShear({ yShearArrow, yShearText, yShearTextBox, yAxisLength, yLoads });
     });
   },
 };

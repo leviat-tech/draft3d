@@ -38,15 +38,15 @@ const createXAxis = (xAxisLength) => {
 };
 
 const createYAxis = (yAxisLength) => {
-  const yAxis = createArrow(new Vector3(0, 1, 0), yAxisLength, COLORS.BLUE);
-  const yAxisLabel = createText('Y', COLORS.BLUE, AXIS_TEXT_SIZE);
+  const yAxis = createArrow(new Vector3(0, 0, -1), yAxisLength, COLORS.RED);
+  const yAxisLabel = createText('Y', COLORS.RED, AXIS_TEXT_SIZE);
 
   return { yAxis, yAxisLabel };
 };
 
 const createZAxis = (zAxisLength) => {
-  const zAxis = createArrow(new Vector3(0, 0, -1), zAxisLength, COLORS.RED);
-  const zAxisLabel = createText('Z', COLORS.RED, AXIS_TEXT_SIZE);
+  const zAxis = createArrow(new Vector3(0, 1, 0), zAxisLength, COLORS.BLUE);
+  const zAxisLabel = createText('Z', COLORS.BLUE, AXIS_TEXT_SIZE);
 
   return { zAxis, zAxisLabel };
 };
@@ -71,10 +71,10 @@ export default {
       xAxisLabel.position.x = -calculeLength(xAxisLength);
       xAxisLabel.position.z -= xAxisLabel.geometry.boundingSphere.center.x;
 
-      yAxisLabel.position.y = calculeLength(yAxisLength);
+      yAxisLabel.position.z = -calculeLength(yAxisLength);
       yAxisLabel.position.x -= yAxisLabel.geometry.boundingSphere.center.x;
 
-      zAxisLabel.position.z = -calculeLength(zAxisLength);
+      zAxisLabel.position.y = calculeLength(zAxisLength);
       zAxisLabel.position.x -= zAxisLabel.geometry.boundingSphere.center.x;
     });
 
@@ -107,8 +107,8 @@ export default {
 
     requestAnimationFrame(() => {
       xAxisLabel.position.x = -calculeLength(xAxisLength);
-      yAxisLabel.position.y = calculeLength(yAxisLength);
-      zAxisLabel.position.z = -calculeLength(zAxisLength);
+      yAxisLabel.position.z = -calculeLength(yAxisLength);
+      zAxisLabel.position.y = calculeLength(zAxisLength);
     });
   },
 };

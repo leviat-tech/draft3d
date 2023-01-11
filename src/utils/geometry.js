@@ -1,12 +1,14 @@
 import {
-  BufferGeometry,
-  ExtrudeGeometry,
   Line,
-  LineBasicMaterial,
   Mesh,
   Shape,
   Vector3,
+  BoxGeometry,
+  BufferGeometry,
+  ExtrudeGeometry,
   CatmullRomCurve3,
+  MeshBasicMaterial,
+  LineBasicMaterial,
 } from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { Font } from 'three/examples/jsm/loaders/FontLoader';
@@ -132,4 +134,15 @@ export function create3dPath(path, closed) {
   curve.curveType = 'catmullrom';
   curve.closed = closed;
   return curve;
+}
+
+export function createTextBox(onClick) {
+  const boxGeometry = new BoxGeometry(0, 0);
+  const boxMaterial = new MeshBasicMaterial({ opacity: 0, transparent: true });
+  const textBox = new Mesh(boxGeometry, boxMaterial);
+
+  textBox.isInteractive = true;
+  textBox.onClick = (e) => onClick(e);
+
+  return textBox;
 }

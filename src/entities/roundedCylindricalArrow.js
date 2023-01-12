@@ -3,15 +3,18 @@ import {
 } from 'three';
 import { createCircle } from '../utils/geometry';
 
+import { createMaterial, updateMaterial } from '../utils/material';
+
 
 const { PI } = Math;
 
 export default {
   name: 'roundedCylindricalArrow',
   parameters: {
-    color: { name: 'color', default: 'black' },
+    color: { name: 'color', default: '#6666aa' },
   },
   render(params) {
+    const { color } = params;
     const curve = new EllipseCurve(
       0, 0, // ax, aY
       0.1, 0.1, // xRadius, yRadius
@@ -25,7 +28,7 @@ export default {
       points.push(new Vector3(...point));
     });
 
-    const material = new LineBasicMaterial({ color: params.color });
+    const material = createMaterial(color, 1);
 
     const curve2 = new CatmullRomCurve3(points);
 
@@ -48,5 +51,10 @@ export default {
     object3D.add(cone);
 
     return object3D;
+  },
+  update(root, params) {
+    root.children.forEach((object3D) => {
+      updateMaterial(object3D, params.color, 1);
+    });
   },
 };

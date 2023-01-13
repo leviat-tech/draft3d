@@ -1,12 +1,14 @@
 import {
-  ConeGeometry, CylinderGeometry, LineBasicMaterial, Mesh, Object3D,
+  ConeGeometry, CylinderGeometry, Mesh, Object3D,
 } from 'three';
+
+import { createMaterial, updateMaterial } from '../utils/material';
 
 
 export default {
   name: 'cylindricalArrow',
   parameters: {
-    color: { name: 'color', default: 'black' },
+    color: { name: 'color', default: '#6666aa' },
     length: { name: 'length', default: 0.1, precision: 0.1 },
   },
   render(params) {
@@ -16,7 +18,7 @@ export default {
     const cylinderGeometry = new CylinderGeometry(0.02, 0.02, length, 32);
     const coneGeometry = new ConeGeometry(0.04, 0.1, 32);
 
-    const material = new LineBasicMaterial({ color });
+    const material = createMaterial(color, 1);
     const cylinder = new Mesh(cylinderGeometry, material);
     const cone = new Mesh(coneGeometry, material);
 
@@ -32,10 +34,13 @@ export default {
   },
   update(root, params) {
     const [cylinder, cone] = root.children;
-    const { length } = params;
+    const { length, color } = params;
+
+    updateMaterial(cylinder, color, 1);
+    updateMaterial(cone, color, 1);
 
     cylinder.geometry.dispose();
-    cylinder.geometry = new CylinderGeometry(0.1, 0.1, length, 32);
+    cylinder.geometry = new CylinderGeometry(0.02, 0.02, length, 32);
 
 
     requestAnimationFrame(() => {

@@ -23,7 +23,7 @@ const halfPI = Math.PI / 2;
 const calculeLength = (length) => (length) + 0.03;
 const createArrow = (vector, length, color) => new ArrowHelper(vector, ORIGIN, length, color, HEAD_LENGTH, HEAD_WIDTH);
 
-const createAxisesLength = (params) => ({
+const createAxesLength = (params) => ({
   xAxisLength: params.xAxisLength + AXIS_EXTENSION,
   yAxisLength: params.yAxisLength + AXIS_EXTENSION,
   zAxisLength: params.zAxisLength + AXIS_EXTENSION,
@@ -59,7 +59,7 @@ export default {
     zAxisLength: { name: 'zAxisLength', default: 2, precision: 0.1 },
   },
   render(params) {
-    const { xAxisLength, yAxisLength, zAxisLength } = createAxisesLength(params);
+    const { xAxisLength, yAxisLength, zAxisLength } = createAxesLength(params);
 
     const root = new Object3D();
 
@@ -90,7 +90,7 @@ export default {
     return root;
   },
   update(root, params) {
-    const { xAxisLength, yAxisLength, zAxisLength } = createAxisesLength(params);
+    const { xAxisLength, yAxisLength, zAxisLength } = createAxesLength(params);
 
     const [
       xAxis,

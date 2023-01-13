@@ -30,16 +30,16 @@ const createAxesLength = (params) => ({
 });
 
 const createXAxis = (xAxisLength) => {
-  const xAxis = createArrow(new Vector3(-1, 0, 0), xAxisLength, COLORS.GREEN);
-  const xAxisLabel = createText('X', COLORS.GREEN, AXIS_TEXT_SIZE);
+  const xAxis = createArrow(new Vector3(0, 0, -1), xAxisLength, COLORS.RED);
+  const xAxisLabel = createText('X', COLORS.RED, AXIS_TEXT_SIZE);
   xAxisLabel.setRotationFromAxisAngle(new Vector3(0, 1, 0), halfPI);
 
   return { xAxis, xAxisLabel };
 };
 
 const createYAxis = (yAxisLength) => {
-  const yAxis = createArrow(new Vector3(0, 0, -1), yAxisLength, COLORS.RED);
-  const yAxisLabel = createText('Y', COLORS.RED, AXIS_TEXT_SIZE);
+  const yAxis = createArrow(new Vector3(-1, 0, 0), yAxisLength, COLORS.GREEN);
+  const yAxisLabel = createText('Y', COLORS.GREEN, AXIS_TEXT_SIZE);
 
   return { yAxis, yAxisLabel };
 };
@@ -68,11 +68,13 @@ export default {
     const { zAxis, zAxisLabel } = createZAxis(zAxisLength);
 
     requestAnimationFrame(() => {
-      xAxisLabel.position.x = -calculeLength(xAxisLength);
-      xAxisLabel.position.z -= xAxisLabel.geometry.boundingSphere.center.x;
+      xAxisLabel.position.z = -calculeLength(xAxisLength);
+      xAxisLabel.position.x -= xAxisLabel.geometry.boundingSphere.center.x;
+      xAxisLabel.rotateY(-halfPI);
 
-      yAxisLabel.position.z = -calculeLength(yAxisLength);
-      yAxisLabel.position.x -= yAxisLabel.geometry.boundingSphere.center.x;
+      yAxisLabel.position.x = -calculeLength(yAxisLength);
+      yAxisLabel.position.z -= yAxisLabel.geometry.boundingSphere.center.x;
+      yAxisLabel.rotateY(-halfPI);
 
       zAxisLabel.position.y = calculeLength(zAxisLength);
       zAxisLabel.position.x -= zAxisLabel.geometry.boundingSphere.center.x;
@@ -106,8 +108,8 @@ export default {
     zAxis.setLength(zAxisLength, HEAD_LENGTH, HEAD_WIDTH);
 
     requestAnimationFrame(() => {
-      xAxisLabel.position.x = -calculeLength(xAxisLength);
-      yAxisLabel.position.z = -calculeLength(yAxisLength);
+      xAxisLabel.position.z = -calculeLength(xAxisLength);
+      yAxisLabel.position.x = -calculeLength(yAxisLength);
       zAxisLabel.position.y = calculeLength(zAxisLength);
     });
   },

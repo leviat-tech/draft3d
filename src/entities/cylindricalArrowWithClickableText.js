@@ -19,15 +19,20 @@ export default {
     color: { name: 'color', default: 'black' },
     onClick: { name: 'onClick', default: () => { } },
     isRounded: { name: 'isRounded', default: false },
+    layer: { name: 'layer', type: 'string', default: 'default' },
   },
   render(params) {
-    const text = createLabel(params.text);
-    const textBox = createTextBox(params.onClick);
-    const arrow = params.isRounded
-      ? roundedCylindricalArrow.render({ color: params.color })
-      : cylindricalArrow.render({ length: params.length, color: params.color });
+    const { color, length, onClick, layer, isRounded } = params;
 
-    return new Object3D().add(arrow).add(text).add(textBox);
+    const text = createLabel(params.text);
+    const textBox = createTextBox(onClick);
+    const arrow = isRounded
+      ? roundedCylindricalArrow.render({ color, layer })
+      : cylindricalArrow.render({ length, color, layer });
+
+    const object3D = new Object3D().add(arrow).add(text).add(textBox);
+
+    return object3D;
   },
   update() { },
 };

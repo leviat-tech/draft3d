@@ -41,11 +41,12 @@ export default class ThreeScene {
     LayerSet.addCamera(this.orthoCamera)
     LayerSet.addCamera(this.perspectiveCamera)
 
-    LayerSet.showOnly('default')
-
     this.renderer = this.createRenderer();
     this.mouse = new Vector2();
+
     this.raycaster = new Raycaster();
+    this.raycaster.layers.enableAll()
+
     this.bindEvents();
     this.onResize();
   }

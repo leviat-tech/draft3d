@@ -1,6 +1,8 @@
 import {
   EllipseCurve, LineBasicMaterial, ConeGeometry, Mesh, CatmullRomCurve3, ExtrudeGeometry, Vector3, Object3D,
 } from 'three';
+
+import LayerSet from '../utils/LayerSet';
 import { createCircle } from '../utils/geometry';
 
 import { createMaterial, updateMaterial } from '../utils/material';
@@ -50,11 +52,15 @@ export default {
     object3D.add(mesh);
     object3D.add(cone);
 
+    LayerSet.addToLayer(params.layer, [mesh, cone]);
+
     return object3D;
   },
   update(root, params) {
     root.children.forEach((object3D) => {
       updateMaterial(object3D, params.color, 1);
     });
+
+    LayerSet.addToLayer(params.layer, root.children);
   },
 };

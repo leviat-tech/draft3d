@@ -2,6 +2,7 @@ import {
   ConeGeometry, CylinderGeometry, Mesh, Object3D,
 } from 'three';
 
+import LayerSet from '../utils/LayerSet';
 import { createMaterial, updateMaterial } from '../utils/material';
 
 
@@ -30,6 +31,8 @@ export default {
     object3D.add(cylinder);
     object3D.add(cone);
 
+    LayerSet.addToLayer(params.layer, [cylinder, cone]);
+
     return object3D;
   },
   update(root, params) {
@@ -42,6 +45,7 @@ export default {
     cylinder.geometry.dispose();
     cylinder.geometry = new CylinderGeometry(0.02, 0.02, length, 32);
 
+    LayerSet.addToLayer(params.layer, root.children);
 
     requestAnimationFrame(() => {
       cone.position.set(0, 0, 0);

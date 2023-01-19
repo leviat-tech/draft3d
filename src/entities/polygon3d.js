@@ -5,6 +5,7 @@ import { createMaterial, updateMaterial } from '../utils/material';
 import { createExtrudeGeometry, createPolygon } from '../utils/geometry';
 import LayerSet from '../utils/LayerSet';
 
+
 export default {
   name: 'polygon3d',
   parameters: {
@@ -23,7 +24,6 @@ export default {
         [0, 0],
       ],
     },
-    layer: { name: 'Layer', type: 'string', default: 'default' },
   },
   render(params) {
     const { depth, color, opacity, path, layer } = params;

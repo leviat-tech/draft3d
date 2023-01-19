@@ -13,7 +13,6 @@ export default {
     dimensions: { name: 'Dimensions', type: 'dimension', default: [2, 2, 2] },
     color: { name: 'Colour', type: 'color', default: '#6666cc' },
     opacity: { name: 'Opacity', type: 'number', precision: 0.05, default: 1 },
-    layer: { name: 'Layer', type: 'string', default: 'default' },
   },
   render(params) {
     const { dimensions, color, opacity, layer } = params;

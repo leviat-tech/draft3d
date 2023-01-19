@@ -1,13 +1,12 @@
 
 
-
 const LayerSet = {
-  layers: [{ id: 0, name:'default', visible: true }],
+  layers: [{ id: 0, name: 'default', visible: true }],
   cameras: [],
 
   addCamera(camera) {
     if (this.cameras.filter((c) => c.uuid === camera.uuid).length > 0) {
-      console.log("LayerSet: Camera " + camera.uuid + " already added to layerset")
+      console.log(`LayerSet: Camera ${camera.uuid} already added to layerset`);
       return;
     }
     this.cameras.push(camera);
@@ -16,10 +15,10 @@ const LayerSet = {
 
   addLayer(name) {
     if (this.layers.filter((l) => l.name === name).length > 0) {
-      console.log("LayerSet: Layer named " + name + " already exists")
+      console.log(`LayerSet: Layer named ${name} already exists`);
       return;
     }
-    const newLayer = { id: this.layers.length, name, visible: false };
+    const newLayer = { id: this.layers.length, name, visible: true };
     this.layers.push(newLayer);
   },
 
@@ -103,7 +102,7 @@ const LayerSet = {
   },
 
   reset() {
-    this.layers = [{ id: 0, name:'default', visible: true }];
+    this.layers = [{ id: 0, name: 'default', visible: true }];
     this.cameras = [];
   },
 };

@@ -49,7 +49,6 @@ export default {
     suffix: { name: 'Suffix', default: '' },
     onClick: { name: 'onClick', default: () => { } },
     isInteractive: { name: 'Interactive', default: true },
-    layer: { name: 'Layer', type: 'string', default: 'test' },
     extension: { name: 'Extension', precision: 0.05, default: 0.1 },
   },
   render(params) {

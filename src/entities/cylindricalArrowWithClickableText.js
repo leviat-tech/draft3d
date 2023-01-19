@@ -19,7 +19,6 @@ export default {
     color: { name: 'color', default: 'black' },
     onClick: { name: 'onClick', default: () => { } },
     isRounded: { name: 'isRounded', default: false },
-    layer: { name: 'layer', type: 'string', default: 'default' },
   },
   render(params) {
     const { color, length, onClick, layer, isRounded } = params;

@@ -5,6 +5,7 @@ import { createMaterial, updateMaterial } from '../utils/material';
 import { createExtrudeGeometry, createPolyCurve } from '../utils/geometry';
 import LayerSet from '../utils/LayerSet';
 
+
 export default {
   name: 'polycurve3d',
   parameters: {
@@ -21,9 +22,8 @@ export default {
         [3, 2],
         [2, 3, 3, 3],
         [0, 3],
-      ]
+      ],
     },
-    layer: { name: 'Layer', type: 'string', default: 'default' },
   },
   render(params) {
     const { depth, color, opacity, path, layer } = params;

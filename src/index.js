@@ -14,6 +14,7 @@ function register(entity, registerTo) {
   const predefinedParameters = {
     position: { name: 'Position', default: [0, 0, 0] },
     rotation: { name: 'Rotation', default: [0, 0, 0] },
+    layer: { name: 'Layer', type: 'string', default: 'default' },
   };
 
   const entityConfig = {

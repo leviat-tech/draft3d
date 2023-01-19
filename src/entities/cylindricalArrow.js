@@ -11,7 +11,6 @@ export default {
   parameters: {
     color: { name: 'color', default: '#6666aa' },
     length: { name: 'length', default: 0.1, precision: 0.1 },
-    layer: { name: 'layer', type: 'string', default: 'default' },
   },
   render(params) {
     const { length, color } = params;

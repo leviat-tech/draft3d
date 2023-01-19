@@ -14,7 +14,6 @@ export default {
   name: 'roundedCylindricalArrow',
   parameters: {
     color: { name: 'color', default: '#6666aa' },
-    layer: { name: 'layer', type: 'string', default: 'default' },
   },
   render(params) {
     const { color } = params;

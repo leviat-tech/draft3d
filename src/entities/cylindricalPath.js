@@ -6,6 +6,7 @@ import { createMaterial, updateMaterial } from '../utils/material';
 import { create3dPath, createCircle } from '../utils/geometry';
 import LayerSet from '../utils/LayerSet';
 
+
 export default {
   name: 'cylindricalPath',
   parameters: {
@@ -26,10 +27,11 @@ export default {
     },
     closed: { name: 'Closed', type: 'boolean', default: true },
     steps: { name: 'steps', precision: 10, default: 100, min: 10 },
-    layer: { name: 'Layer', type: 'string', default: 'default' },
   },
   render(params) {
-    const { radius, color, opacity, path, closed, steps, layer } = params;
+    const {
+      radius, color, opacity, path, closed, steps, layer,
+    } = params;
     const material = createMaterial(color, opacity);
 
     const route = create3dPath(path, closed);
@@ -45,13 +47,15 @@ export default {
     return mesh;
   },
   update(object3d, newParams) {
-    const { radius, color, opacity, path, closed, steps, layer } = newParams;
+    const {
+      radius, color, opacity, path, closed, steps, layer,
+    } = newParams;
 
     updateMaterial(object3d, color, opacity);
 
     const route = create3dPath(path, closed);
     const extrudeSettings = {
-      steps: steps,
+      steps,
       extrudePath: route,
     };
     const shape = createCircle(radius);

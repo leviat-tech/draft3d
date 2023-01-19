@@ -10,6 +10,7 @@ import {
 
 import LayerSet from '../utils/LayerSet';
 
+
 const radialAccuracy = 24;
 
 export default {
@@ -20,10 +21,11 @@ export default {
     length: { name: 'Length', type: 'number', default: 5 },
     color: { name: 'Colour', type: 'color', default: '#6666cc' },
     opacity: { name: 'Opacity', type: 'number', precision: 0.05, default: 1 },
-    layer: { name: 'Layer', type: 'string', default: 'default' },
   },
   render(params) {
-    const { radiusTop, radiusBottom, length, color, opacity, layer } = params;
+    const {
+      radiusTop, radiusBottom, length, color, opacity, layer,
+    } = params;
 
     const material = createMaterial(color, opacity);
 
@@ -34,7 +36,9 @@ export default {
     return mesh;
   },
   update(object3d, newParams) {
-    const { radiusTop, radiusBottom, length, color, opacity, layer } = newParams;
+    const {
+      radiusTop, radiusBottom, length, color, opacity, layer,
+    } = newParams;
 
     updateMaterial(object3d, color, opacity);
     LayerSet.addToLayer(layer, object3d);

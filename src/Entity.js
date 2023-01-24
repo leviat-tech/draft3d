@@ -1,5 +1,4 @@
 import { Object3D } from 'three';
-import { merge } from 'lodash';
 import draft3d from '.';
 
 

@@ -2,6 +2,7 @@ import { Object3D } from 'three';
 import { merge } from 'lodash';
 import draft3d from '.';
 
+
 class Entity {
   /**
    * @typedef entityConfig
@@ -17,7 +18,13 @@ class Entity {
     this.params = Entity.getParams(entityConfig.parameters, params);
     this.features = {};
 
-    const object3d = entityConfig.render.call(this, this.params);
+    if (typeof entityConfig.formatParams === 'function') {
+      this.formatParams = entityConfig.formatParams;
+    }
+
+    const formattedParams = this.formatParams(this.params);
+
+    const object3d = entityConfig.render.call(this, formattedParams);
     if ((object3d instanceof Object3D)) {
       this.object3d = object3d;
     }
@@ -33,8 +40,12 @@ class Entity {
     }
   }
 
+  formatParams(params) {
+    return params;
+  }
+
   updateParams(newParams) {
-    this.params = merge(this.params, newParams);
+    this.params = { ...this.params, ...newParams };
 
     if (newParams.position) {
       this.object3d.position.set(...newParams.position);
@@ -44,8 +55,10 @@ class Entity {
       this.setRotation(newParams.rotation);
     }
 
-    //TODO refector entities so object3d isnt needed 
-    if (this.onUpdate) this.onUpdate(this.object3d, this.params);
+    const formattedParams = this.formatParams(this.params);
+
+    // TODO refector entities so object3d isnt needed
+    if (this.onUpdate) this.onUpdate(this.object3d, formattedParams);
   }
 
   setRotation(rotation) {
@@ -102,7 +115,7 @@ class Entity {
   }
 
   destroy() {
-    console.log(`I'm dead.`)
+    console.log('I\'m dead.');
   }
 
   isEntity(name) {

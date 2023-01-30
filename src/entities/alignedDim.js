@@ -16,7 +16,7 @@ import LayerSet from '../utils/LayerSet';
 
 
 function getTextValue({ length, prefix, suffix, formatter }) {
-  const lengthAsString = (formatter ? formatter(length) : length);
+  const lengthAsString = formatter(length) || length.toFixed(2);
 
   return [prefix, lengthAsString, suffix]
     .filter((val) => val)
@@ -45,7 +45,7 @@ function setTextPosition(textObject, textBox, params) {
 export default {
   name: 'alignedDim',
   parameters: {
-    formatter: { type: Function, default: null },
+    formatter: { name: 'Formatter', default: () => { } },
     textSize: { name: 'Text Size', precision: 0.01, default: 0.1 },
     color: { name: 'Colour', type: 'color', default: '#000000' },
     length: { name: 'Length', precision: 0.05, default: 2 },

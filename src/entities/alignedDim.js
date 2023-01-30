@@ -23,20 +23,22 @@ function getTextValue({ length, prefix, suffix }) {
 }
 
 function setTextPosition(textObject, textBox, params) {
+  const textOffset = 0.05;
+
   if (textObject.geometry.boundingSphere === null) {
     return;
   }
   const { x, y } = textObject.geometry.boundingSphere.center;
 
   textObject.position.x = params.length / 2 - x;
-  textObject.position.z = params.extension + params.textSize;
+  textObject.position.z = params.extension + params.textSize + textOffset;
 
   textBox.position.x = params.length / 2;
-  textBox.position.z = params.extension + params.textSize / 2;
+  textBox.position.z = params.extension + params.textSize / 2 + textOffset;
 
   textBox.geometry.dispose();
 
-  textBox.geometry = new BoxGeometry(x * 2, y * 2, 0.06);
+  textBox.geometry = new BoxGeometry(x * 2, y * 2, 0);
 }
 
 export default {
@@ -90,15 +92,16 @@ export default {
     // to calculate the central position
     requestAnimationFrame(() => {
       setTextPosition(textObject, textBox, params);
+
+      LayerSet.addToLayer(layer, [lineObject, textObject, textBox]);
+      LayerSet.addToLayer(layer, lineObject);
     });
 
-    LayerSet.addToLayer(layer, [lineObject, textObject, textBox]);
-    LayerSet.addToLayer(layer, lineObject);
 
     return root;
   },
   update(root, newParams) {
-    const { length, textSize, layer, extension } = newParams;
+    const { length, textSize, layer, extension, isInteractive } = newParams;
     const [line, text, textBox] = root.children;
 
     line.geometry.dispose();
@@ -113,10 +116,13 @@ export default {
     const textValue = getTextValue(newParams);
     text.geometry.dispose();
     text.geometry = createTextGeometry(textValue, textSize);
-    LayerSet.addToLayer(layer, root.children);
+
+    textBox.isInteractive = isInteractive;
 
     requestAnimationFrame(() => {
       setTextPosition(text, textBox, newParams);
+
+      LayerSet.addToLayer(layer, root.children);
     });
   },
 };

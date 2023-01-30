@@ -26,12 +26,13 @@ export default {
     requestAnimationFrame(() => {
       cylinder.position.y += length / 2;
       cone.position.y += 0.05 + length;
+
+      LayerSet.addToLayer(params.layer, [cylinder, cone]);
     });
 
     object3D.add(cylinder);
     object3D.add(cone);
 
-    LayerSet.addToLayer(params.layer, [cylinder, cone]);
 
     return object3D;
   },
@@ -45,14 +46,14 @@ export default {
     cylinder.geometry.dispose();
     cylinder.geometry = new CylinderGeometry(0.02, 0.02, length, 32);
 
-    LayerSet.addToLayer(params.layer, root.children);
-
     requestAnimationFrame(() => {
       cone.position.set(0, 0, 0);
       cylinder.position.set(0, 0, 0);
 
       cylinder.position.y += length / 2;
       cone.position.y = length;
+
+      LayerSet.addToLayer(params.layer, root.children);
     });
   },
 };

@@ -1,9 +1,9 @@
-import {
-  Mesh,
-} from 'three';
+import { Mesh } from 'three';
+
+import LayerSet from '../utils/LayerSet';
+import { setInteractivity } from '../utils/helpers';
 import { createMaterial, updateMaterial } from '../utils/material';
 import { createExtrudeGeometry, createPolygon } from '../utils/geometry';
-import LayerSet from '../utils/LayerSet';
 
 
 export default {
@@ -33,7 +33,13 @@ export default {
     const geometry = createExtrudeGeometry(shape, depth);
 
     const mesh = new Mesh(geometry, material);
+
+    setInteractivity(mesh, params);
+
+    mesh.layerName = layer;
+
     LayerSet.addToLayer(layer, mesh);
+
     return mesh;
   },
   update(object3d, newParams) {

@@ -14,3 +14,12 @@ export function castParameters(parametersConfig) {
     [key]: paramConfig.default,
   }), {});
 }
+
+export function setInteractivity(element, params) {
+  element.isInteractive = params.isInteractive;
+
+  element.onClick = (e) => params.onClick(e);
+  element.onDbClick = (e) => params.onDbClick(e);
+  element.onMouseOut = (e) => params.onMouseOut(e);
+  element.onMouseOver = (e) => params.onMouseOver(e);
+}

@@ -1,10 +1,8 @@
-import {
-  BoxGeometry,
-  Mesh,
-} from 'three';
-import { createMaterial, updateMaterial } from '../utils/material';
+import { BoxGeometry, Mesh } from 'three';
 
 import LayerSet from '../utils/LayerSet';
+import { setInteractivity } from '../utils/helpers';
+import { createMaterial, updateMaterial } from '../utils/material';
 
 
 export default {
@@ -22,7 +20,13 @@ export default {
     const geometry = new BoxGeometry(...dimensions);
 
     const mesh = new Mesh(geometry, material);
+
+    setInteractivity(mesh, params);
+
+    mesh.layerName = layer;
+
     LayerSet.addToLayer(layer, mesh);
+
     return mesh;
   },
   update(object3d, newParams) {

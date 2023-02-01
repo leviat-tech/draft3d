@@ -1,7 +1,6 @@
 import ThreeScene from './ThreeScene';
 import Entity from './Entity';
 import * as entities from './entities';
-import logger from './utils/logger';
 
 
 const draft3d = {
@@ -14,6 +13,13 @@ function register(entity, registerTo) {
   const predefinedParameters = {
     position: { name: 'Position', default: [0, 0, 0] },
     rotation: { name: 'Rotation', default: [0, 0, 0] },
+
+    onClick: { name: 'onClick', default: () => { } },
+    onDbClick: { name: 'onDbClick', default: () => { } },
+    onMouseOut: { name: 'onMouseOut', default: () => { } },
+    onMouseOver: { name: 'onMouseOver', default: () => { } },
+    isInteractive: { name: 'isInteractive', default: false },
+
     layer: { name: 'Layer', type: 'string', default: 'default' },
   };
 

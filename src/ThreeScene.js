@@ -1,14 +1,14 @@
 import {
-  AmbientLight,
-  DirectionalLight as Light,
-  Raycaster,
   Scene,
   Vector2,
+  Raycaster,
+  AmbientLight,
   WebGLRenderer,
+  DirectionalLight as Light,
 } from 'three';
-import { createCamera, createOrthographicCamera, calculatePlanView, planControls, freeControls } from './utils/camera'
+
 import LayerSet from './utils/LayerSet'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { createCamera, createOrthographicCamera, calculatePlanView, planControls, freeControls } from './utils/camera'
 
 
 export default class ThreeScene {
@@ -178,11 +178,21 @@ export default class ThreeScene {
     return this.raycaster.intersectObjects(interactiveObjects);
   }
 
+  isElementVisible(element) {
+    const layer = LayerSet.layers.find(el => el.name === element.layerName)
+
+    return element?.visible && layer?.visible
+  }
+
   onMouseDown(e) {
     const intersects = this.getIntersectObjects(e)
 
-    if (intersects.length > 0) {
+    if (intersects.length) {
       const { object } = intersects[0];
+
+      if (!this.isElementVisible(object)) {
+        return;
+      }
 
       if (object?.onClick) {
         object.onClick(e);
@@ -193,8 +203,12 @@ export default class ThreeScene {
   onDbClick(e) {
     const intersects = this.getIntersectObjects(e)
 
-    if (intersects.length > 0) {
+    if (intersects.length) {
       const { object } = intersects[0];
+
+      if (!this.isElementVisible(object)) {
+        return;
+      }
 
       if (object?.onDbClick) {
         object.onDbClick(e);
@@ -205,12 +219,10 @@ export default class ThreeScene {
   onMouseMove(e) {
     const intersects = this.getIntersectObjects(e)
 
-    if (intersects.length > 0) {
+    if (intersects.length) {
       const { object } = intersects[0];
 
-      const layer = LayerSet.layers.find(el => el.name === object.layerName)
-
-      if (!layer?.visible) {
+      if (!this.isElementVisible(object)) {
         return
       }
 

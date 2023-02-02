@@ -1,20 +1,22 @@
 import {
-  AmbientLight,
-  DirectionalLight as Light,
-  Raycaster,
   Scene,
   Vector2,
+  Raycaster,
+  AmbientLight,
   WebGLRenderer,
+  DirectionalLight as Light,
 } from 'three';
-import { createCamera, createOrthographicCamera, calculatePlanView, planControls, freeControls } from './utils/camera'
+
 import LayerSet from './utils/LayerSet'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { createCamera, createOrthographicCamera, calculatePlanView, planControls, freeControls } from './utils/camera'
 
 
 export default class ThreeScene {
   events = {
     resize: 'onResize',
     click: 'onMouseDown',
+    dblclick: 'onDbClick',
+    mousemove: 'onMouseMove',
   }
 
   constructor(scene) {
@@ -37,6 +39,8 @@ export default class ThreeScene {
     this.camera = this.perspectiveCamera;
 
     this.lights = this.createLight();
+
+    this.activeObject = null;
 
     LayerSet.addCamera(this.orthoCamera)
     LayerSet.addCamera(this.perspectiveCamera)
@@ -161,7 +165,7 @@ export default class ThreeScene {
     this.camera.updateProjectionMatrix();
   }
 
-  onMouseDown(e) {
+  getIntersectObjects(e) {
     const { left, top } = this.el.getBoundingClientRect();
 
     this.mouse.x = ((e.clientX - left) / this.canvas.clientWidth) * 2 - 1;
@@ -170,11 +174,76 @@ export default class ThreeScene {
     this.raycaster.setFromCamera(this.mouse, this.camera);
 
     const interactiveObjects = this.getInteractiveChildren(this.originalScene);
-    const intersects = this.raycaster.intersectObjects(interactiveObjects);
 
-    if (intersects.length > 0) {
+    return this.raycaster.intersectObjects(interactiveObjects);
+  }
+
+  isElementVisible(element) {
+    const layer = LayerSet.layers.find(el => el.name === element.layerName)
+
+    return element?.visible && layer?.visible
+  }
+
+  onMouseDown(e) {
+    const intersects = this.getIntersectObjects(e)
+
+    if (intersects.length) {
       const { object } = intersects[0];
-      if (object.onClick) object.onClick(e);
+
+      if (!this.isElementVisible(object)) {
+        return;
+      }
+
+      if (object?.onClick) {
+        object.onClick(e);
+      }
+    }
+  }
+
+  onDbClick(e) {
+    const intersects = this.getIntersectObjects(e)
+
+    if (intersects.length) {
+      const { object } = intersects[0];
+
+      if (!this.isElementVisible(object)) {
+        return;
+      }
+
+      if (object?.onDbClick) {
+        object.onDbClick(e);
+      }
+    }
+  }
+
+  onMouseMove(e) {
+    const intersects = this.getIntersectObjects(e)
+
+    if (intersects.length) {
+      const { object } = intersects[0];
+
+      if (!this.isElementVisible(object)) {
+        return
+      }
+
+      // Object changed. Call mouseOut before change object
+      if (this.activeObject?.onMouseOut && this.activeObject.uuid !== object.uuid) {
+        this.activeObject.onMouseOut(e)
+      }
+
+      this.activeObject = object;
+
+      if (object?.onMouseOver) {
+        object.onMouseOver(e)
+      }
+
+    } else {
+      // No objects detected. Call last active object mouseOut
+      if (this.activeObject?.onMouseOut) {
+        this.activeObject.onMouseOut()
+      }
+
+      this.activeObject = null;
     }
   }
 

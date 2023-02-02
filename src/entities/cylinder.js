@@ -1,14 +1,8 @@
-import {
-  CylinderGeometry,
-  Mesh,
-} from 'three';
-
-import {
-  createMaterial,
-  updateMaterial,
-} from '../utils/material';
+import { CylinderGeometry, Mesh } from 'three';
 
 import LayerSet from '../utils/LayerSet';
+import { setInteractivity } from '../utils/helpers';
+import { createMaterial, updateMaterial } from '../utils/material';
 
 
 const radialAccuracy = 24;
@@ -32,7 +26,13 @@ export default {
     const geometry = new CylinderGeometry(radiusTop, radiusBottom, length, radialAccuracy);
 
     const mesh = new Mesh(geometry, material);
+
+    setInteractivity(mesh, params);
+
+    mesh.layerName = layer;
+
     LayerSet.addToLayer(layer, mesh);
+
     return mesh;
   },
   update(object3d, newParams) {

@@ -90,6 +90,10 @@ export default {
       textBox.onClick = (e) => params.onClick(e);
     }
 
+    textBox.layerName = layer;
+    lineObject.layerName = layer;
+    textObject.layerName = layer;
+
     // Let the text render before using its dimensions
     // to calculate the central position
     requestAnimationFrame(() => {

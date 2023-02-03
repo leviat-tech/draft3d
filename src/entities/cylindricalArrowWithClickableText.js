@@ -29,6 +29,10 @@ export default {
       ? roundedCylindricalArrow.render({ color, layer })
       : cylindricalArrow.render({ length, color, layer });
 
+    text.layerName = layer;
+    arrow.layerName = layer;
+    textBox.layerName = layer;
+
     const object3D = new Object3D().add(arrow).add(text).add(textBox);
 
     return object3D;

@@ -43,7 +43,11 @@ export default {
     const geometry = new ExtrudeGeometry(shape, extrudeSettings);
 
     const mesh = new Mesh(geometry, material);
+
+    mesh.layerName = layer;
+
     LayerSet.addToLayer(layer, mesh);
+
     return mesh;
   },
   update(object3d, newParams) {

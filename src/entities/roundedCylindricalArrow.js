@@ -1,5 +1,5 @@
 import {
-  EllipseCurve, LineBasicMaterial, ConeGeometry, Mesh, CatmullRomCurve3, ExtrudeGeometry, Vector3, Object3D,
+  EllipseCurve, ConeGeometry, Mesh, CatmullRomCurve3, ExtrudeGeometry, Vector3, Object3D,
 } from 'three';
 
 import LayerSet from '../utils/LayerSet';
@@ -16,7 +16,7 @@ export default {
     color: { name: 'color', default: '#6666aa' },
   },
   render(params) {
-    const { color } = params;
+    const { color, layer } = params;
     const curve = new EllipseCurve(
       0, 0, // ax, aY
       0.1, 0.1, // xRadius, yRadius
@@ -48,6 +48,9 @@ export default {
     const mesh = new Mesh(geometry, material);
 
     const object3D = new Object3D();
+
+    mesh.layerName = layer;
+    cone.layerName = layer;
 
     object3D.add(mesh);
     object3D.add(cone);

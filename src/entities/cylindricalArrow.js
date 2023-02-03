@@ -13,7 +13,7 @@ export default {
     length: { name: 'length', default: 0.1, precision: 0.1 },
   },
   render(params) {
-    const { length, color } = params;
+    const { length, color, layer } = params;
     const object3D = new Object3D();
 
     const cylinderGeometry = new CylinderGeometry(0.02, 0.02, length, 32);
@@ -22,6 +22,9 @@ export default {
     const material = createMaterial(color, 1);
     const cylinder = new Mesh(cylinderGeometry, material);
     const cone = new Mesh(coneGeometry, material);
+
+    cone.layerName = layer;
+    cylinder.layerName = layer;
 
     requestAnimationFrame(() => {
       cylinder.position.y += length / 2;

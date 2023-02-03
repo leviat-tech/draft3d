@@ -181,7 +181,7 @@ export default class ThreeScene {
   isElementVisible(element) {
     const layer = LayerSet.layers.find(el => el.name === element.layerName)
 
-    return element?.visible && layer?.visible
+    return layer ? (element?.visible && layer?.visible) : element?.visible
   }
 
   onMouseDown(e) {

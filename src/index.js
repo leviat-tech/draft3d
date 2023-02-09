@@ -26,8 +26,8 @@ function register(entity, registerTo) {
   const entityConfig = {
     ...entity,
     parameters: {
-      ...entity.parameters,
       ...predefinedParameters,
+      ...entity.parameters,
     },
   };
 

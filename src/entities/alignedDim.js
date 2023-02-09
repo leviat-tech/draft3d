@@ -13,6 +13,7 @@ import {
   createTextGeometry,
 } from '../utils/geometry';
 import LayerSet from '../utils/LayerSet';
+import { configureElement } from '../utils/helpers';
 
 
 function getTextValue({ length, prefix, suffix, formatter }) {
@@ -58,7 +59,7 @@ export default {
   render(params) {
     const root = new Object3D();
 
-    const { length, color, layer, extension, isInteractive } = params;
+    const { length, color, layer, extension } = params;
 
     // Render line
     const points = [
@@ -81,18 +82,9 @@ export default {
     const boxGeometry = new BoxGeometry(0, 0);
     const boxMaterial = new MeshBasicMaterial({ opacity: 0, transparent: true });
     const textBox = new Mesh(boxGeometry, boxMaterial);
-    textBox.isInteractive = isInteractive;
     textBox.setRotationFromAxisAngle(new Vector3(1, 0, 0), Math.PI / -2);
 
     root.add(textBox);
-
-    if (params.onClick) {
-      textBox.onClick = (e) => params.onClick(e);
-    }
-
-    textBox.layerName = layer;
-    lineObject.layerName = layer;
-    textObject.layerName = layer;
 
     // Let the text render before using its dimensions
     // to calculate the central position
@@ -103,11 +95,14 @@ export default {
       LayerSet.addToLayer(layer, lineObject);
     });
 
+    configureElement(textBox, params);
 
     return root;
   },
   update(root, newParams) {
-    const { length, textSize, layer, extension, isInteractive } = newParams;
+    const {
+      length, textSize, layer, extension,
+    } = newParams;
     const [line, text, textBox] = root.children;
 
     line.geometry.dispose();
@@ -123,12 +118,12 @@ export default {
     text.geometry.dispose();
     text.geometry = createTextGeometry(textValue, textSize);
 
-    textBox.isInteractive = isInteractive;
-
     requestAnimationFrame(() => {
       setTextPosition(text, textBox, newParams);
 
       LayerSet.addToLayer(layer, root.children);
     });
+
+    configureElement(textBox, newParams);
   },
 };

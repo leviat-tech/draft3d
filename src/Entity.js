@@ -28,6 +28,8 @@ class Entity {
       this.object3d = object3d;
     }
 
+    this.object3d.name = entityConfig.name;
+
     this.object3d.position.set(...this.params.position);
     this.setRotation(this.params.rotation);
 

@@ -12,7 +12,6 @@ import {
   createText,
   createTextGeometry,
 } from '../utils/geometry';
-import LayerSet from '../utils/LayerSet';
 import { configureInteractivity } from '../utils/helpers';
 
 
@@ -59,7 +58,7 @@ export default {
   render(params) {
     const root = new Object3D();
 
-    const { length, color, layer, extension } = params;
+    const { length, color, extension } = params;
 
     // Render line
     const points = [
@@ -90,9 +89,6 @@ export default {
     // to calculate the central position
     requestAnimationFrame(() => {
       setTextPosition(textObject, textBox, params);
-
-      LayerSet.addToLayer(layer, [lineObject, textObject, textBox]);
-      LayerSet.addToLayer(layer, lineObject);
     });
 
     configureInteractivity(textBox, params);
@@ -101,7 +97,7 @@ export default {
   },
   update(root, newParams) {
     const {
-      length, textSize, layer, extension,
+      length, textSize, extension,
     } = newParams;
     const [line, text, textBox] = root.children;
 
@@ -120,8 +116,6 @@ export default {
 
     requestAnimationFrame(() => {
       setTextPosition(text, textBox, newParams);
-
-      LayerSet.addToLayer(layer, root.children);
     });
 
     configureInteractivity(textBox, newParams);

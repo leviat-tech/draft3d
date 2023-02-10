@@ -1,6 +1,5 @@
 import { Mesh } from 'three';
 
-import LayerSet from '../utils/LayerSet';
 import { configureInteractivity } from '../utils/helpers';
 import { createMaterial, updateMaterial } from '../utils/material';
 import { createExtrudeGeometry, createPolygon } from '../utils/geometry';
@@ -26,7 +25,7 @@ export default {
     },
   },
   render(params) {
-    const { depth, color, opacity, path, layer } = params;
+    const { depth, color, opacity, path } = params;
 
     const shape = createPolygon(path);
     const material = createMaterial(color, opacity);
@@ -36,17 +35,14 @@ export default {
 
     configureInteractivity(mesh, params);
 
-    LayerSet.addToLayer(layer, mesh);
-
     return mesh;
   },
   update(object3d, newParams) {
-    const { path, depth, color, opacity, layer } = newParams;
+    const { path, depth, color, opacity } = newParams;
 
     updateMaterial(object3d, color, opacity);
 
     const newShape = createPolygon(path);
-    LayerSet.addToLayer(layer, object3d);
 
     object3d.geometry?.dispose();
     object3d.geometry = createExtrudeGeometry(newShape, depth);

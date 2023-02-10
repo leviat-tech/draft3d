@@ -4,7 +4,6 @@ import {
 } from 'three';
 import { createMaterial, updateMaterial } from '../utils/material';
 import { create3dPath, createCircle } from '../utils/geometry';
-import LayerSet from '../utils/LayerSet';
 
 
 export default {
@@ -30,7 +29,7 @@ export default {
   },
   render(params) {
     const {
-      radius, color, opacity, path, closed, steps, layer,
+      radius, color, opacity, path, closed, steps,
     } = params;
     const material = createMaterial(color, opacity);
 
@@ -44,15 +43,11 @@ export default {
 
     const mesh = new Mesh(geometry, material);
 
-    mesh.layerName = layer;
-
-    LayerSet.addToLayer(layer, mesh);
-
     return mesh;
   },
   update(object3d, newParams) {
     const {
-      radius, color, opacity, path, closed, steps, layer,
+      radius, color, opacity, path, closed, steps,
     } = newParams;
 
     updateMaterial(object3d, color, opacity);
@@ -64,7 +59,6 @@ export default {
     };
     const shape = createCircle(radius);
     const geometry = new ExtrudeGeometry(shape, extrudeSettings);
-    LayerSet.addToLayer(layer, object3d);
 
     object3d.geometry?.dispose();
     object3d.geometry = geometry;

@@ -1,5 +1,6 @@
 import { Object3D } from 'three';
 import draft3d from '.';
+import LayerSet from './utils/LayerSet';
 
 
 class Entity {
@@ -30,6 +31,8 @@ class Entity {
 
     this.object3d.name = entityConfig.name;
 
+    LayerSet.addToLayer(entityConfig.layer, [this.object3d, ...this.object3d.children]);
+
     this.object3d.position.set(...this.params.position);
     this.setRotation(this.params.rotation);
 
@@ -57,6 +60,8 @@ class Entity {
     }
 
     const formattedParams = this.formatParams(this.params);
+
+    LayerSet.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
 
     // TODO refector entities so object3d isnt needed
     if (this.onUpdate) this.onUpdate(this.object3d, formattedParams);

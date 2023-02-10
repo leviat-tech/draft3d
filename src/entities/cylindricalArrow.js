@@ -2,7 +2,6 @@ import {
   ConeGeometry, CylinderGeometry, Mesh, Object3D,
 } from 'three';
 
-import LayerSet from '../utils/LayerSet';
 import { createMaterial, updateMaterial } from '../utils/material';
 
 
@@ -13,7 +12,7 @@ export default {
     length: { name: 'length', default: 0.1, precision: 0.1 },
   },
   render(params) {
-    const { length, color, layer } = params;
+    const { length, color } = params;
     const object3D = new Object3D();
 
     const cylinderGeometry = new CylinderGeometry(0.02, 0.02, length, 32);
@@ -23,19 +22,13 @@ export default {
     const cylinder = new Mesh(cylinderGeometry, material);
     const cone = new Mesh(coneGeometry, material);
 
-    cone.layerName = layer;
-    cylinder.layerName = layer;
-
     requestAnimationFrame(() => {
       cylinder.position.y += length / 2;
       cone.position.y += 0.05 + length;
-
-      LayerSet.addToLayer(params.layer, [cylinder, cone]);
     });
 
     object3D.add(cylinder);
     object3D.add(cone);
-
 
     return object3D;
   },
@@ -55,8 +48,6 @@ export default {
 
       cylinder.position.y += length / 2;
       cone.position.y = length;
-
-      LayerSet.addToLayer(params.layer, root.children);
     });
   },
 };

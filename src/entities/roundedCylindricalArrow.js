@@ -49,9 +49,6 @@ export default {
 
     const object3D = new Object3D();
 
-    mesh.layerName = layer;
-    cone.layerName = layer;
-
     object3D.add(mesh);
     object3D.add(cone);
 

@@ -1,7 +1,7 @@
 import { CylinderGeometry, Mesh } from 'three';
 
 import LayerSet from '../utils/LayerSet';
-import { setInteractivity } from '../utils/helpers';
+import { configureInteractivity } from '../utils/helpers';
 import { createMaterial, updateMaterial } from '../utils/material';
 
 
@@ -27,9 +27,7 @@ export default {
 
     const mesh = new Mesh(geometry, material);
 
-    setInteractivity(mesh, params);
-
-    mesh.layerName = layer;
+    configureInteractivity(mesh, params);
 
     LayerSet.addToLayer(layer, mesh);
 
@@ -45,5 +43,7 @@ export default {
 
     object3d.geometry?.dispose();
     object3d.geometry = new CylinderGeometry(radiusTop, radiusBottom, length, radialAccuracy);
+
+    configureInteractivity(object3d, newParams);
   },
 };

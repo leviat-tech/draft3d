@@ -13,7 +13,7 @@ import {
   createTextGeometry,
 } from '../utils/geometry';
 import LayerSet from '../utils/LayerSet';
-import { configureElement } from '../utils/helpers';
+import { configureInteractivity } from '../utils/helpers';
 
 
 function getTextValue({ length, prefix, suffix, formatter }) {
@@ -95,7 +95,7 @@ export default {
       LayerSet.addToLayer(layer, lineObject);
     });
 
-    configureElement(textBox, params);
+    configureInteractivity(textBox, params);
 
     return root;
   },
@@ -124,6 +124,6 @@ export default {
       LayerSet.addToLayer(layer, root.children);
     });
 
-    configureElement(textBox, newParams);
+    configureInteractivity(textBox, newParams);
   },
 };

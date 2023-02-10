@@ -24,7 +24,7 @@ export function setInteractivity(element, params) {
   element.onMouseOver = (e) => params.onMouseOver(e);
 }
 
-export function configureElement(element, params) {
+export function configureInteractivity(element, params) {
   const configure = (el) => {
     setInteractivity(el, params);
 

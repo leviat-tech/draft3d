@@ -27,6 +27,7 @@ export default {
     const mesh = new Mesh(geometry, material);
 
     configureInteractivity(mesh, params);
+    console.log('');
 
     return mesh;
   },

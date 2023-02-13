@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main
+      - CI/CD
 jobs:
   release-please:
     runs-on: ubuntu-latest
@@ -9,4 +9,6 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         with:
           release-type: node
+          release-as: 0.0.11
+          default-branch: CI/CD
           package-name: release-please-action

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/leviat-tech/draft3d/compare/v0.1.0...v0.1.1) (2023-02-13)
+
+
+### Bug Fixes
+
+* NExt test ([#42](https://github.com/leviat-tech/draft3d/issues/42)) ([55ee8a7](https://github.com/leviat-tech/draft3d/commit/55ee8a7efec3fd37670f4cb955950183600d7bb1))
+
 ## [0.1.0](https://github.com/leviat-tech/draft3d/compare/v0.0.11...v0.1.0) (2023-02-13)
 
 

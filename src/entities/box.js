@@ -23,6 +23,7 @@ export default {
     configureInteractivity(mesh, params);
 
     console.log('RR');
+    console.log('NEXRT');
 
     return mesh;
   },

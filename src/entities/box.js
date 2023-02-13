@@ -22,6 +22,8 @@ export default {
 
     configureInteractivity(mesh, params);
 
+    console.log('RR');
+
     return mesh;
   },
   update(object3d, newParams) {

@@ -17,10 +17,12 @@ export default {
     const material = createMaterial(color, opacity);
 
     const geometry = new BoxGeometry(...dimensions);
+    console.log('');
 
     const mesh = new Mesh(geometry, material);
 
     configureInteractivity(mesh, params);
+
 
     return mesh;
   },

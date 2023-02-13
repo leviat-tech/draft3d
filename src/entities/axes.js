@@ -18,6 +18,8 @@ const HEAD_LENGTH = 0.2;
 const ORIGIN = new Vector3(0, 0, 0);
 const AXIS_EXTENSION = 1.5;
 
+console.log('TEST');
+
 const halfPI = Math.PI / 2;
 
 const calculeLength = (length) => (length) + 0.03;

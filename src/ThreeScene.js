@@ -10,6 +10,7 @@ import {
 import LayerSet from './utils/LayerSet'
 import { createCamera, createOrthographicCamera, calculatePlanView, planControls, freeControls } from './utils/camera'
 
+// CI tests, to remove
 
 export default class ThreeScene {
   events = {

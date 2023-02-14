@@ -1,6 +1,6 @@
 {
   "name": "@crhio/draft3d",
-  "version": "0.0.10",
+  "version": "0.0.3",
   "description": "A functional toolkit for drawing and flexing 3D parametric drawings",
   "bin": "src/cli.js",
   "scripts": {

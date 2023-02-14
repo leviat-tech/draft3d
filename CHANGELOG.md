@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.0](https://github.com/leviat-tech/draft3d/compare/v0.1.2...v0.2.0) (2023-02-14)
+
+
+### Features
+
+* add publish ([#51](https://github.com/leviat-tech/draft3d/issues/51)) ([2fa0479](https://github.com/leviat-tech/draft3d/commit/2fa04798c488b2b441e5465de28aa9a9a6d563ed))
+* new feat ([#49](https://github.com/leviat-tech/draft3d/issues/49)) ([35fa133](https://github.com/leviat-tech/draft3d/commit/35fa1336c21b93005a50574d58da2520ccb32708))
+
 ## [0.1.2](https://github.com/leviat-tech/draft3d/compare/v0.1.1...v0.1.2) (2023-02-14)
 
 

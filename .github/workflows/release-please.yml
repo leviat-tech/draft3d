@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - CI/CD
+      - CI
 
 name: release-please
 jobs:
@@ -12,7 +12,7 @@ jobs:
         id: release
         with:
           release-type: node
-          default-branch: CI/CD
+          default-branch: CI
           package-name: test-release-please
       # The logic below handles the npm publication:
       - uses: actions/checkout@v2

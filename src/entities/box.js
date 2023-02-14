@@ -17,6 +17,7 @@ export default {
     console.log('DD');
     console.log('DDs');
     console.log('NEXT');
+    console.log('DD');
     const material = createMaterial(color, opacity);
 
     const geometry = new BoxGeometry(...dimensions);

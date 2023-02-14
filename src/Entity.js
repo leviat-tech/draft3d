@@ -11,6 +11,7 @@ class Entity {
    * @property { function } render
    * @property { function } [update]
    *
+   *
    * @param { entityConfig } entityConfig
    * @param { object } params
    */

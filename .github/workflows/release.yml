@@ -1,9 +1,9 @@
 name: Publish Package to npmjs
 
 on:
-  release:
+  push:
     branches:
-    - CI/CD
+      - CI/CD
 
 jobs:
   build:

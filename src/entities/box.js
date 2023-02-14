@@ -14,6 +14,7 @@ export default {
   render(params) {
     const { dimensions, color, opacity } = params;
 
+    console.log('DD');
     const material = createMaterial(color, opacity);
 
     const geometry = new BoxGeometry(...dimensions);

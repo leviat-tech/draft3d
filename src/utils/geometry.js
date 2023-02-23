@@ -124,14 +124,14 @@ export function createCircle(radius) {
   return shape;
 }
 
-export function create3dPath(path, closed) {
+export function create3dPath(path, closed, curveType = 'catmullrom') {
   const points = [];
 
   path.forEach((point) => {
     points.push(new Vector3(...point));
   });
   const curve = new CatmullRomCurve3(points);
-  curve.curveType = 'catmullrom';
+  curve.curveType = curveType;
   curve.closed = closed;
   return curve;
 }

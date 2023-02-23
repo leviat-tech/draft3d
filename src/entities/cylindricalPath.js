@@ -26,14 +26,15 @@ export default {
     },
     closed: { name: 'Closed', type: 'boolean', default: true },
     steps: { name: 'steps', precision: 10, default: 100, min: 10 },
+    curveType: { name: 'curveType', default: 'catmullrom' },
   },
   render(params) {
     const {
-      radius, color, opacity, path, closed, steps,
+      radius, color, opacity, path, closed, steps, curveType,
     } = params;
     const material = createMaterial(color, opacity);
 
-    const route = create3dPath(path, closed);
+    const route = create3dPath(path, closed, curveType);
     const extrudeSettings = {
       steps,
       extrudePath: route,

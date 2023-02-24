@@ -6,6 +6,7 @@ import alignedDim from './alignedDim';
 import polycurve3d from './polycurve3d';
 import cylindricalPath from './cylindricalPath';
 import cylindricalArrow from './cylindricalArrow';
+import roundedCylindricalRect from './roundedCylindricalRect';
 import roundedCylindricalArrow from './roundedCylindricalArrow';
 import cylindricalArrowWithClickableText from './cylindricalArrowWithClickableText';
 
@@ -19,6 +20,7 @@ export {
   polycurve3d,
   cylindricalPath,
   cylindricalArrow,
+  roundedCylindricalRect,
   roundedCylindricalArrow,
   cylindricalArrowWithClickableText,
 };

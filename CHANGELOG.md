@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.0](https://github.com/leviat-tech/draft3d/compare/v0.0.13...v0.1.0) (2023-02-24)
+
+
+### Features
+
+* Add roundedRect entity ([#76](https://github.com/leviat-tech/draft3d/issues/76)) ([5163e6b](https://github.com/leviat-tech/draft3d/commit/5163e6b7abee96dd4b13757de47f29c286553c1c))
+
 ## [0.0.13](https://github.com/leviat-tech/draft3d/compare/v0.0.12...v0.0.13) (2023-02-14)
 
 

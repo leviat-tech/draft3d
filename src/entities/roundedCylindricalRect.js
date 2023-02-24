@@ -35,7 +35,7 @@ export default {
     opacity: { name: 'opacity', default: 1 },
     color: { name: 'color', default: '#000000' },
     shapeRadius: { name: 'shapeRadius', default: 0.01 },
-    bendRadius: { name: 'Radius', precision: 0.1, default: 0.09 },
+    bendRadius: { name: 'bendRadius', precision: 0.1, default: 0.09 },
   },
   render(params) {
     const {

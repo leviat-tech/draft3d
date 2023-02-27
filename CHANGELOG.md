@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/leviat-tech/draft3d/compare/v0.1.0...v0.1.1) (2023-02-27)
+
+
+### Bug Fixes
+
+* add husky ([#78](https://github.com/leviat-tech/draft3d/issues/78)) ([ba6377e](https://github.com/leviat-tech/draft3d/commit/ba6377e4e883f679297627dcbca023f26bdbb31c))
+
 ## [0.1.0](https://github.com/leviat-tech/draft3d/compare/v0.0.13...v0.1.0) (2023-02-24)
 
 

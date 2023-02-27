@@ -1,0 +1,17 @@
+#!/bin/sh
+
+. "$(dirname "$0")/_/husky.sh"
+
+echo ""
+echo "Your commit message should begin with one of the following:"
+echo " fix: - it will create release PR 0.0.1 -> 0.0.2"
+echo " feat: - it will create release PR 0.1.0 -> 0.2.0"
+echo " feat!: OR fix!: OR refactor!: - it will create release PR 1.0.0 -> 2.0.0 (BREAKING CHANGES)"
+echo ""
+echo "chore: - !!! it will not create release PR"
+echo ""
+echo "More info: https://github.com/googleapis/release-please"
+echo ""
+
+npx --no-install commitlint --edit
+

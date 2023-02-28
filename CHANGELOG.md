@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/leviat-tech/draft3d/compare/v0.1.1...v0.1.2) (2023-02-28)
+
+
+### Bug Fixes
+
+* make cylindricalArrowWithClickableText interactive by default ([45c29fe](https://github.com/leviat-tech/draft3d/commit/45c29fee296ccc02a43e413e4e97afdc9fdf044f))
+
 ## [0.1.1](https://github.com/leviat-tech/draft3d/compare/v0.1.0...v0.1.1) (2023-02-27)
 
 

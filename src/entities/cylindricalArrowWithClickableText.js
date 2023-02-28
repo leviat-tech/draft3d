@@ -21,6 +21,7 @@ export default {
     color: { name: 'color', default: 'black' },
     onClick: { name: 'onClick', default: () => { } },
     isRounded: { name: 'isRounded', default: false },
+    isInteractive: { name: 'isInteractive', default: true },
   },
   render(params) {
     const { color, length, onClick, layer, isRounded } = params;

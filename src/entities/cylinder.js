@@ -4,7 +4,7 @@ import { configureInteractivity } from '../utils/helpers';
 import { createMaterial, updateMaterial } from '../utils/material';
 
 
-const radialAccuracy = 24;
+const radialAccuracy = 64;
 
 export default {
   name: 'cylinder',

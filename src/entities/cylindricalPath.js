@@ -6,6 +6,9 @@ import { createMaterial, updateMaterial } from '../utils/material';
 import { create3dPath, createCircle } from '../utils/geometry';
 
 
+// Ensures cylinder renders smoothly
+const curveSegments = 64;
+
 export default {
   name: 'cylindricalPath',
   parameters: {
@@ -36,6 +39,7 @@ export default {
 
     const route = create3dPath(path, closed, curveType);
     const extrudeSettings = {
+      curveSegments,
       steps,
       extrudePath: route,
     };
@@ -55,6 +59,7 @@ export default {
 
     const route = create3dPath(path, closed);
     const extrudeSettings = {
+      curveSegments,
       steps,
       extrudePath: route,
     };

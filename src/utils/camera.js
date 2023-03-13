@@ -8,10 +8,20 @@ import {
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 
-export function createCamera(cameraConfig) {
-  const { fov, position } = cameraConfig;
-  const camera = new PerspectiveCamera(fov, 1, 1, 1000);
+const defaultCameraConfig = {
+  fov: 50,
+  aspect: 1,
+  near: 0.1,
+  far: 1000,
+};
+
+export function createCamera(userCameraConfig) {
+  const cameraConfig = { ...defaultCameraConfig, ...userCameraConfig };
+  const { fov, near, far, aspect, position } = cameraConfig;
+  const camera = new PerspectiveCamera(fov, aspect, near, far);
+
   if (position) Object.assign(camera.position, position);
+
   return camera;
 }
 
@@ -27,21 +37,31 @@ export function createOrthographicCamera(cameraConfig) {
   return camera;
 }
 
-export function planControls(camera, canvas) {
+function createControls(camera, canvas, userControlsConfig) {
   const controls = new OrbitControls(camera, canvas);
-  controls.target.set(0, 0, 0);
+  const target = userControlsConfig.target || [0, 0, 0];
+
+  controls.target.set(...target);
+
+  return controls;
+}
+
+export function planControls(camera, canvas, userControlsConfig) {
+  const controls = createControls(camera, canvas, userControlsConfig);
   controls.enableRotate = false;
   return controls;
 }
 
-export function freeControls(camera, canvas) {
-  const controls = new OrbitControls(camera, canvas);
-  controls.target.set(0, 0, 0);
+export function freeControls(camera, canvas, userControlsConfig) {
+  const controls = createControls(camera, canvas, userControlsConfig);
+
+  if (userControlsConfig.panSpeed) controls.panSpeed = userControlsConfig.panSpeed;
+  if (userControlsConfig.rotateSpeed) controls.rotateSpeed = userControlsConfig.rotateSpeed;
+
   return controls;
 }
 
-export function calculateFreeView(camera , content)
-{
+export function calculateFreeView(camera, content) {
   const boundingBox = new Box3().setFromObject(content);
   const boundingSphere = new Sphere();
   boundingBox.getBoundingSphere(boundingSphere);
@@ -76,16 +96,14 @@ export function calculatePlanView(camera, content, viewFrom) {
     bottom: radius * -ratio / yfactor,
     near: lens_distance,
     far: lens_distance + radius * 2,
-  }
+  };
   Object.assign(camera, frustrum);
 
   if (viewFrom === 'x') {
     camera.position.set(center.x - 2 * radius - lens_distance, center.y);
-  }
-  else if (viewFrom === 'y') {
+  } else if (viewFrom === 'y') {
     camera.position.set(center.x, center.y + radius + lens_distance, center.z);
-  }
-  else {
+  } else {
     camera.position.set(center.x, center.y, center.z + 2 * radius + lens_distance);
   }
 

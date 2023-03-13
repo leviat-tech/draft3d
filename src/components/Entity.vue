@@ -19,7 +19,6 @@ let entity = draft3d.entities[props.entity](params);
 entity.addTo(draft3d.scene);
 
 watch(params, (newParams) => {
-  console.log(newParams);
   entity.updateParams(newParams);
 }, { deep: true });
 

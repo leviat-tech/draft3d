@@ -11,6 +11,14 @@ import LayerSet from './utils/LayerSet'
 import { createCamera, createOrthographicCamera, calculatePlanView, planControls, freeControls } from './utils/camera'
 
 
+const defaultLights = {
+  intensity: 0.5,
+  directionalLights: [
+    [2, 3, 1],
+    [-2, 3, -1],
+  ],
+}
+
 export default class ThreeScene {
   events = {
     resize: 'onResize',
@@ -25,25 +33,31 @@ export default class ThreeScene {
 
   initialize(el, config) {
     const {
+      use2DCamera,
       camera,
+      controls,
+      light
     } = config;
 
     this.el = el;
     this.canvas = ThreeScene.createCanvas(el);
 
     this.perspectiveCamera = createCamera(camera);
-    this.perspectiveControls = freeControls(this.perspectiveCamera, this.canvas);
-    this.orthoCamera = createOrthographicCamera(camera);
-    this.planControls = planControls(this.orthoCamera, this.canvas);
+    this.perspectiveControls = freeControls(this.perspectiveCamera, this.canvas, controls);
 
     this.camera = this.perspectiveCamera;
 
-    this.lights = this.createLight();
+    this.lights = this.createLight(light);
 
     this.activeObject = null;
 
-    LayerSet.addCamera(this.orthoCamera)
-    LayerSet.addCamera(this.perspectiveCamera)
+    LayerSet.addCamera(this.perspectiveCamera);
+
+    if (use2DCamera) {
+      this.orthoCamera = createOrthographicCamera(camera);
+      this.planControls = planControls(this.orthoCamera, this.canvas);
+      LayerSet.addCamera(this.orthoCamera)
+    }
 
     this.renderer = this.createRenderer();
     this.mouse = new Vector2();
@@ -87,17 +101,16 @@ export default class ThreeScene {
     return canvas;
   }
 
-  createLight() {
+  createLight(userLightConfig) {
     const lightColor = 0xffffff;
+    const lightConfig = { ...defaultLights, ...userLightConfig }
+    const { intensity, directionalLights } = lightConfig;
 
-    const ambientLight = new AmbientLight(lightColor, 0.5);
+    const ambientLight = new AmbientLight(lightColor, intensity);
     ambientLight.layers.enableAll()
     this.originalScene.add(ambientLight);
 
-    return [
-      this.createDirectionalLight(2, 3, 1),
-      this.createDirectionalLight(-2, 3, -1),
-    ];
+    return directionalLights.map(lightCoords => this.createDirectionalLight(...lightCoords));
   }
 
 
@@ -270,7 +283,11 @@ export default class ThreeScene {
     cancelAnimationFrame(this.animationFrame);
     this.originalScene = null;
     this.camera = null;
+    this.orthoCamera = null;
+    this.perspectiveCamera = null;
     this.controls = null;
+    this.planControls = null;
+    this.perspectiveControls = null;
     this.el.removeChild(this.canvas);
     this.unbindEvents();
   }

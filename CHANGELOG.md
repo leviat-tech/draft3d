@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/leviat-tech/draft3d/compare/v0.1.2...v0.2.0) (2023-03-14)
+
+
+### Features
+
+* allow user to specify camera, lights and controls config ([d807442](https://github.com/leviat-tech/draft3d/commit/d807442279e4eb60844fd032e6f7858bca3b5f0b))
+
+
+### Bug Fixes
+
+* improve quality of cylinder and cylindrical path ([21a1bb3](https://github.com/leviat-tech/draft3d/commit/21a1bb33811d64cde46f5ec28731ad5111269862))
+
 ## [0.1.2](https://github.com/leviat-tech/draft3d/compare/v0.1.1...v0.1.2) (2023-02-28)
 
 

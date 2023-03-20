@@ -4,7 +4,7 @@ import { Vector3, BufferGeometry, Line, LineBasicMaterial } from 'three';
 export default {
   name: 'line',
   parameters: {
-    length: { name: 'radius', type: 'number', default: 1 },
+    length: { name: 'length', type: 'number', default: 1 },
     color: { name: 'Colour', type: 'color', default: 'red' },
     opacity: { name: 'Opacity', type: 'number', precision: 0.05, default: 1 },
   },

@@ -9,6 +9,7 @@ const radialAccuracy = 64;
 export default {
   name: 'cylinder',
   parameters: {
+    radius: { name: 'radius', type: 'number' },
     radiusTop: { name: 'radius Top', type: 'number', default: 2 },
     radiusBottom: { name: 'radius Bottom', type: 'number', default: 2 },
     length: { name: 'Length', type: 'number', default: 5 },
@@ -16,9 +17,10 @@ export default {
     opacity: { name: 'Opacity', type: 'number', precision: 0.05, default: 1 },
   },
   render(params) {
-    const {
-      radiusTop, radiusBottom, length, color, opacity,
-    } = params;
+    const { radius, length, color, opacity } = params;
+
+    const radiusTop = radius || params.radiusTop;
+    const radiusBottom = radius || params.radiusBottom;
 
     const material = createMaterial(color, opacity);
 

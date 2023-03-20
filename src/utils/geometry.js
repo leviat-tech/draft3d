@@ -124,7 +124,7 @@ export function createCircle(radius) {
   return shape;
 }
 
-export function create3dPath(path, closed, curveType = 'catmullrom') {
+export function create3dPath(path, closed, curveType = 'catmullrom', tension) {
   const points = [];
 
   path.forEach((point) => {
@@ -133,6 +133,7 @@ export function create3dPath(path, closed, curveType = 'catmullrom') {
   const curve = new CatmullRomCurve3(points);
   curve.curveType = curveType;
   curve.closed = closed;
+  curve.tension = tension;
   return curve;
 }
 

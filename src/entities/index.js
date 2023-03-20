@@ -1,4 +1,5 @@
 import box from './box';
+import line from './line';
 import axes from './axes';
 import cylinder from './cylinder';
 import polygon3d from './polygon3d';
@@ -13,6 +14,7 @@ import cylindricalArrowWithClickableText from './cylindricalArrowWithClickableTe
 
 export {
   box,
+  line,
   axes,
   cylinder,
   polygon3d,

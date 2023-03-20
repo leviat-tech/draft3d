@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/leviat-tech/draft3d/compare/v0.2.0...v0.3.0) (2023-03-20)
+
+
+### Features
+
+* add line entity ([#85](https://github.com/leviat-tech/draft3d/issues/85)) ([e1ebea5](https://github.com/leviat-tech/draft3d/commit/e1ebea5441f61c11be947fd7bedbaf41e4dcaf82))
+
 ## [0.2.0](https://github.com/leviat-tech/draft3d/compare/v0.1.2...v0.2.0) (2023-03-14)
 
 

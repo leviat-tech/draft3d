@@ -54,12 +54,12 @@ export default {
   },
   update(object3d, newParams) {
     const {
-      radius, color, opacity, path, closed, steps,
+      radius, color, opacity, path, closed, steps, curveType, tension,
     } = newParams;
 
     updateMaterial(object3d, color, opacity);
 
-    const route = create3dPath(path, closed);
+    const route = create3dPath(path, closed, curveType, tension);
     const extrudeSettings = {
       curveSegments,
       steps,

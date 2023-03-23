@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/leviat-tech/draft3d/compare/v0.3.0...v0.3.1) (2023-03-23)
+
+
+### Bug Fixes
+
+* add default value to params ([#87](https://github.com/leviat-tech/draft3d/issues/87)) ([6793054](https://github.com/leviat-tech/draft3d/commit/6793054e37de7522597bb3d8ad7ef58ed9f4719b))
+
 ## [0.3.0](https://github.com/leviat-tech/draft3d/compare/v0.2.0...v0.3.0) (2023-03-20)
 
 

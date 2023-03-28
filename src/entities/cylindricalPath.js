@@ -6,8 +6,7 @@ import { createMaterial, updateMaterial } from '../utils/material';
 import { create3dPath, createCircle } from '../utils/geometry';
 
 
-// Ensures cylinder renders smoothly
-const curveSegments = 64;
+const curveSegments = 12;
 
 export default {
   name: 'cylindricalPath',

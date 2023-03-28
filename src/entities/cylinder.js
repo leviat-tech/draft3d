@@ -34,8 +34,11 @@ export default {
   },
   update(object3d, newParams) {
     const {
-      radiusTop, radiusBottom, length, color, opacity,
+      radius, length, color, opacity,
     } = newParams;
+
+    const radiusTop = radius || newParams.radiusTop;
+    const radiusBottom = radius || newParams.radiusBottom;
 
     updateMaterial(object3d, color, opacity);
 

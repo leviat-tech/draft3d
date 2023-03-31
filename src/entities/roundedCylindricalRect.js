@@ -33,8 +33,8 @@ export default {
     width: { name: 'width', default: 3 },
     height: { name: 'height', default: 3 },
     opacity: { name: 'opacity', default: 1 },
-    color: { name: 'color', default: '#000000' },
-    shapeRadius: { name: 'shapeRadius', default: 0.01 },
+    color: { name: 'color', type: 'color', default: '#000000' },
+    shapeRadius: { name: 'shapeRadius', precision: 0.01, default: 0.01 },
     bendRadius: { name: 'bendRadius', precision: 0.1, default: 0.09 },
   },
   render(params) {

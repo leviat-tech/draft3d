@@ -5,6 +5,7 @@
 
 import draft3d from 'draft3d';
 import { computed, ref, watch } from 'vue';
+import cloneDeep from 'lodash/cloneDeep';
 import { destroyObject } from '../utils/helpers';
 
 
@@ -13,12 +14,13 @@ const props = defineProps({
   params: { type: Object, default: {} },
 });
 
-const params = computed(() => props.params);
+const params = computed(() => cloneDeep(props.params));
 const entityName = computed(() => props.entity);
-let entity = draft3d.entities[props.entity](params);
+let entity = draft3d.entities[props.entity](props.params);
 entity.addTo(draft3d.scene);
 
 watch(params, (newParams) => {
+  console.log(newParams.path);
   entity.updateParams(newParams);
 }, { deep: true });
 

@@ -56,8 +56,6 @@ class Entity {
 
     this.params = mergedParams;
 
-    console.log(shouldUpdate);
-
     if (!shouldUpdate) return;
 
     if (newParams.position) {

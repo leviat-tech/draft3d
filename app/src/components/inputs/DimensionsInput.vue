@@ -33,8 +33,6 @@ export default {
     modelValue: { type: Array, required: true },
   },
   data() {
-    console.log(this.parameter);
-
     return {
       value: this.modelValue,
       focused: false,

@@ -1,6 +1,7 @@
 import { Vector3, Object3D, ArrowHelper } from 'three';
 
 import { createText } from '../utils/geometry';
+import { createMaterial } from '../utils/material.js';
 
 
 const COLORS = {
@@ -21,7 +22,12 @@ const AXIS_EXTENSION = 1.5;
 const halfPI = Math.PI / 2;
 
 const calculeLength = (length) => (length) + 0.03;
-const createArrow = (vector, length, color) => new ArrowHelper(vector, ORIGIN, length, color, HEAD_LENGTH, HEAD_WIDTH);
+const createArrow = (vector, length, color) => {
+  const arrow = new ArrowHelper(vector, ORIGIN, length, color, HEAD_LENGTH, HEAD_WIDTH);
+  arrow.cone.material.dispose();
+  arrow.cone.material = createMaterial(color, 1);
+  return arrow;
+};
 
 const createAxesLength = (params) => ({
   xAxisLength: params.xAxisLength + AXIS_EXTENSION,
@@ -56,7 +62,7 @@ export default {
   parameters: {
     xAxisLength: { name: 'xAxisLength', default: 0.8, precision: 0.1 },
     yAxisLength: { name: 'yAxisLength', default: 0.8, precision: 0.1 },
-    zAxisLength: { name: 'zAxisLength', default: 2, precision: 0.1 },
+    zAxisLength: { name: 'zAxisLength', default: 0.8, precision: 0.1 },
   },
   render(params) {
     const { xAxisLength, yAxisLength, zAxisLength } = createAxesLength(params);

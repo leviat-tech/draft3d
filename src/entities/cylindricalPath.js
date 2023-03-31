@@ -87,9 +87,9 @@ export default {
     if (solid) {
       const startCapGeometry = getCapGeometry(curve, START, tubeGeometry);
       const endCapGeometry = getCapGeometry(curve, END, tubeGeometry);
-
-      const startCap = new Mesh(startCapGeometry, material);
-      const endCap = new Mesh(endCapGeometry, material);
+      const capMaterial = createMaterial(color, opacity, true);
+      const startCap = new Mesh(startCapGeometry, capMaterial);
+      const endCap = new Mesh(endCapGeometry, capMaterial);
 
       tube.add(startCap, endCap);
     }
@@ -114,9 +114,10 @@ export default {
       if (!startCap) {
         const startCapGeometry = getCapGeometry(curve, START, tubeGeometry);
         const endCapGeometry = getCapGeometry(curve, END, tubeGeometry);
+        const capMaterial = createMaterial(color, opacity, true);
 
-        startCap = new Mesh(startCapGeometry, object3d.material);
-        endCap = new Mesh(endCapGeometry, object3d.material);
+        startCap = new Mesh(startCapGeometry, capMaterial);
+        endCap = new Mesh(endCapGeometry, capMaterial);
         object3d.add(startCap, endCap);
       } else {
         replaceGeometry(startCap, getCapGeometry(curve, START, tubeGeometry));
@@ -125,8 +126,8 @@ export default {
     } else {
       object3d.remove(startCap);
       object3d.remove(endCap);
-      startCap.geometry?.dispose();
-      endCap.geometry?.dispose();
+      startCap?.geometry?.dispose();
+      endCap?.geometry?.dispose();
     }
   },
 };

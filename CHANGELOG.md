@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.4](https://github.com/leviat-tech/draft3d/compare/v0.3.3...v0.3.4) (2023-03-31)
+
+
+### Bug Fixes
+
+* check for changes before updating entity ([7761339](https://github.com/leviat-tech/draft3d/commit/77613394e4bec4a97366280990ef2d12a9d64165))
+* update cylindricalPath to use TubeGeometry ([7aa37e1](https://github.com/leviat-tech/draft3d/commit/7aa37e19342ba6cfe2f00a7de5209276668ddb8c))
+
 ## [0.3.3](https://github.com/leviat-tech/draft3d/compare/v0.3.2...v0.3.3) (2023-03-28)
 
 

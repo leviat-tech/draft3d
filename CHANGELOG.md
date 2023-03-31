@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.3.3](https://github.com/leviat-tech/draft3d/compare/v0.3.2...v0.3.3) (2023-03-28)
+
+
+### Bug Fixes
+
+* cylinder radius update ([#91](https://github.com/leviat-tech/draft3d/issues/91)) ([1509b17](https://github.com/leviat-tech/draft3d/commit/1509b174f42c17d1fcd8855d53b35be70c6142fd))
+
+## [0.3.2](https://github.com/leviat-tech/draft3d/compare/v0.3.1...v0.3.2) (2023-03-28)
+
+
+### Bug Fixes
+
+* performance issues with cylinders ([dd85ead](https://github.com/leviat-tech/draft3d/commit/dd85eadf657aeb78cdb2a866a6f49ec6697c2cf6))
+
 ## [0.3.1](https://github.com/leviat-tech/draft3d/compare/v0.3.0...v0.3.1) (2023-03-23)
 
 

@@ -9,6 +9,8 @@ import {
   CatmullRomCurve3,
   MeshBasicMaterial,
   LineBasicMaterial,
+  CurvePath,
+  QuadraticBezierCurve3, Vector2, QuadraticBezierCurve,
 } from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { Font } from 'three/examples/jsm/loaders/FontLoader';
@@ -99,20 +101,21 @@ export function dim3(width = 0, height = 0, depth = 1) {
 
 
 export function createPolyCurve(path) {
-  const shape = new Shape();
+  const curvePath = new Shape();
 
-  shape.moveTo(...path[0]);
+  path.slice(1).forEach((point, i) => {
+    const [x1, y1] = path[i];
+    const [x2, y2, cx, cy] = point;
+    const start = new Vector3(x1, y1, 0);
+    const end = new Vector3(x2, y2, 0);
 
-  path.slice(1).forEach((point) => {
-    const [x, y, cx, cy] = point;
+    const controlPoint = cx ? new Vector3(cx, cy, 0) : new Vector3(x2, y2, 0);
+    const curve = new QuadraticBezierCurve3(start, controlPoint, end);
 
-    if (cx === undefined) {
-      shape.lineTo(x, y);
-    } else {
-      shape.quadraticCurveTo(cx, cy, x, y);
-    }
+    curvePath.add(curve);
   });
-  return shape;
+
+  return curvePath;
 }
 
 // approximate circleGeometry but as a shape so extrusion works properly
@@ -123,6 +126,7 @@ export function createCircle(radius) {
   shape.moveTo(0, 0);
   return shape;
 }
+
 
 export function create3dPath(path, closed, curveType = 'catmullrom', tension = 0.5) {
   const points = [];
@@ -146,4 +150,9 @@ export function createTextBox(onClick) {
   textBox.onClick = (e) => onClick(e);
 
   return textBox;
+}
+
+export function replaceGeometry(object3d, newGeometry) {
+  object3d.geometry?.dispose();
+  object3d.geometry = newGeometry;
 }

@@ -50,7 +50,15 @@ class Entity {
   }
 
   updateParams(newParams) {
-    this.params = { ...this.params, ...newParams };
+    const mergedParams = { ...this.params, ...newParams };
+
+    const shouldUpdate = JSON.stringify(mergedParams) !== JSON.stringify(this.params);
+
+    this.params = mergedParams;
+
+    console.log(shouldUpdate);
+
+    if (!shouldUpdate) return;
 
     if (newParams.position) {
       this.object3d.position.set(...newParams.position);

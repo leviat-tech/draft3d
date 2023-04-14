@@ -23,12 +23,25 @@ function getTextValue({ length, prefix, suffix, formatter }) {
     .join(' ');
 }
 
+let retries = 0;
+
 function setTextPosition(textObject, textBox, params) {
   const textOffset = 0.05;
 
-  if (textObject.geometry.boundingSphere === null) {
+  if (!textObject.geometry.boundingSphere) {
+    if (retries === 10) {
+      console.warn('alignedDim.setTextPosition exceeded maximum retries');
+      return;
+    }
+
+    retries += 1;
+
+    setTimeout(() => {
+      setTextPosition(textObject, textBox, params);
+    }, 100);
     return;
   }
+
   const { x, y } = textObject.geometry.boundingSphere.center;
 
   textObject.position.x = params.length / 2 - x;
@@ -58,7 +71,7 @@ export default {
   render(params) {
     const root = new Object3D();
 
-    const { length, color, extension } = params;
+    const { length, textSize, color, extension } = params;
 
     // Render line
     const points = [
@@ -72,7 +85,7 @@ export default {
 
     // Render text
     const textValue = getTextValue(params);
-    const textObject = createText(textValue, color);
+    const textObject = createText(textValue, color, textSize);
     // Set initial rotation
     textObject.setRotationFromAxisAngle(new Vector3(1, 0, 0), Math.PI / -2);
     root.add(textObject);

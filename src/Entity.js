@@ -1,4 +1,5 @@
 import { Object3D } from 'three';
+import { forEach } from 'lodash-es';
 import draft3d from '.';
 import LayerSet from './utils/LayerSet';
 
@@ -16,7 +17,8 @@ class Entity {
    * @param { object } params
    */
   constructor(entityConfig, params = {}) {
-    this.params = Entity.getParams(entityConfig.parameters, params);
+    this.name = entityConfig.name;
+    this.params = Entity.getParams(entityConfig.parameters, params, entityConfig.name);
     this.features = {};
 
     if (typeof entityConfig.formatParams === 'function') {
@@ -32,7 +34,7 @@ class Entity {
 
     this.object3d.name = entityConfig.name;
 
-    LayerSet.addToLayer(entityConfig.layer, [this.object3d, ...this.object3d.children]);
+    LayerSet.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
 
     this.object3d.position.set(...this.params.position);
     this.setRotation(this.params.rotation);
@@ -56,7 +58,7 @@ class Entity {
 
     this.params = mergedParams;
 
-    if (!shouldUpdate) return;
+    // if (!shouldUpdate) return;
 
     if (newParams.position) {
       this.object3d.position.set(...newParams.position);
@@ -107,6 +109,8 @@ class Entity {
     const feat = this.isEntity(type) ? draft3d.entities[type](params) : draft3d.features[type](params);
     this.features[name] = feat;
     this.add(feat.object3d);
+
+    return feat;
   }
 
   addFeatureTo(arrayName, type, params) {
@@ -118,13 +122,21 @@ class Entity {
     const feat = this.isEntity(type) ? draft3d.entities[type](params) : draft3d.features[type](params);
     this.features[arrayName].push(feat);
     this.add(feat.object3d);
+
+    return feat;
+  }
+
+  setVisibility(isVisible) {
+    this.object3d.visible = isVisible;
   }
 
   static getParams(definedParameters, userParams) {
-    return Object.entries(definedParameters).reduce((params, [name, param]) => ({
+    const defaults = Object.entries(definedParameters).reduce((params, [name, param]) => ({
       ...params,
-      [name]: userParams[name] ?? param.default,
+      [name]: param.default ?? param,
     }), {});
+
+    return { ...defaults, ...userParams };
   }
 
   destroy() {

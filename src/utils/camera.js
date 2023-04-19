@@ -42,6 +42,7 @@ function createControls(camera, canvas, userControlsConfig) {
   const target = userControlsConfig.target || [0, 0, 0];
 
   controls.target.set(...target);
+  controls.update();
 
   return controls;
 }

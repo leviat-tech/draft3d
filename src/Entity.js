@@ -36,6 +36,10 @@ class Entity {
 
     LayerSet.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
 
+    if (typeof this.params.visible === 'boolean') {
+      this.setVisibility(this.params.visible);
+    }
+
     this.object3d.position.set(...this.params.position);
     this.setRotation(this.params.rotation);
 
@@ -59,6 +63,10 @@ class Entity {
     this.params = mergedParams;
 
     // if (!shouldUpdate) return;
+
+    if (typeof newParams.visible === 'boolean') {
+      this.setVisibility(newParams.visible);
+    }
 
     if (newParams.position) {
       this.object3d.position.set(...newParams.position);
@@ -130,7 +138,7 @@ class Entity {
     this.object3d.visible = isVisible;
   }
 
-  static getParams(definedParameters, userParams) {
+  static getParams(definedParameters, userParams, entityName) {
     const defaults = Object.entries(definedParameters).reduce((params, [name, param]) => ({
       ...params,
       [name]: param.default ?? param,

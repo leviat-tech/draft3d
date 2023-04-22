@@ -62,7 +62,7 @@ class Entity {
 
     this.params = mergedParams;
 
-    // if (!shouldUpdate) return;
+    if (!shouldUpdate) return;
 
     if (typeof newParams.visible === 'boolean') {
       this.setVisibility(newParams.visible);

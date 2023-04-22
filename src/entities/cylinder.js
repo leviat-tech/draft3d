@@ -1,10 +1,16 @@
 import { CylinderGeometry, Mesh } from 'three';
-
 import { configureInteractivity } from '../utils/helpers';
 import { createMaterial, updateMaterial } from '../utils/material';
 
 
-const radialAccuracy = 12;
+function getRadius(params) {
+  const hasRadiusProp = typeof params.radius === 'number';
+
+  return {
+    radiusTop: hasRadiusProp ? params.radius : params.radiusTop,
+    radiusBottom: hasRadiusProp ? params.radius : params.radiusBottom,
+  };
+}
 
 export default {
   name: 'cylinder',
@@ -18,15 +24,11 @@ export default {
     opacity: { name: 'Opacity', type: 'number', precision: 0.05, default: 1 },
   },
   render(params) {
-    const { radius, length, segments, color, opacity } = params;
-
-    const radiusTop = radius || params.radiusTop;
-    const radiusBottom = radius || params.radiusBottom;
+    const { length, segments, color, opacity } = params;
+    const { radiusTop, radiusBottom } = getRadius(params);
 
     const material = createMaterial(color, opacity);
-
     const geometry = new CylinderGeometry(radiusTop, radiusBottom, length, segments);
-
     const mesh = new Mesh(geometry, material);
 
     configureInteractivity(mesh, params);
@@ -34,17 +36,13 @@ export default {
     return mesh;
   },
   update(object3d, newParams) {
-    const {
-      radius, length, color, opacity,
-    } = newParams;
-
-    const radiusTop = radius || newParams.radiusTop;
-    const radiusBottom = radius || newParams.radiusBottom;
+    const { length, segments, color, opacity } = newParams;
+    const { radiusTop, radiusBottom } = getRadius(newParams);
 
     updateMaterial(object3d, color, opacity);
 
     object3d.geometry?.dispose();
-    object3d.geometry = new CylinderGeometry(radiusTop, radiusBottom, length, radialAccuracy);
+    object3d.geometry = new CylinderGeometry(radiusTop, radiusBottom, length, segments);
 
     configureInteractivity(object3d, newParams);
   },

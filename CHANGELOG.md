@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.4.0](https://github.com/leviat-tech/draft3d/compare/v0.3.4...v0.4.0) (2023-04-24)
+
+
+### Features
+
+* add setVisibility method to Entity ([75cb177](https://github.com/leviat-tech/draft3d/commit/75cb1773b7d91340c0aac117fa5362d12f3172d1))
+* change cursor when hovering interactive entities ([1c750df](https://github.com/leviat-tech/draft3d/commit/1c750df1f6a929e72e640de4e270e79ca51f0684))
+
+
+### Bug Fixes
+
+* alignedDim - ensure correct text size and position on initial render ([ecbea28](https://github.com/leviat-tech/draft3d/commit/ecbea28973ece42642b14ed2eeb8a588a6a00f6c))
+* ensure all params are included in render ([75cb177](https://github.com/leviat-tech/draft3d/commit/75cb1773b7d91340c0aac117fa5362d12f3172d1))
+* ensure cylinder renders correctly when radius is 0 ([368a429](https://github.com/leviat-tech/draft3d/commit/368a4291e035f47164d0fc5daa2af180a03e3aaa))
+* ensure dimensions and axes render correctly ([e38e1ba](https://github.com/leviat-tech/draft3d/commit/e38e1baf9e0cd2ecd4d3a00f76a91d6409c3b50a))
+* ensure scene renders with correct camera target ([cec9039](https://github.com/leviat-tech/draft3d/commit/cec9039314304697b08a6e57127bf0dd67d55902))
+* set visibility of entity from params ([5e3cbf0](https://github.com/leviat-tech/draft3d/commit/5e3cbf073e7758b5ab0b4991c8f76123b8ec3599))
+
 ## [0.3.4](https://github.com/leviat-tech/draft3d/compare/v0.3.3...v0.3.4) (2023-03-31)
 
 

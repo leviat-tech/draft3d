@@ -23,25 +23,14 @@ function getTextValue({ length, prefix, suffix, formatter }) {
     .join(' ');
 }
 
-let retries = 0;
-
 function setTextPosition(textObject, textBox, params) {
   const textOffset = 0.05;
 
   if (!textObject.geometry.boundingSphere) {
-    if (retries === 10) {
-      console.warn('alignedDim.setTextPosition exceeded maximum retries');
-      return;
-    }
-
-    retries += 1;
-
-    setTimeout(() => {
+    return setTimeout(() => {
       setTextPosition(textObject, textBox, params);
     }, 100);
-    return;
   }
-
   const { x, y } = textObject.geometry.boundingSphere.center;
 
   textObject.position.x = params.length / 2 - x;

@@ -73,7 +73,17 @@ export default {
     const { yAxis, yAxisLabel } = createYAxis(yAxisLength);
     const { zAxis, zAxisLabel } = createZAxis(zAxisLength);
 
-    requestAnimationFrame(() => {
+    root.add(xAxis);
+    root.add(yAxis);
+    root.add(zAxis);
+
+    root.add(xAxisLabel);
+    root.add(yAxisLabel);
+    root.add(zAxisLabel);
+
+    (function setLabelPostions() {
+      if (!xAxisLabel.geometry.boundingSphere) return requestAnimationFrame(setLabelPostions);
+
       xAxisLabel.position.z = -calculeLength(xAxisLength);
       xAxisLabel.position.x -= xAxisLabel.geometry.boundingSphere.center.x;
       xAxisLabel.rotateY(-halfPI);
@@ -84,16 +94,7 @@ export default {
 
       zAxisLabel.position.y = calculeLength(zAxisLength);
       zAxisLabel.position.x -= zAxisLabel.geometry.boundingSphere.center.x;
-    });
-
-
-    root.add(xAxis);
-    root.add(yAxis);
-    root.add(zAxis);
-
-    root.add(xAxisLabel);
-    root.add(yAxisLabel);
-    root.add(zAxisLabel);
+    })();
 
     return root;
   },

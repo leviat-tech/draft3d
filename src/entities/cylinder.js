@@ -9,7 +9,7 @@ function getRadius(params) {
   return {
     radiusTop: hasRadiusProp ? params.radius : params.radiusTop,
     radiusBottom: hasRadiusProp ? params.radius : params.radiusBottom,
-  };
+  }
 }
 
 export default {

@@ -244,6 +244,7 @@ export default class ThreeScene {
         this.activeObject.onMouseOut(e)
       }
 
+      this.canvas.style.cursor = 'pointer';
       this.activeObject = object;
 
       if (object?.onMouseOver) {
@@ -256,6 +257,7 @@ export default class ThreeScene {
         this.activeObject.onMouseOut()
       }
 
+      this.canvas.style.cursor = '';
       this.activeObject = null;
     }
   }

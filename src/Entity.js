@@ -1,7 +1,6 @@
 import { Object3D } from 'three';
 import draft3d from '.';
 import LayerSet from './utils/LayerSet';
-import { forEach } from 'lodash-es';
 
 
 class Entity {

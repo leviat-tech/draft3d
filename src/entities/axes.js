@@ -11,10 +11,10 @@ const COLORS = {
   BLACK: '#000000',
 };
 
-const AXIS_TEXT_SIZE = 0.1;
+const DEFAULT_AXIS_TEXT_SIZE = 0.1;
 
-const HEAD_WIDTH = 0.1;
-const HEAD_LENGTH = 0.2;
+const DEFAULT_HEAD_WIDTH = 0.1;
+const DEFAULT_HEAD_LENGTH = 0.2;
 
 const ORIGIN = new Vector3(0, 0, 0);
 const AXIS_EXTENSION = 1.5;
@@ -22,8 +22,8 @@ const AXIS_EXTENSION = 1.5;
 const halfPI = Math.PI / 2;
 
 const calculeLength = (length) => (length) + 0.03;
-const createArrow = (vector, length, color) => {
-  const arrow = new ArrowHelper(vector, ORIGIN, length, color, HEAD_LENGTH, HEAD_WIDTH);
+const createArrow = (vector, length, color, headLength, headWidth) => {
+  const arrow = new ArrowHelper(vector, ORIGIN, length, color, headLength, headWidth);
   arrow.cone.material.dispose();
   arrow.cone.material = createMaterial(color, 1);
   return arrow;
@@ -35,24 +35,24 @@ const createAxesLength = (params) => ({
   zAxisLength: params.zAxisLength + AXIS_EXTENSION,
 });
 
-const createXAxis = (xAxisLength) => {
-  const xAxis = createArrow(new Vector3(0, 0, -1), xAxisLength, COLORS.RED);
-  const xAxisLabel = createText('X', COLORS.RED, AXIS_TEXT_SIZE);
+const createXAxis = (xAxisLength, textSize, color, headLength, headWidth) => {
+  const xAxis = createArrow(new Vector3(0, 0, -1), xAxisLength, color, headLength, headWidth);
+  const xAxisLabel = createText('X', color, textSize);
   xAxisLabel.setRotationFromAxisAngle(new Vector3(0, 1, 0), halfPI);
 
   return { xAxis, xAxisLabel };
 };
 
-const createYAxis = (yAxisLength) => {
-  const yAxis = createArrow(new Vector3(-1, 0, 0), yAxisLength, COLORS.GREEN);
-  const yAxisLabel = createText('Y', COLORS.GREEN, AXIS_TEXT_SIZE);
+const createYAxis = (yAxisLength, textSize, color, headLength, headWidth) => {
+  const yAxis = createArrow(new Vector3(-1, 0, 0), yAxisLength, color, headLength, headWidth);
+  const yAxisLabel = createText('Y', color, textSize);
 
   return { yAxis, yAxisLabel };
 };
 
-const createZAxis = (zAxisLength) => {
-  const zAxis = createArrow(new Vector3(0, 1, 0), zAxisLength, COLORS.BLUE);
-  const zAxisLabel = createText('Z', COLORS.BLUE, AXIS_TEXT_SIZE);
+const createZAxis = (zAxisLength, textSize, color, headLength, headWidth) => {
+  const zAxis = createArrow(new Vector3(0, 1, 0), zAxisLength, color, headLength, headWidth);
+  const zAxisLabel = createText('Z', color, textSize);
 
   return { zAxis, zAxisLabel };
 };
@@ -60,18 +60,27 @@ const createZAxis = (zAxisLength) => {
 export default {
   name: 'axes',
   parameters: {
-    xAxisLength: { name: 'xAxisLength', default: 0.8, precision: 0.1 },
-    yAxisLength: { name: 'yAxisLength', default: 0.8, precision: 0.1 },
-    zAxisLength: { name: 'zAxisLength', default: 0.8, precision: 0.1 },
+    xAxisLength: { name: 'X axisLength', default: 0.8, precision: 0.1 },
+    yAxisLength: { name: 'Y axisLength', default: 0.8, precision: 0.1 },
+    zAxisLength: { name: 'Z axisLength', default: 0.8, precision: 0.1 },
+    textSize: { name: 'Text size', default: DEFAULT_AXIS_TEXT_SIZE, precision: 0.1 },
+    xColor: { name: 'X color', default: COLORS.RED },
+    yColor: { name: 'Y color', default: COLORS.GREEN },
+    zColor: { name: 'Z color', default: COLORS.BLUE },
+    headLength: { name: 'Head length', default: DEFAULT_HEAD_LENGTH },
+    headWidth: { name: 'Head width', default: DEFAULT_HEAD_WIDTH },
   },
   render(params) {
+    const {
+      textSize, xColor, yColor, zColor, headLength, headWidth,
+    } = params;
     const { xAxisLength, yAxisLength, zAxisLength } = createAxesLength(params);
 
     const root = new Object3D();
 
-    const { xAxis, xAxisLabel } = createXAxis(xAxisLength);
-    const { yAxis, yAxisLabel } = createYAxis(yAxisLength);
-    const { zAxis, zAxisLabel } = createZAxis(zAxisLength);
+    const { xAxis, xAxisLabel } = createXAxis(xAxisLength, textSize, xColor, headLength, headWidth);
+    const { yAxis, yAxisLabel } = createYAxis(yAxisLength, textSize, yColor, headLength, headWidth);
+    const { zAxis, zAxisLabel } = createZAxis(zAxisLength, textSize, zColor, headLength, headWidth);
 
     root.add(xAxis);
     root.add(yAxis);
@@ -81,8 +90,13 @@ export default {
     root.add(yAxisLabel);
     root.add(zAxisLabel);
 
-    (function setLabelPostions() {
-      if (!xAxisLabel.geometry.boundingSphere) return requestAnimationFrame(setLabelPostions);
+    (function setLabelPostions(retryCount = 0) {
+      if (retryCount === 10) return;
+
+      if (!xAxisLabel.geometry.boundingSphere) {
+        const RETRY_INTERVAL = 100;
+        return setTimeout(() => setLabelPostions(retryCount + 1), RETRY_INTERVAL);
+      }
 
       xAxisLabel.position.z = -calculeLength(xAxisLength);
       xAxisLabel.position.x -= xAxisLabel.geometry.boundingSphere.center.x;
@@ -94,11 +108,12 @@ export default {
 
       zAxisLabel.position.y = calculeLength(zAxisLength);
       zAxisLabel.position.x -= zAxisLabel.geometry.boundingSphere.center.x;
-    })();
+    }());
 
     return root;
   },
   update(root, params) {
+    const { headLength, headWidth } = params;
     const { xAxisLength, yAxisLength, zAxisLength } = createAxesLength(params);
 
     const [
@@ -110,9 +125,9 @@ export default {
       zAxisLabel,
     ] = root.children;
 
-    xAxis.setLength(xAxisLength, HEAD_LENGTH, HEAD_WIDTH);
-    yAxis.setLength(yAxisLength, HEAD_LENGTH, HEAD_WIDTH);
-    zAxis.setLength(zAxisLength, HEAD_LENGTH, HEAD_WIDTH);
+    xAxis.setLength(xAxisLength, headLength, headWidth);
+    yAxis.setLength(yAxisLength, headLength, headWidth);
+    zAxis.setLength(zAxisLength, headLength, headWidth);
 
     requestAnimationFrame(() => {
       xAxisLabel.position.z = -calculeLength(xAxisLength);

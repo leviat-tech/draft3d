@@ -23,13 +23,16 @@ function getTextValue({ length, prefix, suffix, formatter }) {
     .join(' ');
 }
 
-function setTextPosition(textObject, textBox, params) {
+function setTextPosition(textObject, textBox, params, retryCount = 0) {
   const textOffset = 0.05;
 
+  if (retryCount === 10) return;
+
   if (!textObject.geometry.boundingSphere) {
+    const RETRY_INTERVAL = 100;
     return setTimeout(() => {
-      setTextPosition(textObject, textBox, params);
-    }, 100);
+      setTextPosition(textObject, textBox, params, retryCount + 1);
+    }, RETRY_INTERVAL);
   }
   const { x, y } = textObject.geometry.boundingSphere.center;
 

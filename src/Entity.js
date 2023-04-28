@@ -1,6 +1,5 @@
 import { Object3D } from 'three';
 import draft3d from '.';
-import LayerSet from './utils/LayerSet';
 
 
 class Entity {
@@ -15,10 +14,11 @@ class Entity {
    * @param { entityConfig } entityConfig
    * @param { object } params
    */
-  constructor(entityConfig, params = {}) {
+  constructor(entityConfig, params = {}, layerSet) {
     this.name = entityConfig.name;
     this.params = Entity.getParams(entityConfig.parameters, params, entityConfig.name);
     this.features = {};
+    this.layerSet = layerSet;
 
     if (typeof entityConfig.formatParams === 'function') {
       this.formatParams = entityConfig.formatParams;
@@ -33,7 +33,7 @@ class Entity {
 
     this.object3d.name = entityConfig.name;
 
-    LayerSet.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
+    this.layerSet?.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
 
     if (typeof this.params.visible === 'boolean') {
       this.setVisibility(this.params.visible);
@@ -77,7 +77,7 @@ class Entity {
 
     const formattedParams = this.formatParams(this.params);
 
-    LayerSet.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
+    this.layerSet?.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
 
     // TODO refector entities so object3d isnt needed
     if (this.onUpdate) this.onUpdate(this.object3d, formattedParams);
@@ -113,7 +113,8 @@ class Entity {
       throw new Error('Feature Name already in use');
     }
 
-    const feat = this.isEntity(type) ? draft3d.entities[type](params) : draft3d.features[type](params);
+    const constructor = this.isEntity(type) ? draft3d.entities[type] : draft3d.features[type];
+    const feat = constructor(params, this.layerSet);
     this.features[name] = feat;
     this.add(feat.object3d);
 
@@ -126,7 +127,8 @@ class Entity {
     } else if (!(this.features[arrayName] instanceof Array)) {
       throw new Error('Feature Name already in use for non-iterable feature');
     }
-    const feat = this.isEntity(type) ? draft3d.entities[type](params) : draft3d.features[type](params);
+    const constructor = this.isEntity(type) ? draft3d.entities[type] : draft3d.features[type];
+    const feat = constructor(params, this.layerSet);
     this.features[arrayName].push(feat);
     this.add(feat.object3d);
 

@@ -282,6 +282,17 @@ export default class ThreeScene {
     return obj;
   }
 
+  renderToImage(...options) {
+    // In order to be able to call the toDataURL method on the canvas element
+    // without detrimental performance by preserving the drawing buffer
+    // we need to call render syncronously and call toDataURL immediately.
+    // See issue below for more info
+    // https://stackoverflow.com/questions/15558418/how-do-you-save-an-image-from-a-three-js-canvas
+    this.renderer.render(this.originalScene, this.perspectiveCamera);
+
+    return this.canvas.toDataURL(...options)
+  }
+
   destroy() {
     cancelAnimationFrame(this.animationFrame);
     this.originalScene = null;

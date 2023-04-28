@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.5.0](https://github.com/leviat-tech/draft3d/compare/v0.4.0...v0.5.0) (2023-04-28)
+
+
+### Features
+
+* add renderToImage method to scene ([b3a659c](https://github.com/leviat-tech/draft3d/commit/b3a659c9039653b8ca085517f5d38295cbf26aeb))
+* add size and color params to axes ([1a46313](https://github.com/leviat-tech/draft3d/commit/1a46313812ecdfc3f25cda45295dd8093c769cdd))
+* enable multiple LayerSet instances ([10615b2](https://github.com/leviat-tech/draft3d/commit/10615b2550f31374805b5885a664683cde684802))
+
 ## [0.4.0](https://github.com/leviat-tech/draft3d/compare/v0.3.4...v0.4.0) (2023-04-24)
 
 

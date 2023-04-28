@@ -27,7 +27,8 @@ export default class ThreeScene {
     mousemove: 'onMouseMove',
   }
 
-  constructor(scene) {
+  constructor() {
+    this.layerSet = new LayerSet();
     this.originalScene = new Scene();
   }
 
@@ -51,12 +52,12 @@ export default class ThreeScene {
 
     this.activeObject = null;
 
-    LayerSet.addCamera(this.perspectiveCamera);
+    this.layerSet.addCamera(this.perspectiveCamera);
 
     if (use2DCamera) {
       this.orthoCamera = createOrthographicCamera(camera);
       this.planControls = planControls(this.orthoCamera, this.canvas);
-      LayerSet.addCamera(this.orthoCamera)
+      this.layerSet.addCamera(this.orthoCamera)
     }
 
     this.renderer = this.createRenderer();
@@ -192,7 +193,7 @@ export default class ThreeScene {
   }
 
   isElementVisible(element) {
-    const layer = LayerSet.layers.find(el => el.name === element.layerName)
+    const layer = this.layerSet.layers.find(el => el.name === element.layerName)
 
     return layer ? (element?.visible && layer?.visible) : element?.visible
   }

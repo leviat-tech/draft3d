@@ -33,7 +33,7 @@ function register(entity, registerTo) {
 
   Object.defineProperty(registerTo, entityConfig.name, {
     get() {
-      return (params) => new Entity(entityConfig, params);
+      return (params, layerSet) => new Entity(entityConfig, params, layerSet);
     },
   });
 }

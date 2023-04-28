@@ -1,8 +1,10 @@
 
 
-const LayerSet = {
-  layers: [{ id: 0, name: 'default', visible: true }],
-  cameras: [],
+class LayerSet {
+  constructor() {
+    this.layers = [{ id: 0, name: 'default', visible: true }];
+    this.cameras = [];
+  }
 
   addCamera(camera) {
     if (this.cameras.filter((c) => c.uuid === camera.uuid).length > 0) {
@@ -11,7 +13,7 @@ const LayerSet = {
     }
     this.cameras.push(camera);
     this.applyToCameras();
-  },
+  }
 
   addLayer(name) {
     if (this.layers.filter((l) => l.name === name).length > 0) {
@@ -20,11 +22,11 @@ const LayerSet = {
     }
     const newLayer = { id: this.layers.length, name, visible: true };
     this.layers.push(newLayer);
-  },
+  }
 
   getLayerId(name) {
     return this.layers.filter((a) => a.name === name)[0]?.id;
-  },
+  }
 
   addToLayer(name, object3d) {
     if (Array.isArray(object3d)) {
@@ -36,11 +38,11 @@ const LayerSet = {
       object3d.layers.disableAll();
       object3d.layers.set(this.getLayerId(name));
     }
-  },
+  }
 
   getLayerNames() {
     return this.layers.map((l) => l.name);
-  },
+  }
 
   show(name) {
     if (Array.isArray(name)) {
@@ -57,7 +59,7 @@ const LayerSet = {
       });
     }
     this.applyToCameras();
-  },
+  }
 
   showOnly(name) {
     if (Array.isArray(name)) {
@@ -70,7 +72,7 @@ const LayerSet = {
       });
     }
     this.applyToCameras();
-  },
+  }
 
   hide(name) {
     if (Array.isArray(name)) {
@@ -87,7 +89,7 @@ const LayerSet = {
       });
     }
     this.applyToCameras();
-  },
+  }
 
 
   applyToCameras() {
@@ -99,12 +101,12 @@ const LayerSet = {
         }
       });
     });
-  },
+  }
 
   reset() {
     this.layers = [{ id: 0, name: 'default', visible: true }];
     this.cameras = [];
-  },
+  }
 };
 
 export default LayerSet;

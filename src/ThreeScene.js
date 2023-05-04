@@ -7,9 +7,14 @@ import {
   DirectionalLight as Light,
 } from 'three';
 
-import LayerSet from './utils/LayerSet'
-import { createCamera, createOrthographicCamera, calculatePlanView, planControls, freeControls } from './utils/camera'
-
+import LayerSet from './utils/LayerSet';
+import {
+  createCamera,
+  createOrthographicCamera,
+  calculatePlanView,
+  planControls,
+  freeControls,
+} from './utils/camera';
 
 const defaultLights = {
   intensity: 0.5,
@@ -17,7 +22,7 @@ const defaultLights = {
     [2, 3, 1],
     [-2, 3, -1],
   ],
-}
+};
 
 export default class ThreeScene {
   events = {
@@ -25,7 +30,7 @@ export default class ThreeScene {
     click: 'onMouseDown',
     dblclick: 'onDbClick',
     mousemove: 'onMouseMove',
-  }
+  };
 
   constructor() {
     this.layerSet = new LayerSet();
@@ -33,18 +38,17 @@ export default class ThreeScene {
   }
 
   initialize(el, config) {
-    const {
-      use2DCamera,
-      camera,
-      controls,
-      light
-    } = config;
+    const { use2DCamera, camera, controls, light } = config;
 
     this.el = el;
     this.canvas = ThreeScene.createCanvas(el);
 
     this.perspectiveCamera = createCamera(camera);
-    this.perspectiveControls = freeControls(this.perspectiveCamera, this.canvas, controls);
+    this.perspectiveControls = freeControls(
+      this.perspectiveCamera,
+      this.canvas,
+      controls
+    );
 
     this.camera = this.perspectiveCamera;
 
@@ -57,14 +61,14 @@ export default class ThreeScene {
     if (use2DCamera) {
       this.orthoCamera = createOrthographicCamera(camera);
       this.planControls = planControls(this.orthoCamera, this.canvas);
-      this.layerSet.addCamera(this.orthoCamera)
+      this.layerSet.addCamera(this.orthoCamera);
     }
 
     this.renderer = this.createRenderer();
     this.mouse = new Vector2();
 
     this.raycaster = new Raycaster();
-    this.raycaster.layers.enableAll()
+    this.raycaster.layers.enableAll();
 
     this.bindEvents();
     this.onResize();
@@ -95,6 +99,8 @@ export default class ThreeScene {
     Object.assign(canvas.style, {
       position: 'absolute',
       inset: '0 0 0 0',
+      marginLeft: 'auto',
+      marginRight: 'auto',
     });
 
     parent.appendChild(canvas);
@@ -104,17 +110,17 @@ export default class ThreeScene {
 
   createLight(userLightConfig) {
     const lightColor = 0xffffff;
-    const lightConfig = { ...defaultLights, ...userLightConfig }
+    const lightConfig = { ...defaultLights, ...userLightConfig };
     const { intensity, directionalLights } = lightConfig;
 
     const ambientLight = new AmbientLight(lightColor, intensity);
-    ambientLight.layers.enableAll()
+    ambientLight.layers.enableAll();
     this.originalScene.add(ambientLight);
 
-    return directionalLights.map(lightCoords => this.createDirectionalLight(...lightCoords));
+    return directionalLights.map((lightCoords) =>
+      this.createDirectionalLight(...lightCoords)
+    );
   }
-
-
 
   createDirectionalLight(x1 = 0, y1 = 5, z1 = 1, x2 = 0, y2 = 0, z2 = 0) {
     const lightColor = 0xffffff;
@@ -151,7 +157,7 @@ export default class ThreeScene {
 
   bindEvents() {
     Object.entries(this.events).forEach(([eventType, method]) => {
-      const el = (eventType === 'resize') ? window : this.canvas;
+      const el = eventType === 'resize' ? window : this.canvas;
       this[method] = this[method].bind(this);
       el.addEventListener(eventType, this[method]);
     });
@@ -159,7 +165,7 @@ export default class ThreeScene {
 
   unbindEvents() {
     Object.entries(this.events).forEach(([eventType, method]) => {
-      const el = (eventType === 'resize') ? window : this.canvas;
+      const el = eventType === 'resize' ? window : this.canvas;
       el.removeEventListener(eventType, this[method]);
     });
   }
@@ -174,7 +180,7 @@ export default class ThreeScene {
     this.canvas.height = this.height;
 
     this.renderer.setSize(width, height);
-    this.perspectiveCamera.aspect = this.width / this.height
+    this.perspectiveCamera.aspect = this.width / this.height;
 
     this.camera.updateProjectionMatrix();
   }
@@ -193,13 +199,15 @@ export default class ThreeScene {
   }
 
   isElementVisible(element) {
-    const layer = this.layerSet.layers.find(el => el.name === element.layerName)
+    const layer = this.layerSet.layers.find(
+      (el) => el.name === element.layerName
+    );
 
-    return layer ? (element?.visible && layer?.visible) : element?.visible
+    return layer ? element?.visible && layer?.visible : element?.visible;
   }
 
   onMouseDown(e) {
-    const intersects = this.getIntersectObjects(e)
+    const intersects = this.getIntersectObjects(e);
 
     if (intersects.length) {
       const { object } = intersects[0];
@@ -215,7 +223,7 @@ export default class ThreeScene {
   }
 
   onDbClick(e) {
-    const intersects = this.getIntersectObjects(e)
+    const intersects = this.getIntersectObjects(e);
 
     if (intersects.length) {
       const { object } = intersects[0];
@@ -231,31 +239,33 @@ export default class ThreeScene {
   }
 
   onMouseMove(e) {
-    const intersects = this.getIntersectObjects(e)
+    const intersects = this.getIntersectObjects(e);
 
     if (intersects.length) {
       const { object } = intersects[0];
 
       if (!this.isElementVisible(object)) {
-        return
+        return;
       }
 
       // Object changed. Call mouseOut before change object
-      if (this.activeObject?.onMouseOut && this.activeObject.uuid !== object.uuid) {
-        this.activeObject.onMouseOut(e)
+      if (
+        this.activeObject?.onMouseOut &&
+        this.activeObject.uuid !== object.uuid
+      ) {
+        this.activeObject.onMouseOut(e);
       }
 
       this.canvas.style.cursor = 'pointer';
       this.activeObject = object;
 
       if (object?.onMouseOver) {
-        object.onMouseOver(e)
+        object.onMouseOver(e);
       }
-
     } else {
       // No objects detected. Call last active object mouseOut
       if (this.activeObject?.onMouseOut) {
-        this.activeObject.onMouseOut()
+        this.activeObject.onMouseOut();
       }
 
       this.canvas.style.cursor = '';
@@ -270,12 +280,12 @@ export default class ThreeScene {
 
     return object3d.children.reduce((interactiveChildren, child) => {
       if (child?.isInteractive) {
-        interactiveChildren.push(child)
+        interactiveChildren.push(child);
       }
 
       return [...interactiveChildren, ...this.getInteractiveChildren(child)];
-    }, [])
-  };
+    }, []);
+  }
 
   add(obj) {
     this.originalScene.add(obj);
@@ -290,7 +300,7 @@ export default class ThreeScene {
     // https://stackoverflow.com/questions/15558418/how-do-you-save-an-image-from-a-three-js-canvas
     this.renderer.render(this.originalScene, this.perspectiveCamera);
 
-    return this.canvas.toDataURL(...options)
+    return this.canvas.toDataURL(...options);
   }
 
   destroy() {

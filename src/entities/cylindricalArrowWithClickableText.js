@@ -8,10 +8,9 @@ import roundedCylindricalArrow from './roundedCylindricalArrow';
 import { configureInteractivity } from '../utils/helpers';
 
 
-const LABEL_TEXT_SIZE = 0.1;
 const LABEL_COLOR = '#000000';
 
-const createLabel = (text) => createText(text, LABEL_COLOR, LABEL_TEXT_SIZE);
+const createLabel = (text, textSize) => createText(text, LABEL_COLOR, textSize);
 
 export default {
   name: 'cylindricalArrowWithClickableText',
@@ -19,6 +18,7 @@ export default {
     text: { name: 'text', default: '' },
     length: { name: 'length', default: 0.2 },
     color: { name: 'color', default: 'black' },
+    textSize: { name: 'textSize', default: 0.065 },
     onClick: { name: 'onClick', default: () => { } },
     isRounded: { name: 'isRounded', default: false },
     isInteractive: { name: 'isInteractive', default: true },
@@ -26,7 +26,7 @@ export default {
   render(params) {
     const { color, length, onClick, layer, isRounded } = params;
 
-    const text = createLabel(params.text);
+    const text = createLabel(params.text, params.textSize);
     const textBox = createTextBox(onClick);
     const arrow = isRounded
       ? roundedCylindricalArrow.render({ color, layer })

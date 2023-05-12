@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.1](https://github.com/leviat-tech/draft3d/compare/v0.5.0...v0.5.1) (2023-05-12)
+
+
+### Bug Fixes
+
+* add text size to cylindrical arrow ([d00fed8](https://github.com/leviat-tech/draft3d/commit/d00fed896ac80ed7b22d5f346781cdc75e763a76))
+* added center styles to canvas ([e80aa78](https://github.com/leviat-tech/draft3d/commit/e80aa78a0eb8c6a9c20078525083666c4f10a2e3))
+
 ## [0.5.0](https://github.com/leviat-tech/draft3d/compare/v0.4.0...v0.5.0) (2023-04-28)
 
 

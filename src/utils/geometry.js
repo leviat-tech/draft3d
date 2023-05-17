@@ -109,7 +109,7 @@ export function createPolyCurve(path) {
     const start = new Vector3(x1, y1, 0);
     const end = new Vector3(x2, y2, 0);
 
-    const controlPoint = cx ? new Vector3(cx, cy, 0) : new Vector3(x2, y2, 0);
+    const controlPoint = cx !== undefined ? new Vector3(cx, cy, 0) : new Vector3(x2, y2, 0);
     const curve = new QuadraticBezierCurve3(start, controlPoint, end);
 
     curvePath.add(curve);

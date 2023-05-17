@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2](https://github.com/leviat-tech/draft3d/compare/v0.5.1...v0.5.2) (2023-05-17)
+
+
+### Bug Fixes
+
+* poly curve creation ([#103](https://github.com/leviat-tech/draft3d/issues/103)) ([e2792f9](https://github.com/leviat-tech/draft3d/commit/e2792f92a284817a64c63acf5260e98f7d80efa6))
+
 ## [0.5.1](https://github.com/leviat-tech/draft3d/compare/v0.5.0...v0.5.1) (2023-05-12)
 
 

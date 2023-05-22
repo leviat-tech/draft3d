@@ -4,7 +4,7 @@ import {
   Raycaster,
   AmbientLight,
   WebGLRenderer,
-  DirectionalLight as Light,
+  DirectionalLight as Light, AxisHelper, AxesHelper,
 } from 'three';
 
 import LayerSet from './utils/LayerSet';
@@ -15,6 +15,8 @@ import {
   planControls,
   freeControls,
 } from './utils/camera';
+import axes from './entities/axes';
+import Entity from './Entity.js';
 
 const defaultLights = {
   intensity: 0.5,
@@ -38,7 +40,7 @@ export default class ThreeScene {
   }
 
   initialize(el, config) {
-    const { use2DCamera, camera, controls, light } = config;
+    const { use2DCamera, camera, controls, light, axisIndicator = {} } = config;
 
     this.el = el;
     this.canvas = ThreeScene.createCanvas(el);
@@ -64,7 +66,9 @@ export default class ThreeScene {
       this.layerSet.addCamera(this.orthoCamera);
     }
 
-    this.renderer = this.createRenderer();
+    this.renderer = this.createRenderer(this.originalScene, this.canvas, 'animationFrame');
+    this.createAxisIndicator(el, axisIndicator);
+
     this.mouse = new Vector2();
 
     this.raycaster = new Raycaster();
@@ -133,23 +137,47 @@ export default class ThreeScene {
     return directionalLight;
   }
 
-  createRenderer() {
+  createRenderer(scene, canvas, afKey) {
     const rendererConfig = {
-      canvas: this.canvas,
+      canvas,
       alpha: true,
       antialias: true,
     };
     const renderer = new WebGLRenderer(rendererConfig);
     renderer.setPixelRatio(window.devicePixelRatio);
-    this.startAnimation(renderer);
+    this.startAnimation(renderer, scene, afKey);
 
     return renderer;
   }
 
-  startAnimation(renderer) {
+  createAxisIndicator(el, axisIndicatorConfig) {
+    if (!axisIndicatorConfig.isEnabled) return;
+
+    const config = {
+      size: 80,
+      style: { bottom: 0, left: 0, margin: '2rem' },
+      ...axisIndicatorConfig,
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.width = config.size;
+    canvas.height = config.size;
+    canvas.style.border = '1px solid black';
+    canvas.style.position = 'absolute';
+    Object.assign(canvas.style, config.style);
+
+    el.appendChild(canvas);
+
+    const scene = new Scene();
+    new Entity(axes).addTo(scene);
+
+    this.createRenderer(scene, canvas, 'indicatorAnimationFrame');
+  }
+
+  startAnimation(renderer, scene, afKey) {
     const animate = () => {
-      this.animationFrame = requestAnimationFrame(animate);
-      renderer.render(this.originalScene, this.camera);
+      this[afKey] = requestAnimationFrame(animate);
+      renderer.render(scene, this.camera);
     };
 
     animate();
@@ -295,7 +323,7 @@ export default class ThreeScene {
   renderToImage(...options) {
     // In order to be able to call the toDataURL method on the canvas element
     // without detrimental performance by preserving the drawing buffer
-    // we need to call render syncronously and call toDataURL immediately.
+    // we need to call render synchronously and call toDataURL immediately.
     // See issue below for more info
     // https://stackoverflow.com/questions/15558418/how-do-you-save-an-image-from-a-three-js-canvas
     this.renderer.render(this.originalScene, this.perspectiveCamera);

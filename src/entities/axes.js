@@ -2,6 +2,7 @@ import { Vector3, Object3D, ArrowHelper } from 'three';
 
 import { createText } from '../utils/geometry';
 import { createMaterial } from '../utils/material.js';
+import { defineEntity } from '../';
 
 
 const COLORS = {
@@ -57,7 +58,7 @@ const createZAxis = (zAxisLength, textSize, color, headLength, headWidth) => {
   return { zAxis, zAxisLabel };
 };
 
-export default {
+export default defineEntity({
   name: 'axes',
   parameters: {
     xAxisLength: { name: 'X axisLength', default: 0.8, precision: 0.1 },
@@ -135,4 +136,4 @@ export default {
       zAxisLabel.position.y = calculeLength(zAxisLength);
     });
   },
-};
+});

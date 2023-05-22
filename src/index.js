@@ -50,5 +50,10 @@ export function initializeScene(el, sceneConfig) {
   return draft3d.scene;
 }
 
+export function defineEntity(entityConfig) {
+  console.log(entityConfig);
+  return (params, layerSet) => new Entity(entityConfig, params, layerSet);
+}
+
 
 export default draft3d;

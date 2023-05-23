@@ -184,6 +184,8 @@ export default class ThreeScene {
     this.axisIndicator.isEnabled = true;
 
     const scene = new Scene();
+    const ambientLight = new AmbientLight('#ffffff', 1);
+    scene.add(ambientLight);
     const axes = await ThreeScene.renderAxesEntity();
     axes.addTo(scene);
 

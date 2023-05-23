@@ -25,8 +25,8 @@ const halfPI = Math.PI / 2;
 const calculateLength = (length) => (length) + 0.03;
 const createArrow = (vector, length, color, headLength, headWidth) => {
   const arrow = new ArrowHelper(vector, ORIGIN, length, color, headLength, headWidth);
-  arrow.material?.dispose();
-  arrow.material = createMaterial(color, 1);
+  arrow.cone.material.dispose();
+  arrow.cone.material = createMaterial(color, 1);
   return arrow;
 };
 
@@ -95,7 +95,7 @@ export default defineEntity({
       if (retryCount === 10) return;
 
       if (!xAxisLabel.geometry.boundingSphere) {
-        const RETRY_INTERVAL = 100;
+        const RETRY_INTERVAL = 50;
         return setTimeout(() => setLabelPostions(retryCount + 1), RETRY_INTERVAL);
       }
 

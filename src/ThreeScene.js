@@ -4,7 +4,7 @@ import {
   Raycaster,
   AmbientLight,
   WebGLRenderer,
-  DirectionalLight as Light, AxisHelper, AxesHelper,
+  DirectionalLight as Light, AxesHelper, Vector3,
 } from 'three';
 
 import LayerSet from './utils/LayerSet';
@@ -15,8 +15,8 @@ import {
   planControls,
   freeControls,
 } from './utils/camera';
-import axes from './entities/axes';
 import Entity from './Entity.js';
+import scene from 'three/examples/jsm/offscreen/scene.js';
 
 const defaultLights = {
   intensity: 0.5,
@@ -24,6 +24,19 @@ const defaultLights = {
     [2, 3, 1],
     [-2, 3, -1],
   ],
+};
+
+const defaultAxesIndicatorConfig = {
+  isEnabled: true,
+  size: 120,
+  style: { bottom: 0, right: '2rem' },
+};
+
+const axisIndicatorCameraConfig = {
+  fov: 60,
+  aspect: 1,
+  near: 5,
+  far: 1000,
 };
 
 export default class ThreeScene {
@@ -35,6 +48,14 @@ export default class ThreeScene {
   };
 
   constructor() {
+    this.axisIndicator = {
+      isEnabled: false,
+      scene: null,
+      canvas: null,
+      camera: null,
+      renderer: null,
+    }
+    this.animationFrame = null;
     this.layerSet = new LayerSet();
     this.originalScene = new Scene();
   }
@@ -66,7 +87,7 @@ export default class ThreeScene {
       this.layerSet.addCamera(this.orthoCamera);
     }
 
-    this.renderer = this.createRenderer(this.originalScene, this.canvas, 'animationFrame');
+    this.renderer = this.createRenderer(this.originalScene, this.perspectiveCamera, this.canvas, 'animationFrame');
     this.createAxisIndicator(el, axisIndicator);
 
     this.mouse = new Vector2();
@@ -137,7 +158,7 @@ export default class ThreeScene {
     return directionalLight;
   }
 
-  createRenderer(scene, canvas, afKey) {
+  createRenderer(scene, camera, canvas, afKey) {
     const rendererConfig = {
       canvas,
       alpha: true,
@@ -145,42 +166,100 @@ export default class ThreeScene {
     };
     const renderer = new WebGLRenderer(rendererConfig);
     renderer.setPixelRatio(window.devicePixelRatio);
-    this.startAnimation(renderer, scene, afKey);
+    afKey && this.startAnimation(renderer, scene, camera, afKey);
 
     return renderer;
   }
 
-  createAxisIndicator(el, axisIndicatorConfig) {
+  startAnimation(renderer, scene, camera, afKey) {
+    const animate = () => {
+      this[afKey] = requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    };
+
+    animate();
+  }
+
+  async createAxisIndicator(el, axisIndicatorConfig) {
     if (!axisIndicatorConfig.isEnabled) return;
 
-    const config = {
-      size: 80,
-      style: { bottom: 0, left: 0, margin: '2rem' },
-      ...axisIndicatorConfig,
-    }
+    this.axisIndicator.isEnabled = true;
 
+    const scene = new Scene();
+    const axes = await ThreeScene.renderAxesEntity();
+    axes.addTo(scene);
+
+    const camera = createCamera(axisIndicatorCameraConfig);
+    const canvas = ThreeScene.createAxesIndicatorCanvas(el, axisIndicatorConfig);
+    const renderer = this.createRenderer(scene, camera, canvas);
+
+    // Hacky but both timeouts are required in order for the labels to render correctly
+    setTimeout(() => this.updateAxisIndicator(renderer, scene, camera));
+    setTimeout(() => {
+      this.updateAxisIndicator(renderer, scene, camera);
+      canvas.style.opacity = 1;
+    }, 100);
+
+    this.onControlsChange = (e) => {
+      this.updateAxisIndicator(renderer, scene, camera);
+    }
+    this.perspectiveControls.addEventListener('change', this.onControlsChange);
+
+    Object.assign(this.axisIndicator, {
+      scene,
+      camera,
+      canvas,
+      renderer,
+    });
+  }
+
+  static createAxesIndicatorCanvas(el, axisIndicatorConfig) {
+    const config = { ...defaultAxesIndicatorConfig, ...axisIndicatorConfig };
     const canvas = document.createElement('canvas');
     canvas.width = config.size;
     canvas.height = config.size;
-    canvas.style.border = '1px solid black';
     canvas.style.position = 'absolute';
+    // Mask canvas until axes rendered
+    canvas.style.opacity = 0;
+    canvas.addEventListener('contextmenu', e => e.preventDefault());
     Object.assign(canvas.style, config.style);
 
     el.appendChild(canvas);
 
-    const scene = new Scene();
-    new Entity(axes).addTo(scene);
-
-    this.createRenderer(scene, canvas, 'indicatorAnimationFrame');
+    return canvas;
   }
 
-  startAnimation(renderer, scene, afKey) {
-    const animate = () => {
-      this[afKey] = requestAnimationFrame(animate);
-      renderer.render(scene, this.camera);
-    };
+  static async renderAxesEntity() {
+    // Use dynamic import to prevent circular dependencies
+    const axesModule = await import('./entities/axes');
 
-    animate();
+    const axisLength = 2;
+    return axesModule.default({
+      headWidth: 0.3,
+      headLength: 0.5,
+      xAxisLength: axisLength,
+      yAxisLength: axisLength,
+      zAxisLength: axisLength,
+      textSize: 1,
+      position: [0, 0, 0]
+    });
+  }
+
+  updateAxisIndicator(renderer, scene, camera) {
+    const { position, rotation } = this.perspectiveCamera
+
+    const { x, y, z } = rotation;
+    camera.rotation.set(x, y, z);
+
+    // Reset vector distance from origin to prevent zooming in axes view
+    const axisCameraDistance = 10;
+    const newPosition = position.clone().setLength(axisCameraDistance);
+    camera.position.set(newPosition.x, newPosition.y, newPosition.z);
+
+    // Reset position to prevent panning in axes view
+    camera.lookAt(0,0,0);
+
+    renderer.render(scene, camera);
   }
 
   bindEvents() {
@@ -332,6 +411,19 @@ export default class ThreeScene {
   }
 
   destroy() {
+    if (this.axisIndicator.isEnabled) {
+      this.el.removeChild(this.axisIndicator.canvas);
+      this.perspectiveCamera.removeEventListener('change', this.onControlsChange);
+      this.onControlsChange = null;
+      Object.assign(this.axisIndicator, {
+        isEnabled: false,
+        canvas: null,
+        camera: null,
+        scene: null,
+        renderer: null,
+      });
+    }
+
     cancelAnimationFrame(this.animationFrame);
     this.originalScene = null;
     this.camera = null;

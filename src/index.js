@@ -1,15 +1,18 @@
-import ThreeScene from './ThreeScene';
 import Entity from './Entity';
+import draft3d from './draft3d';
 import * as entities from './entities';
 
 
-const draft3d = {
-  entities: {},
-  features: {},
-  scene: new ThreeScene(),
-};
+export function initializeScene(el, sceneConfig) {
+  draft3d.scene.initialize(el, sceneConfig);
+  return draft3d.scene;
+}
 
 function register(entity, registerTo) {
+  if (entity.name === 'entityConstructor') {
+    return;
+  }
+
   const predefinedParameters = {
     position: { name: 'Position', default: [0, 0, 0] },
     rotation: { name: 'Rotation', default: [0, 0, 0] },
@@ -31,29 +34,18 @@ function register(entity, registerTo) {
     },
   };
 
-  Object.defineProperty(registerTo, entityConfig.name, {
-    get() {
-      return (params, layerSet) => new Entity(entityConfig, params, layerSet);
-    },
-  });
-}
+  const entityConstructor = (params, layerSet) => new Entity(entityConfig, params, layerSet);
+  entityConstructor.config = entityConfig;
 
-function registerEntity(entity) {
-  register(entity, draft3d.entities);
-}
-Object.values(entities).forEach(registerEntity);
+  registerTo[entityConfig.name] = entityConstructor;
 
-draft3d.registerFeature = (feature) => register(feature, draft3d.features);
-
-export function initializeScene(el, sceneConfig) {
-  draft3d.scene.initialize(el, sceneConfig);
-  return draft3d.scene;
+  return entityConstructor;
 }
 
 export function defineEntity(entityConfig) {
-  console.log(entityConfig);
-  return (params, layerSet) => new Entity(entityConfig, params, layerSet);
+  return register(entityConfig, draft3d.entities);
 }
 
+Object.values(entities).forEach(defineEntity);
 
 export default draft3d;

@@ -2,12 +2,11 @@ const config = {
   three: {
     axisIndicator: {
       isEnabled: true,
-      size: 80,
+      size: 120,
       style: {
         bottom: 0,
-        left: 0,
-        margin: '2rem',
-      }
+        left: '2rem',
+      },
     },
     camera: {
       fov: 50,
@@ -26,6 +25,6 @@ const config = {
       ],
     },
   },
-}
+};
 
 export default config;

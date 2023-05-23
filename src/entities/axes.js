@@ -2,7 +2,7 @@ import { Vector3, Object3D, ArrowHelper } from 'three';
 
 import { createText } from '../utils/geometry';
 import { createMaterial } from '../utils/material.js';
-import { defineEntity } from '../';
+import { defineEntity } from '..';
 
 
 const COLORS = {
@@ -22,11 +22,11 @@ const AXIS_EXTENSION = 1.5;
 
 const halfPI = Math.PI / 2;
 
-const calculeLength = (length) => (length) + 0.03;
+const calculateLength = (length) => (length) + 0.03;
 const createArrow = (vector, length, color, headLength, headWidth) => {
   const arrow = new ArrowHelper(vector, ORIGIN, length, color, headLength, headWidth);
-  arrow.cone.material.dispose();
-  arrow.cone.material = createMaterial(color, 1);
+  arrow.material?.dispose();
+  arrow.material = createMaterial(color, 1);
   return arrow;
 };
 
@@ -99,15 +99,15 @@ export default defineEntity({
         return setTimeout(() => setLabelPostions(retryCount + 1), RETRY_INTERVAL);
       }
 
-      xAxisLabel.position.z = -calculeLength(xAxisLength);
+      xAxisLabel.position.z = -calculateLength(xAxisLength);
       xAxisLabel.position.x -= xAxisLabel.geometry.boundingSphere.center.x;
       xAxisLabel.rotateY(-halfPI);
 
-      yAxisLabel.position.x = -calculeLength(yAxisLength);
+      yAxisLabel.position.x = -calculateLength(yAxisLength);
       yAxisLabel.position.z -= yAxisLabel.geometry.boundingSphere.center.x;
       yAxisLabel.rotateY(-halfPI);
 
-      zAxisLabel.position.y = calculeLength(zAxisLength);
+      zAxisLabel.position.y = calculateLength(zAxisLength);
       zAxisLabel.position.x -= zAxisLabel.geometry.boundingSphere.center.x;
     }());
 
@@ -131,9 +131,10 @@ export default defineEntity({
     zAxis.setLength(zAxisLength, headLength, headWidth);
 
     requestAnimationFrame(() => {
-      xAxisLabel.position.z = -calculeLength(xAxisLength);
-      yAxisLabel.position.x = -calculeLength(yAxisLength);
-      zAxisLabel.position.y = calculeLength(zAxisLength);
+      xAxisLabel.position.z = -calculateLength(xAxisLength);
+      console.log(xAxisLabel.position.z);
+      yAxisLabel.position.x = -calculateLength(yAxisLength);
+      zAxisLabel.position.y = calculateLength(zAxisLength);
     });
   },
 });

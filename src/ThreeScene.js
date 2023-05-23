@@ -4,7 +4,7 @@ import {
   Raycaster,
   AmbientLight,
   WebGLRenderer,
-  DirectionalLight as Light, AxesHelper, Vector3,
+  DirectionalLight as Light,
 } from 'three';
 
 import LayerSet from './utils/LayerSet';

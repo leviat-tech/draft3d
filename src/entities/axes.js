@@ -132,7 +132,6 @@ export default defineEntity({
 
     requestAnimationFrame(() => {
       xAxisLabel.position.z = -calculateLength(xAxisLength);
-      console.log(xAxisLabel.position.z);
       yAxisLabel.position.x = -calculateLength(yAxisLength);
       zAxisLabel.position.y = calculateLength(zAxisLength);
     });

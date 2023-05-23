@@ -15,8 +15,6 @@ import {
   planControls,
   freeControls,
 } from './utils/camera';
-import Entity from './Entity.js';
-import scene from 'three/examples/jsm/offscreen/scene.js';
 
 const defaultLights = {
   intensity: 0.5,

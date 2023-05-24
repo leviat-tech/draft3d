@@ -33,7 +33,7 @@ class Entity {
 
     this.object3d.name = entityConfig.name;
 
-    this.layerSet?.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
+    this.layerSet?.addToLayer(formattedParams.layer || this.params.layer, [this.object3d, ...this.object3d.children]);
 
     if (typeof this.params.visible === 'boolean') {
       this.setVisibility(this.params.visible);
@@ -77,7 +77,7 @@ class Entity {
 
     const formattedParams = this.formatParams(this.params);
 
-    this.layerSet?.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
+    this.layerSet?.addToLayer(formattedParams.layer || this.params.layer, [this.object3d, ...this.object3d.children]);
 
     // TODO refector entities so object3d isnt needed
     if (this.onUpdate) this.onUpdate(this.object3d, formattedParams);

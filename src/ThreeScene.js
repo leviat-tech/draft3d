@@ -215,14 +215,25 @@ export default class ThreeScene {
 
   static createAxesIndicatorCanvas(el, axisIndicatorConfig) {
     const config = { ...defaultAxesIndicatorConfig, ...axisIndicatorConfig };
+    const { size, style } = config;
     const canvas = document.createElement('canvas');
-    canvas.width = config.size;
-    canvas.height = config.size;
-    canvas.style.position = 'absolute';
+    canvas.width = size;
+    canvas.height = size;
+
+    const sizePx = size + 'px';
+
     // Mask canvas until axes rendered
-    canvas.style.opacity = 0;
+    Object.assign(canvas.style, {
+      ...style,
+      // Specify CSS size as well otherwise canvas will be rendered at size * devicePixelRatio
+      width: sizePx,
+      height: sizePx,
+      position: 'absolute',
+      // Mask canvas until axes rendered
+      opacity: 0,
+    });
+
     canvas.addEventListener('contextmenu', e => e.preventDefault());
-    Object.assign(canvas.style, config.style);
 
     el.appendChild(canvas);
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/leviat-tech/draft3d/compare/v0.5.2...v0.6.0) (2023-05-25)
+
+
+### Features
+
+* axis indicator ([aa40322](https://github.com/leviat-tech/draft3d/commit/aa4032246a9d896faee5bdfb8f3669244a3573ee))
+
 ## [0.5.2](https://github.com/leviat-tech/draft3d/compare/v0.5.1...v0.5.2) (2023-05-17)
 
 

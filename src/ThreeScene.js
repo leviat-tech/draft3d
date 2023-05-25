@@ -24,6 +24,19 @@ const defaultLights = {
   ],
 };
 
+const defaultAxesIndicatorConfig = {
+  isEnabled: true,
+  size: 120,
+  style: { bottom: 0, right: '2rem' },
+};
+
+const axisIndicatorCameraConfig = {
+  fov: 60,
+  aspect: 1,
+  near: 5,
+  far: 1000,
+};
+
 export default class ThreeScene {
   events = {
     resize: 'onResize',
@@ -33,12 +46,20 @@ export default class ThreeScene {
   };
 
   constructor() {
+    this.axisIndicator = {
+      isEnabled: false,
+      scene: null,
+      canvas: null,
+      camera: null,
+      renderer: null,
+    }
+    this.animationFrame = null;
     this.layerSet = new LayerSet();
     this.originalScene = new Scene();
   }
 
   initialize(el, config) {
-    const { use2DCamera, camera, controls, light } = config;
+    const { use2DCamera, camera, controls, light, axisIndicator = {} } = config;
 
     this.el = el;
     this.canvas = ThreeScene.createCanvas(el);
@@ -64,7 +85,9 @@ export default class ThreeScene {
       this.layerSet.addCamera(this.orthoCamera);
     }
 
-    this.renderer = this.createRenderer();
+    this.renderer = this.createRenderer(this.originalScene, this.perspectiveCamera, this.canvas, 'animationFrame');
+    this.createAxisIndicator(el, axisIndicator);
+
     this.mouse = new Vector2();
 
     this.raycaster = new Raycaster();
@@ -133,26 +156,121 @@ export default class ThreeScene {
     return directionalLight;
   }
 
-  createRenderer() {
+  createRenderer(scene, camera, canvas, enableAnimation) {
     const rendererConfig = {
-      canvas: this.canvas,
+      canvas,
       alpha: true,
       antialias: true,
     };
     const renderer = new WebGLRenderer(rendererConfig);
     renderer.setPixelRatio(window.devicePixelRatio);
-    this.startAnimation(renderer);
+    enableAnimation && this.startAnimation(renderer, scene, camera);
 
     return renderer;
   }
 
-  startAnimation(renderer) {
+  startAnimation(renderer, scene, camera) {
     const animate = () => {
       this.animationFrame = requestAnimationFrame(animate);
-      renderer.render(this.originalScene, this.camera);
+      renderer.render(scene, camera);
     };
 
     animate();
+  }
+
+  async createAxisIndicator(el, axisIndicatorConfig) {
+    if (!axisIndicatorConfig.isEnabled) return;
+
+    this.axisIndicator.isEnabled = true;
+
+    const scene = new Scene();
+    const ambientLight = new AmbientLight('#ffffff', 1);
+    scene.add(ambientLight);
+    const axes = await ThreeScene.renderAxesEntity();
+    axes.addTo(scene);
+
+    const camera = createCamera(axisIndicatorCameraConfig);
+    const canvas = ThreeScene.createAxesIndicatorCanvas(el, axisIndicatorConfig);
+    const renderer = this.createRenderer(scene, camera, canvas);
+
+    // Hacky but both timeouts are required in order for the labels to render correctly
+    setTimeout(() => this.updateAxisIndicator(renderer, scene, camera));
+    setTimeout(() => {
+      this.updateAxisIndicator(renderer, scene, camera);
+      canvas.style.opacity = 1;
+    }, 100);
+
+    this.onControlsChange = (e) => {
+      this.updateAxisIndicator(renderer, scene, camera);
+    }
+    this.perspectiveControls.addEventListener('change', this.onControlsChange);
+
+    Object.assign(this.axisIndicator, {
+      scene,
+      camera,
+      canvas,
+      renderer,
+    });
+  }
+
+  static createAxesIndicatorCanvas(el, axisIndicatorConfig) {
+    const config = { ...defaultAxesIndicatorConfig, ...axisIndicatorConfig };
+    const { size, style } = config;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+
+    const sizePx = size + 'px';
+
+    // Mask canvas until axes rendered
+    Object.assign(canvas.style, {
+      ...style,
+      // Specify CSS size as well otherwise canvas will be rendered at size * devicePixelRatio
+      width: sizePx,
+      height: sizePx,
+      position: 'absolute',
+      // Mask canvas until axes rendered
+      opacity: 0,
+    });
+
+    canvas.addEventListener('contextmenu', e => e.preventDefault());
+
+    el.appendChild(canvas);
+
+    return canvas;
+  }
+
+  static async renderAxesEntity() {
+    // Use dynamic import to prevent circular dependencies
+    const axesModule = await import('./entities/axes');
+
+    const axisLength = 2;
+    return axesModule.default({
+      headWidth: 0.3,
+      headLength: 0.5,
+      xAxisLength: axisLength,
+      yAxisLength: axisLength,
+      zAxisLength: axisLength,
+      textSize: 1,
+      position: [0, 0, 0]
+    });
+  }
+
+  updateAxisIndicator(renderer, scene, camera) {
+    const { position, rotation } = this.perspectiveCamera
+
+    const { x, y, z } = rotation;
+    camera.rotation.set(x, y, z);
+
+    // Reset vector distance from origin to prevent zooming in axes view
+    const axisCameraDistance = 10;
+    const newPosition = position.clone().setLength(axisCameraDistance);
+    camera.position.set(newPosition.x, newPosition.y, newPosition.z);
+
+    // Reset position to prevent panning in axes view
+    camera.lookAt(0,0,0);
+
+    renderer.render(scene, camera);
   }
 
   bindEvents() {
@@ -295,7 +413,7 @@ export default class ThreeScene {
   renderToImage(...options) {
     // In order to be able to call the toDataURL method on the canvas element
     // without detrimental performance by preserving the drawing buffer
-    // we need to call render syncronously and call toDataURL immediately.
+    // we need to call render synchronously and call toDataURL immediately.
     // See issue below for more info
     // https://stackoverflow.com/questions/15558418/how-do-you-save-an-image-from-a-three-js-canvas
     this.renderer.render(this.originalScene, this.perspectiveCamera);
@@ -304,6 +422,19 @@ export default class ThreeScene {
   }
 
   destroy() {
+    if (this.axisIndicator.isEnabled) {
+      this.el.removeChild(this.axisIndicator.canvas);
+      this.perspectiveCamera.removeEventListener('change', this.onControlsChange);
+      this.onControlsChange = null;
+      Object.assign(this.axisIndicator, {
+        isEnabled: false,
+        canvas: null,
+        camera: null,
+        scene: null,
+        renderer: null,
+      });
+    }
+
     cancelAnimationFrame(this.animationFrame);
     this.originalScene = null;
     this.camera = null;

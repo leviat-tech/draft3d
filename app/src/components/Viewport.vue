@@ -5,13 +5,12 @@
     <div class="absolute z-10 border-r border-b">
       <ThreeDevTools :scene="scene" class="pr-4" />
 
-
       <div class="w-48">
         <router-link v-for="i in entities"
-                     :to="`/entity/${i.name}`"
+                     :to="`/entity/${i.config.name}`"
                      class="py-2 px-4 block border-t"
         >
-          {{ i.name }}
+          {{ i.config.name }}
         </router-link>
       </div>
     </div>
@@ -26,8 +25,7 @@
 import { onMounted, computed, ref, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-import * as entities from 'draft3d/entities';
-import { initializeScene } from 'draft3d';
+import draft3d, { initializeScene } from 'draft3d';
 import Entity from 'draft3d/components/Entity.vue';
 import ThreeDevTools from 'draft3d/components/ThreeDevTools.vue';
 
@@ -45,7 +43,7 @@ const params = ref(castParameters(parameterConfig.value));
 
 const el = ref(null);
 const scene = ref(null);
-
+const entities = draft3d.entities;
 
 onMounted(() => {
   scene.value = initializeScene(el.value, config.three);
@@ -56,7 +54,7 @@ const onUpdate = (val) => {
 };
 
 watch(entity, (newEntity) => {
-  parameterConfig.value = entities[newEntity].parameters;
+  parameterConfig.value = entities[newEntity].config.parameters;
   params.value = castParameters(parameterConfig.value);
 });
 

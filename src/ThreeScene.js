@@ -156,7 +156,7 @@ export default class ThreeScene {
     return directionalLight;
   }
 
-  createRenderer(scene, camera, canvas, afKey) {
+  createRenderer(scene, camera, canvas, animationFrameKey) {
     const rendererConfig = {
       canvas,
       alpha: true,
@@ -164,14 +164,14 @@ export default class ThreeScene {
     };
     const renderer = new WebGLRenderer(rendererConfig);
     renderer.setPixelRatio(window.devicePixelRatio);
-    afKey && this.startAnimation(renderer, scene, camera, afKey);
+    animationFrameKey && this.startAnimation(renderer, scene, camera, animationFrameKey);
 
     return renderer;
   }
 
-  startAnimation(renderer, scene, camera, afKey) {
+  startAnimation(renderer, scene, camera, animationFrameKey) {
     const animate = () => {
-      this[afKey] = requestAnimationFrame(animate);
+      this[animationFrameKey] = requestAnimationFrame(animate);
       renderer.render(scene, camera);
     };
 

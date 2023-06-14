@@ -4,7 +4,6 @@ import {
   Mesh,
   MeshBasicMaterial,
   Object3D,
-  CircleGeometry,
   LineBasicMaterial,
   Line,
   BufferGeometry,
@@ -63,6 +62,51 @@ function createCrosshair(crosshairParams) {
   return crosshair;
 }
 
+function createCrosshairs(root, params) {
+  const { length, textSize, color, extension } = params;
+
+  //Overflow lines
+  const lineLength = textSize / 4;
+
+  const xAxisOverflowPoints = [
+    [-lineLength * 2, 0, -lineLength],
+    [length + lineLength * 2, 0, -lineLength],
+  ];
+
+  const xAxisLine = createPolyLine(xAxisOverflowPoints);
+  xAxisLine.position.z = extension + lineLength;
+  root.add(xAxisLine);
+
+  const zAxisOverflowPoints = [
+    [0, 0, lineLength],
+    [0, 0, -lineLength],
+    [length, 0, -lineLength],
+    [length, 0, lineLength],
+  ];
+
+  const zAxisLine = createPolyLine(zAxisOverflowPoints);
+  zAxisLine.position.z = extension + lineLength;
+  root.add(zAxisLine);
+
+  //Circles
+  const crosshairDefaults = {
+    plotPoint: 0,
+    color,
+    size: textSize / 8,
+    extension,
+  };
+
+  const startCrosshair = createCrosshair(crosshairDefaults);
+
+  root.add(startCrosshair);
+
+  const endCrosshair = createCrosshair({
+    ...crosshairDefaults,
+    plotPoint: length,
+  });
+  root.add(endCrosshair);
+}
+
 export default {
   name: 'alignedDim',
   parameters: {
@@ -81,8 +125,6 @@ export default {
 
     const { length, textSize, color, extension } = params;
 
-    const crosshairSize = textSize / 2;
-
     // Render line
     const points = [
       [0, 0, 0],
@@ -90,8 +132,10 @@ export default {
       [length, 0, extension],
       [length, 0, 0],
     ];
-    const lineObject = createPolyLine(points, color);
+    const lineObject = createPolyLine(points);
     root.add(lineObject);
+
+    createCrosshairs(root, params);
 
     // Render text
     const textValue = getTextValue(params);
@@ -110,23 +154,6 @@ export default {
     textBox.setRotationFromAxisAngle(new Vector3(1, 0, 0), Math.PI / -2);
 
     root.add(textBox);
-
-    const crosshairDefaults = {
-      plotPoint: 0,
-      color,
-      size: textSize / 2,
-      extension,
-    };
-
-    const startCrosshair = createCrosshair(crosshairDefaults);
-
-    root.add(startCrosshair);
-
-    const endCrosshair = createCrosshair({
-      ...crosshairDefaults,
-      plotPoint: length,
-    });
-    root.add(endCrosshair);
 
     // Let the text render before using its dimensions
     // to calculate the central position

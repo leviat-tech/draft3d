@@ -4,6 +4,11 @@ import {
   Mesh,
   MeshBasicMaterial,
   Object3D,
+  CircleGeometry,
+  LineBasicMaterial,
+  Line,
+  BufferGeometry,
+  Path,
 } from 'three';
 
 import {
@@ -14,13 +19,10 @@ import {
 } from '../utils/geometry';
 import { configureInteractivity } from '../utils/helpers';
 
-
 function getTextValue({ length, prefix, suffix, formatter }) {
   const lengthAsString = formatter(length) || length.toFixed(2);
 
-  return [prefix, lengthAsString, suffix]
-    .filter((val) => val)
-    .join(' ');
+  return [prefix, lengthAsString, suffix].filter((val) => val).join(' ');
 }
 
 function setTextPosition(textObject, textBox, params, retryCount = 0) {
@@ -47,16 +49,30 @@ function setTextPosition(textObject, textBox, params, retryCount = 0) {
   textBox.geometry = new BoxGeometry(x * 2, y * 2, 0);
 }
 
+function createCrosshair(crosshairParams) {
+  const { plotPoint, color, size, extension } = crosshairParams;
+  const circleGeometry = new BufferGeometry().setFromPoints(
+    new Path().absarc(plotPoint, 0, size, 0, Math.PI * 2).getSpacedPoints(32)
+  );
+
+  const circleMaterial = new LineBasicMaterial({ color });
+  const crosshair = new Line(circleGeometry, circleMaterial);
+  crosshair.position.z = extension;
+  crosshair.rotation.set(Math.PI / 2, 0, 0);
+
+  return crosshair;
+}
+
 export default {
   name: 'alignedDim',
   parameters: {
-    formatter: { name: 'Formatter', default: () => { } },
+    formatter: { name: 'Formatter', default: () => {} },
     textSize: { name: 'Text Size', precision: 0.01, default: 0.1 },
     color: { name: 'Colour', type: 'color', default: '#000000' },
     length: { name: 'Length', precision: 0.05, default: 2 },
     prefix: { name: 'Prefix', default: '' },
     suffix: { name: 'Suffix', default: '' },
-    onClick: { name: 'onClick', default: () => { } },
+    onClick: { name: 'onClick', default: () => {} },
     isInteractive: { name: 'Interactive', default: true },
     extension: { name: 'Extension', precision: 0.05, default: 0.1 },
   },
@@ -64,6 +80,8 @@ export default {
     const root = new Object3D();
 
     const { length, textSize, color, extension } = params;
+
+    const crosshairSize = textSize / 2;
 
     // Render line
     const points = [
@@ -84,11 +102,31 @@ export default {
 
     // Text surface for pointer capture
     const boxGeometry = new BoxGeometry(0, 0);
-    const boxMaterial = new MeshBasicMaterial({ opacity: 0, transparent: true });
+    const boxMaterial = new MeshBasicMaterial({
+      opacity: 0,
+      transparent: true,
+    });
     const textBox = new Mesh(boxGeometry, boxMaterial);
     textBox.setRotationFromAxisAngle(new Vector3(1, 0, 0), Math.PI / -2);
 
     root.add(textBox);
+
+    const crosshairDefaults = {
+      plotPoint: 0,
+      color,
+      size: textSize / 2,
+      extension,
+    };
+
+    const startCrosshair = createCrosshair(crosshairDefaults);
+
+    root.add(startCrosshair);
+
+    const endCrosshair = createCrosshair({
+      ...crosshairDefaults,
+      plotPoint: length,
+    });
+    root.add(endCrosshair);
 
     // Let the text render before using its dimensions
     // to calculate the central position
@@ -101,9 +139,7 @@ export default {
     return root;
   },
   update(root, newParams) {
-    const {
-      length, textSize, extension,
-    } = newParams;
+    const { length, textSize, extension } = newParams;
     const [line, text, textBox] = root.children;
 
     line.geometry.dispose();

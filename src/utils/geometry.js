@@ -14,7 +14,7 @@ import {
 } from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { Font } from 'three/examples/jsm/loaders/FontLoader';
-import fontData from '../fonts/helvetiker_regular.typeface.json';
+import fontData from '../fonts/consolas_regular.typeface.json';
 
 
 const font = new Font(fontData);

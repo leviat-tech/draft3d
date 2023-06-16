@@ -9,16 +9,13 @@ import {
   CatmullRomCurve3,
   MeshBasicMaterial,
   LineBasicMaterial,
-  CurvePath,
-  QuadraticBezierCurve3, Vector2, QuadraticBezierCurve,
+  QuadraticBezierCurve3,
 } from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { Font } from 'three/examples/jsm/loaders/FontLoader';
-import fontData from '../fonts/helvetiker_regular.typeface.json';
-
+import fontData from '../fonts/consolas_regular.typeface.json';
 
 const font = new Font(fontData);
-
 
 export function createLineGeometry(length) {
   const lineFrom = new Vector3(0, 0, 0);
@@ -43,7 +40,6 @@ export function createPolyLine(points, color = '#000000') {
   return new Line(lineGeometry, lineMaterial);
 }
 
-
 export function createTextGeometry(text, size = 0.1) {
   return new TextGeometry(text, {
     font,
@@ -61,14 +57,12 @@ export function createExtrudeGeometry(shape, depth) {
   });
 }
 
-
 export function createText(text, color, size = 0.1) {
   const material = new LineBasicMaterial({ color });
   const geometry = createTextGeometry(text, size);
 
   return new Mesh(geometry, material);
 }
-
 
 export function createPolygon(path) {
   const shape = new Shape();
@@ -81,7 +75,6 @@ export function createPolygon(path) {
 
   return shape;
 }
-
 
 export function vector2(x = 0, y = 0) {
   return { x, y };
@@ -99,7 +92,6 @@ export function dim3(width = 0, height = 0, depth = 1) {
   return { width, height, depth };
 }
 
-
 export function createPolyCurve(path) {
   const curvePath = new Shape();
 
@@ -109,7 +101,8 @@ export function createPolyCurve(path) {
     const start = new Vector3(x1, y1, 0);
     const end = new Vector3(x2, y2, 0);
 
-    const controlPoint = cx !== undefined ? new Vector3(cx, cy, 0) : new Vector3(x2, y2, 0);
+    const controlPoint =
+      cx !== undefined ? new Vector3(cx, cy, 0) : new Vector3(x2, y2, 0);
     const curve = new QuadraticBezierCurve3(start, controlPoint, end);
 
     curvePath.add(curve);
@@ -127,8 +120,12 @@ export function createCircle(radius) {
   return shape;
 }
 
-
-export function create3dPath(path, closed, curveType = 'catmullrom', tension = 0.5) {
+export function create3dPath(
+  path,
+  closed,
+  curveType = 'catmullrom',
+  tension = 0.5
+) {
   const points = [];
 
   path.forEach((point) => {

@@ -4,6 +4,10 @@ import {
   Mesh,
   MeshBasicMaterial,
   Object3D,
+  LineBasicMaterial,
+  Line,
+  BufferGeometry,
+  Path,
 } from 'three';
 
 import {
@@ -14,13 +18,10 @@ import {
 } from '../utils/geometry';
 import { configureInteractivity } from '../utils/helpers';
 
-
 function getTextValue({ length, prefix, suffix, formatter }) {
   const lengthAsString = formatter(length) || length.toFixed(2);
 
-  return [prefix, lengthAsString, suffix]
-    .filter((val) => val)
-    .join(' ');
+  return [prefix, lengthAsString, suffix].filter((val) => val).join(' ');
 }
 
 function setTextPosition(textObject, textBox, params, retryCount = 0) {
@@ -47,16 +48,75 @@ function setTextPosition(textObject, textBox, params, retryCount = 0) {
   textBox.geometry = new BoxGeometry(x * 2, y * 2, 0);
 }
 
+function createCrosshair(crosshairParams) {
+  const { plotPoint, color, size, extension } = crosshairParams;
+  const circleGeometry = new BufferGeometry().setFromPoints(
+    new Path().absarc(plotPoint, 0, size, 0, Math.PI * 2).getSpacedPoints(32)
+  );
+
+  const circleMaterial = new LineBasicMaterial({ color });
+  const crosshair = new Line(circleGeometry, circleMaterial);
+  crosshair.position.z = extension;
+  crosshair.rotation.set(Math.PI / 2, 0, 0);
+
+  return crosshair;
+}
+
+function createCrosshairs(root, params) {
+  const { length, textSize, color, extension } = params;
+
+  //Overflow lines
+  const lineLength = textSize / 4;
+
+  const xAxisOverflowPoints = [
+    [-lineLength * 2, 0, -lineLength],
+    [length + lineLength * 2, 0, -lineLength],
+  ];
+
+  const xAxisLine = createPolyLine(xAxisOverflowPoints);
+  xAxisLine.position.z = extension + lineLength;
+  root.add(xAxisLine);
+
+  const zAxisOverflowPoints = [
+    [0, 0, lineLength],
+    [0, 0, -lineLength],
+    [length, 0, -lineLength],
+    [length, 0, lineLength],
+  ];
+
+  const zAxisLine = createPolyLine(zAxisOverflowPoints);
+  zAxisLine.position.z = extension + lineLength;
+  root.add(zAxisLine);
+
+  //Circles
+  const crosshairDefaults = {
+    plotPoint: 0,
+    color,
+    size: textSize / 8,
+    extension,
+  };
+
+  const startCrosshair = createCrosshair(crosshairDefaults);
+
+  root.add(startCrosshair);
+
+  const endCrosshair = createCrosshair({
+    ...crosshairDefaults,
+    plotPoint: length,
+  });
+  root.add(endCrosshair);
+}
+
 export default {
   name: 'alignedDim',
   parameters: {
-    formatter: { name: 'Formatter', default: () => { } },
+    formatter: { name: 'Formatter', default: () => {} },
     textSize: { name: 'Text Size', precision: 0.01, default: 0.1 },
     color: { name: 'Colour', type: 'color', default: '#000000' },
     length: { name: 'Length', precision: 0.05, default: 2 },
     prefix: { name: 'Prefix', default: '' },
     suffix: { name: 'Suffix', default: '' },
-    onClick: { name: 'onClick', default: () => { } },
+    onClick: { name: 'onClick', default: () => {} },
     isInteractive: { name: 'Interactive', default: true },
     extension: { name: 'Extension', precision: 0.05, default: 0.1 },
   },
@@ -72,8 +132,10 @@ export default {
       [length, 0, extension],
       [length, 0, 0],
     ];
-    const lineObject = createPolyLine(points, color);
+    const lineObject = createPolyLine(points);
     root.add(lineObject);
+
+    createCrosshairs(root, params);
 
     // Render text
     const textValue = getTextValue(params);
@@ -84,7 +146,10 @@ export default {
 
     // Text surface for pointer capture
     const boxGeometry = new BoxGeometry(0, 0);
-    const boxMaterial = new MeshBasicMaterial({ opacity: 0, transparent: true });
+    const boxMaterial = new MeshBasicMaterial({
+      opacity: 0,
+      transparent: true,
+    });
     const textBox = new Mesh(boxGeometry, boxMaterial);
     textBox.setRotationFromAxisAngle(new Vector3(1, 0, 0), Math.PI / -2);
 
@@ -101,9 +166,7 @@ export default {
     return root;
   },
   update(root, newParams) {
-    const {
-      length, textSize, extension,
-    } = newParams;
+    const { length, textSize, extension } = newParams;
     const [line, text, textBox] = root.children;
 
     line.geometry.dispose();

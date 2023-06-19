@@ -1,7 +1,7 @@
 import { CylinderGeometry, Mesh } from 'three';
 import { configureInteractivity } from '../utils/helpers';
 import { createMaterial, updateMaterial } from '../utils/material';
-import { defineEntity } from '../defineEntity.js';
+import { defineEntity } from '../defineEntity';
 
 
 function getRadius(params) {

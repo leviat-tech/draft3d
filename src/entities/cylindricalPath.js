@@ -10,7 +10,7 @@ import {
   createPolyCurve,
   replaceGeometry,
 } from '../utils/geometry';
-import { defineEntity } from '../defineEntity.js';
+import { defineEntity } from '../defineEntity';
 
 
 const START = 0;

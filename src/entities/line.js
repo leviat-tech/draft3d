@@ -1,5 +1,5 @@
 import { Vector3, BufferGeometry, Line, LineBasicMaterial } from 'three';
-import { defineEntity } from '../defineEntity.js';
+import { defineEntity } from '../defineEntity';
 
 
 export default defineEntity({

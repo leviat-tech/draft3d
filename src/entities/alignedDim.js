@@ -17,7 +17,7 @@ import {
   createTextGeometry,
 } from '../utils/geometry';
 import { configureInteractivity } from '../utils/helpers';
-import { defineEntity } from '../defineEntity.js';
+import { defineEntity } from '../defineEntity';
 
 
 function getTextValue({ length, prefix, suffix, formatter }) {

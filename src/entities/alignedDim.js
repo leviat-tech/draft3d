@@ -17,6 +17,7 @@ import {
   createTextGeometry,
 } from '../utils/geometry';
 import { configureInteractivity } from '../utils/helpers';
+import defineEntity from '../defineEntity.js';
 
 function getTextValue({ length, prefix, suffix, formatter }) {
   const lengthAsString = formatter(length) || length.toFixed(2);
@@ -107,7 +108,7 @@ function createCrosshairs(root, params) {
   root.add(endCrosshair);
 }
 
-export default {
+export default defineEntity({
   name: 'alignedDim',
   parameters: {
     formatter: { name: 'Formatter', default: () => {} },
@@ -188,4 +189,4 @@ export default {
 
     configureInteractivity(textBox, newParams);
   },
-};
+});

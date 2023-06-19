@@ -1,6 +1,7 @@
 import { CylinderGeometry, Mesh } from 'three';
 import { configureInteractivity } from '../utils/helpers';
 import { createMaterial, updateMaterial } from '../utils/material';
+import defineEntity from '../defineEntity.js';
 
 
 function getRadius(params) {
@@ -12,7 +13,7 @@ function getRadius(params) {
   }
 }
 
-export default {
+export default defineEntity({
   name: 'cylinder',
   parameters: {
     radius: { name: 'Radius', type: 'number' },
@@ -46,4 +47,4 @@ export default {
 
     configureInteractivity(object3d, newParams);
   },
-};
+});

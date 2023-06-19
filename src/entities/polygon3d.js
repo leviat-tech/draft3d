@@ -5,7 +5,7 @@ import { createMaterial, updateMaterial } from '../utils/material';
 import { createExtrudeGeometry, createPolygon } from '../utils/geometry';
 
 
-export default {
+export default defineEntity({
   name: 'polygon3d',
   parameters: {
     depth: { name: 'Depth', precision: 0.1, default: 1 },
@@ -49,4 +49,4 @@ export default {
 
     configureInteractivity(object3d, newParams);
   },
-};
+});

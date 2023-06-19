@@ -5,7 +5,7 @@ import {
 import { createMaterial, updateMaterial } from '../utils/material';
 
 
-export default {
+export default defineEntity({
   name: 'cylindricalArrow',
   parameters: {
     color: { name: 'color', default: '#6666aa' },
@@ -50,4 +50,4 @@ export default {
       cone.position.y = length;
     });
   },
-};
+});

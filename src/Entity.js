@@ -113,7 +113,7 @@ class Entity {
       throw new Error('Feature Name already in use');
     }
 
-    const constructor = this.isEntity(type) ? draft3d.entities[type] : draft3d.features[type];
+    const constructor = draft3d.entities[type];
     const feat = constructor(params, this.layerSet);
     this.features[name] = feat;
     this.add(feat.object3d);
@@ -127,7 +127,7 @@ class Entity {
     } else if (!(this.features[arrayName] instanceof Array)) {
       throw new Error('Feature Name already in use for non-iterable feature');
     }
-    const constructor = this.isEntity(type) ? draft3d.entities[type] : draft3d.features[type];
+    const constructor = draft3d.entities[type];
     const feat = constructor(params, this.layerSet);
     this.features[arrayName].push(feat);
     this.add(feat.object3d);
@@ -151,11 +151,6 @@ class Entity {
   destroy() {
     console.log('I\'m dead.');
   }
-
-  isEntity(name) {
-    return draft3d.entities[name] !== undefined;
-  }
-
 }
 
 export default Entity;

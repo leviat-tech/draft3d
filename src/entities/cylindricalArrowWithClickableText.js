@@ -12,7 +12,7 @@ const LABEL_COLOR = '#000000';
 
 const createLabel = (text, textSize) => createText(text, LABEL_COLOR, textSize);
 
-export default {
+export default defineEntity({
   name: 'cylindricalArrowWithClickableText',
   parameters: {
     text: { name: 'text', default: '' },
@@ -42,4 +42,4 @@ export default {
   update(object3d, newParams) {
     configureInteractivity(object3d, newParams);
   },
-};
+});

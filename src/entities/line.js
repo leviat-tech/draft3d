@@ -1,7 +1,8 @@
 import { Vector3, BufferGeometry, Line, LineBasicMaterial } from 'three';
+import defineEntity from '../defineEntity.js';
 
 
-export default {
+export default defineEntity({
   name: 'line',
   parameters: {
     length: { name: 'length', type: 'number', default: 1 },
@@ -42,4 +43,4 @@ export default {
     object3d.geometry = new BufferGeometry().setFromPoints(points);
     object3d.material = material;
   },
-};
+});

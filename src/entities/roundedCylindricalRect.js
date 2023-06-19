@@ -1,5 +1,6 @@
 import { Shape } from 'three';
 import cylindricalPath from './cylindricalPath';
+import defineEntity from '../defineEntity.js';
 
 
 function generateShape({ width, height, bendRadius }) {
@@ -27,7 +28,7 @@ const defaultParams = {
   curveType: 'centripetal',
 };
 
-export default {
+export default defineEntity({
   name: 'roundedCylindricalRect',
   parameters: {
     width: { name: 'width', default: 3 },
@@ -66,4 +67,4 @@ export default {
       path: generateShape({ width, height, bendRadius }).getPoints(),
     }).geometry;
   },
-};
+});

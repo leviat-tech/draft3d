@@ -10,6 +10,7 @@ import {
   createPolyCurve,
   replaceGeometry,
 } from '../utils/geometry';
+import defineEntity from '../defineEntity.js';
 
 
 const START = 0;
@@ -47,7 +48,7 @@ function getCapGeometry(curve, t, tubeGeometry) {
   return pointsGeometry;
 }
 
-export default {
+export default defineEntity({
   name: 'cylindricalPath',
   parameters: {
     tension: { name: 'tension', default: 0.5 },
@@ -130,4 +131,4 @@ export default {
       endCap?.geometry?.dispose();
     }
   },
-};
+});

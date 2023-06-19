@@ -1,8 +1,8 @@
 import { Vector3, Object3D, ArrowHelper } from 'three';
 
 import { createText } from '../utils/geometry';
-import { createMaterial } from '../utils/material.js';
-import { defineEntity } from '..';
+import { createMaterial } from '../utils/material';
+import { defineEntity } from '../defineEntity';
 
 
 const COLORS = {

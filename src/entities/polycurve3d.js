@@ -5,7 +5,7 @@ import { createMaterial, updateMaterial } from '../utils/material';
 import { createExtrudeGeometry, createPolyCurve } from '../utils/geometry';
 
 
-export default {
+export default defineEntity({
   name: 'polycurve3d',
   parameters: {
     depth: { name: 'Depth', precision: 0.1, default: 1 },
@@ -49,4 +49,4 @@ export default {
 
     configureInteractivity(object3d, newParams);
   },
-};
+});

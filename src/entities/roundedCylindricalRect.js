@@ -1,6 +1,6 @@
 import { Shape } from 'three';
 import cylindricalPath from './cylindricalPath';
-import defineEntity from '../defineEntity.js';
+import { defineEntity } from '../defineEntity';
 
 
 function generateShape({ width, height, bendRadius }) {
@@ -43,7 +43,7 @@ export default defineEntity({
       bendRadius, width, height, color, opacity, shapeRadius,
     } = params;
 
-    return cylindricalPath.render({
+    return cylindricalPath.config.render({
       ...defaultParams,
       color,
       opacity,
@@ -58,7 +58,7 @@ export default defineEntity({
 
     object3d.geometry?.dispose();
 
-    object3d.geometry = cylindricalPath.render({
+    object3d.geometry = cylindricalPath.config.render({
       ...defaultParams,
 
       color,

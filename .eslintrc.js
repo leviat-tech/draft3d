@@ -49,7 +49,7 @@ module.exports = {
       },
     ],
     'import/extensions': ['error', 'ignorePackages', {
-      js: 'always',
+      js: 'never',
       vue: 'always',
       json: 'always',
     }],

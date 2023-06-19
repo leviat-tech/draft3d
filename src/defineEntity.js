@@ -1,13 +1,10 @@
 import Entity from './Entity';
+import { registerEntity } from './draft3d';
 
 
 const noop = () => {};
 
-export default function defineEntity(entity) {
-  if (entity.name === 'entityConstructor') {
-    return entity;
-  }
-
+function createFactory(entity) {
   const predefinedParameters = {
     position: { name: 'Position', default: [0, 0, 0] },
     rotation: { name: 'Rotation', default: [0, 0, 0] },
@@ -29,8 +26,16 @@ export default function defineEntity(entity) {
     },
   };
 
-  const entityConstructor = (params, layerSet) => new Entity(entityConfig, params, layerSet);
-  entityConstructor.config = entityConfig;
+  const factory = (params, layerSet) => new Entity(entityConfig, params, layerSet);
+  factory.config = entityConfig;
 
-  return entityConstructor;
+  return factory;
+}
+
+export function defineEntity(entityConfig) {
+  return registerEntity(createFactory(entityConfig), 'entities');
+}
+
+export function defineFeature(entityConfig) {
+  return registerEntity(createFactory(entityConfig), 'features');
 }

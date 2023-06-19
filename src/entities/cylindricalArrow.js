@@ -3,6 +3,7 @@ import {
 } from 'three';
 
 import { createMaterial, updateMaterial } from '../utils/material';
+import { defineEntity } from '../defineEntity';
 
 
 export default defineEntity({

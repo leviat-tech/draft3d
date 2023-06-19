@@ -6,6 +6,7 @@ import cylindricalArrow from './cylindricalArrow';
 import roundedCylindricalArrow from './roundedCylindricalArrow';
 
 import { configureInteractivity } from '../utils/helpers';
+import { defineEntity } from '../defineEntity';
 
 
 const LABEL_COLOR = '#000000';
@@ -29,8 +30,8 @@ export default defineEntity({
     const text = createLabel(params.text, params.textSize);
     const textBox = createTextBox(onClick);
     const arrow = isRounded
-      ? roundedCylindricalArrow.render({ color, layer })
-      : cylindricalArrow.render({ length, color, layer });
+      ? roundedCylindricalArrow.config.render({ color, layer })
+      : cylindricalArrow.config.render({ length, color, layer });
 
     configureInteractivity(textBox, params);
 

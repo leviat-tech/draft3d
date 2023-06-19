@@ -3,6 +3,7 @@ import { Mesh } from 'three';
 import { configureInteractivity } from '../utils/helpers';
 import { createMaterial, updateMaterial } from '../utils/material';
 import { createExtrudeGeometry, createPolyCurve } from '../utils/geometry';
+import { defineEntity } from '../defineEntity';
 
 
 export default defineEntity({

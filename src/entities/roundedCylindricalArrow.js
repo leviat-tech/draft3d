@@ -5,7 +5,7 @@ import {
 import { createCircle } from '../utils/geometry';
 
 import { createMaterial, updateMaterial } from '../utils/material';
-import defineEntity from '../defineEntity.js';
+import { defineEntity } from '../defineEntity.js';
 
 
 const { PI } = Math;

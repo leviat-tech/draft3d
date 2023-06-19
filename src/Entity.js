@@ -1,5 +1,5 @@
 import { Object3D } from 'three';
-import draft3d from '.';
+import draft3d from './draft3d';
 
 
 class Entity {
@@ -113,7 +113,7 @@ class Entity {
       throw new Error('Feature Name already in use');
     }
 
-    const constructor = draft3d.entities[type];
+    const constructor = draft3d.repository[type];
     const feat = constructor(params, this.layerSet);
     this.features[name] = feat;
     this.add(feat.object3d);
@@ -127,7 +127,7 @@ class Entity {
     } else if (!(this.features[arrayName] instanceof Array)) {
       throw new Error('Feature Name already in use for non-iterable feature');
     }
-    const constructor = draft3d.entities[type];
+    const constructor = draft3d.repository[type];
     const feat = constructor(params, this.layerSet);
     this.features[arrayName].push(feat);
     this.add(feat.object3d);

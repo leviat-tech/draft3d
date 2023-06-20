@@ -11,7 +11,14 @@ const draft3d = {
 };
 
 export function registerEntity(entity, registerTo) {
-  draft3d[registerTo][entity.config.name] = entity;
+  const { name } = entity.config;
+
+  if (draft3d.repository[name]) {
+    throw new Error(`Cannot register ${name} as it already exists`);
+  }
+
+  draft3d[registerTo][name] = entity;
+
   return entity;
 }
 

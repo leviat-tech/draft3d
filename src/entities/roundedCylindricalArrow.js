@@ -5,11 +5,12 @@ import {
 import { createCircle } from '../utils/geometry';
 
 import { createMaterial, updateMaterial } from '../utils/material';
+import { defineEntity } from '../defineEntity';
 
 
 const { PI } = Math;
 
-export default {
+export default defineEntity({
   name: 'roundedCylindricalArrow',
   parameters: {
     color: { name: 'color', default: '#6666aa' },
@@ -58,4 +59,4 @@ export default {
       updateMaterial(object3D, params.color, 1);
     });
   },
-};
+});

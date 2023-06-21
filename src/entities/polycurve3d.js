@@ -3,9 +3,10 @@ import { Mesh } from 'three';
 import { configureInteractivity } from '../utils/helpers';
 import { createMaterial, updateMaterial } from '../utils/material';
 import { createExtrudeGeometry, createPolyCurve } from '../utils/geometry';
+import { defineEntity } from '../defineEntity';
 
 
-export default {
+export default defineEntity({
   name: 'polycurve3d',
   parameters: {
     depth: { name: 'Depth', precision: 0.1, default: 1 },
@@ -49,4 +50,4 @@ export default {
 
     configureInteractivity(object3d, newParams);
   },
-};
+});

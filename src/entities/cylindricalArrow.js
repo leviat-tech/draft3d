@@ -3,9 +3,10 @@ import {
 } from 'three';
 
 import { createMaterial, updateMaterial } from '../utils/material';
+import { defineEntity } from '../defineEntity';
 
 
-export default {
+export default defineEntity({
   name: 'cylindricalArrow',
   parameters: {
     color: { name: 'color', default: '#6666aa' },
@@ -50,4 +51,4 @@ export default {
       cone.position.y = length;
     });
   },
-};
+});

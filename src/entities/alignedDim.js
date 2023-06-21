@@ -17,6 +17,8 @@ import {
   createTextGeometry,
 } from '../utils/geometry';
 import { configureInteractivity } from '../utils/helpers';
+import { defineEntity } from '../defineEntity';
+
 
 function getTextValue({ length, prefix, suffix, formatter }) {
   const lengthAsString = formatter(length) || length.toFixed(2);
@@ -51,7 +53,7 @@ function setTextPosition(textObject, textBox, params, retryCount = 0) {
 function createCrosshair(crosshairParams) {
   const { plotPoint, color, size, extension } = crosshairParams;
   const circleGeometry = new BufferGeometry().setFromPoints(
-    new Path().absarc(plotPoint, 0, size, 0, Math.PI * 2).getSpacedPoints(32)
+    new Path().absarc(plotPoint, 0, size, 0, Math.PI * 2).getSpacedPoints(32),
   );
 
   const circleMaterial = new LineBasicMaterial({ color });
@@ -65,7 +67,7 @@ function createCrosshair(crosshairParams) {
 function createCrosshairs(root, params) {
   const { length, textSize, color, extension } = params;
 
-  //Overflow lines
+  // Overflow lines
   const lineLength = textSize / 4;
 
   const xAxisOverflowPoints = [
@@ -88,7 +90,7 @@ function createCrosshairs(root, params) {
   zAxisLine.position.z = extension + lineLength;
   root.add(zAxisLine);
 
-  //Circles
+  // Circles
   const crosshairDefaults = {
     plotPoint: 0,
     color,
@@ -107,7 +109,7 @@ function createCrosshairs(root, params) {
   root.add(endCrosshair);
 }
 
-export default {
+export default defineEntity({
   name: 'alignedDim',
   parameters: {
     formatter: { name: 'Formatter', default: () => {} },
@@ -188,4 +190,4 @@ export default {
 
     configureInteractivity(textBox, newParams);
   },
-};
+});

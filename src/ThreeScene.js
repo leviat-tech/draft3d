@@ -37,7 +37,7 @@ const axisIndicatorCameraConfig = {
   far: 1000,
 };
 
-export default class ThreeScene {
+class ThreeScene {
   events = {
     resize: 'onResize',
     click: 'onMouseDown',
@@ -447,3 +447,5 @@ export default class ThreeScene {
     this.unbindEvents();
   }
 }
+
+export default ThreeScene;

@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.0](https://github.com/leviat-tech/draft3d/compare/v0.6.0...v1.0.0) (2023-06-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* features must now be defined by calling `defineFeature`
+
+### Features
+
+* refactor entities to use defineEntity ([d93f560](https://github.com/leviat-tech/draft3d/commit/d93f56024eee59fc5d032a65630e12b9fb09f093))
+* update dimension font to monospace and add crosshairs to dimension lines ([c677c1d](https://github.com/leviat-tech/draft3d/commit/c677c1d3d84d7e9fb8f2f8f1795290104f68fc96))
+
 ## [0.6.0](https://github.com/leviat-tech/draft3d/compare/v0.5.2...v0.6.0) (2023-05-25)
 
 

@@ -50,14 +50,13 @@ function setTextPosition(textObject, textBox, params, retryCount = 0) {
 }
 
 function createCrosshair(crosshairParams) {
-  const { plotPoint, color, size, extension } = crosshairParams;
+  const { color, size } = crosshairParams;
   const circleGeometry = new BufferGeometry().setFromPoints(
-    new Path().absarc(plotPoint, 0, size, 0, Math.PI * 2).getSpacedPoints(32)
+    new Path().absarc(0, 0, size, 0, Math.PI * 2).getSpacedPoints(32)
   );
 
   const circleMaterial = new LineBasicMaterial({ color });
   const crosshair = new Line(circleGeometry, circleMaterial);
-  crosshair.position.z = extension;
   crosshair.rotation.set(Math.PI / 2, 0, 0);
 
   return crosshair;
@@ -95,19 +94,12 @@ function createCrosshairs(params) {
 
   // Circles
   const crosshairDefaults = {
-    plotPoint: 0,
     color,
     size: textSize / 8,
-    extension,
   };
 
   const startCrosshair = createCrosshair(crosshairDefaults);
-
-  const endCrosshair = createCrosshair({
-    ...crosshairDefaults,
-    plotPoint: length,
-    extension,
-  });
+  const endCrosshair = createCrosshair({ ...crosshairDefaults, color: 'red' });
 
   return [
     startXAxisLine,
@@ -173,6 +165,11 @@ export default defineEntity({
       startCrosshair,
       endCrosshair,
     ] = createCrosshairs(params);
+
+    startCrosshair.position.z = extension;
+    endCrosshair.position.z = extension;
+    endCrosshair.position.x = length;
+
     root.add(startXAxisLine);
     root.add(startZAxisLine);
     root.add(endXAxisLine);
@@ -217,22 +214,15 @@ export default defineEntity({
     textObject.geometry.dispose();
     textObject.geometry = createTextGeometry(textValue, textSize);
 
-    const overflowLineStartPosition = extension - newParams.textSize;
-    const overflowLineXPosition = extension;
+    startXAxisLine.position.z = extension - textSize;
+    startZAxisLine.position.z = extension - textSize;
 
-    startXAxisLine.position.z = overflowLineStartPosition;
-    startZAxisLine.position.z = overflowLineStartPosition;
+    endXAxisLine.position.z = 0;
+    endZAxisLine.position.z = 0;
+
     startCrosshair.position.z = extension;
-
-    endXAxisLine.position.z = overflowLineStartPosition;
-    endZAxisLine.position.z = overflowLineStartPosition;
-
-    //endXAxisLine.position.x = 0;
-    //endZAxisLine.position.x = 0;
-
-    //endCrosshair.position.x = 0;
     endCrosshair.position.z = extension;
-    //endCrosshair.position.x = length;
+    endCrosshair.position.x = length;
 
     requestAnimationFrame(() => {
       setTextPosition(textObject, textBox, newParams);

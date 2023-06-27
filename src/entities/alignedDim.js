@@ -77,6 +77,37 @@ function createCrosshairs(params) {
   return [startCrosshair, endCrosshair];
 }
 
+function createLines(params) {
+  const { length, textSize, extension } = params;
+
+  const overflowLineLength = textSize / 4;
+
+  //mainLine.geometry.dispose();
+  const mainLinePoints = [
+    [-overflowLineLength, 0, extension],
+    [length + overflowLineLength, 0, extension],
+  ];
+  const mainLine = createPolyLine(mainLinePoints);
+
+  const startLinePoints = [
+    [0, 0, 0],
+    [0, 0, extension + overflowLineLength],
+  ];
+
+  //startLine.geometry.dispose();
+  const startLine = createPolyLine(startLinePoints);
+
+  const endLinePoints = [
+    [length, 0, 0],
+    [length, 0, extension + overflowLineLength],
+  ];
+
+  //endLine.geometry.dispose();
+  const endLine = createPolyLine(endLinePoints);
+
+  return [mainLine, startLine, endLine];
+}
+
 export default defineEntity({
   name: 'alignedDim',
   parameters: {
@@ -95,34 +126,7 @@ export default defineEntity({
 
     const { length, textSize, color, extension } = params;
 
-    const overflowLineLength = textSize / 4;
-
-    // Render line
-    // const points = [
-    //   [0, 0, 0],
-    //   [0, 0, extension],
-    //   [length, 0, extension],
-    //   [length, 0, 0],
-    // ];
-
-    //need to be overflow length/2 at each end
-    const mainLinePoints = [
-      [-overflowLineLength, 0, extension],
-      [length + overflowLineLength, 0, extension],
-    ];
-    const mainLine = createPolyLine(mainLinePoints);
-
-    const startLinePoints = [
-      [0, 0, 0],
-      [0, 0, extension + overflowLineLength],
-    ];
-    const startLine = createPolyLine(startLinePoints);
-
-    const endLinePoints = [
-      [length, 0, 0],
-      [length, 0, extension + overflowLineLength],
-    ];
-    const endLine = createPolyLine(endLinePoints);
+    const [mainLine, startLine, endLine] = createLines(params);
 
     const [startCrosshair, endCrosshair] = createCrosshairs(params);
 
@@ -167,8 +171,6 @@ export default defineEntity({
   update(root, newParams) {
     const { length, textSize, extension } = newParams;
 
-    const overflowLineLength = textSize / 4;
-
     let [
       mainLine,
       startLine,
@@ -180,30 +182,17 @@ export default defineEntity({
     ] = root.children;
 
     mainLine.geometry.dispose();
-    const mainLinePoints = [
-      [-overflowLineLength, 0, extension],
-      [length + overflowLineLength, 0, extension],
-    ];
-    mainLine.geometry = createPolyLineGeometry(mainLinePoints);
-
-    const startLinePoints = [
-      [0, 0, 0],
-      [0, 0, extension + overflowLineLength],
-    ];
-
     startLine.geometry.dispose();
-    startLine.geometry = createPolyLineGeometry(startLinePoints);
-
-    const endLinePoints = [
-      [length, 0, 0],
-      [length, 0, extension + overflowLineLength],
-    ];
-
     endLine.geometry.dispose();
-    endLine.geometry = createPolyLineGeometry(endLinePoints);
+    textObject.geometry.dispose();
+
+    const [main, start, end] = createLines(newParams);
+
+    mainLine.geometry = main.geometry;
+    startLine.geometry = start.geometry;
+    endLine.geometry = end.geometry;
 
     const textValue = getTextValue(newParams);
-    textObject.geometry.dispose();
     textObject.geometry = createTextGeometry(textValue, textSize);
 
     startCrosshair.position.z = extension;

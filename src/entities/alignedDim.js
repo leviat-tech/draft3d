@@ -174,6 +174,8 @@ export default defineEntity({
       endCrosshair,
     ] = root.children;
 
+    const overflowLineLength = newParams.textSize / 4;
+
     lineObject.geometry.dispose();
     const points = [
       [0, 0, 0],
@@ -187,16 +189,11 @@ export default defineEntity({
     textObject.geometry.dispose();
     textObject.geometry = createTextGeometry(textValue, textSize);
 
-    const [x, z, s, e] = createCrosshairs(newParams);
+    const overflowLinePosition = extension - newParams.textSize;
 
-    xAxisLine.geometry.dispose();
-    zAxisLine.geometry.dispose();
-    startCrosshair.geometry.dispose();
-    endCrosshair.geometry.dispose();
-    //xAxisLine = x;
-    //zAxisLine = z;
-    //startCrosshair = s;
-    //endCrosshair = e;
+    xAxisLine.position.z = overflowLinePosition;
+    zAxisLine.position.z = overflowLinePosition;
+    startCrosshair.position.z = extension;
 
     requestAnimationFrame(() => {
       setTextPosition(textObject, textBox, newParams);

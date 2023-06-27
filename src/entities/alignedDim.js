@@ -73,13 +73,25 @@ function createCrosshairs(params) {
     [0, 0, extension],
     [-overflowLineLength, 0, extension],
   ];
-  const startXAxisLine = createPolyLine(startXAxisOverflowPoints, '#ff0000');
+  const startXAxisLine = createPolyLine(startXAxisOverflowPoints, 'red');
 
   const startZAxisOverflowPoints = [
     [0, 0, extension],
     [0, 0, extension + overflowLineLength],
   ];
-  const startZAxisLine = createPolyLine(startZAxisOverflowPoints, '#00ff00');
+  const startZAxisLine = createPolyLine(startZAxisOverflowPoints, 'green');
+
+  const endXAxisOverflowPoints = [
+    [length, 0, extension],
+    [length + overflowLineLength, 0, extension],
+  ];
+  const endXAxisLine = createPolyLine(endXAxisOverflowPoints, 'orange');
+
+  const endZAxisOverflowPoints = [
+    [length, 0, extension],
+    [length, 0, extension + overflowLineLength],
+  ];
+  const endZAxisLine = createPolyLine(endZAxisOverflowPoints, 'cyan');
 
   // Circles
   const crosshairDefaults = {
@@ -97,7 +109,14 @@ function createCrosshairs(params) {
     extension,
   });
 
-  return [startXAxisLine, startZAxisLine, startCrosshair, endCrosshair];
+  return [
+    startXAxisLine,
+    startZAxisLine,
+    endXAxisLine,
+    endZAxisLine,
+    startCrosshair,
+    endCrosshair,
+  ];
 }
 
 export default defineEntity({
@@ -106,7 +125,7 @@ export default defineEntity({
     formatter: { name: 'Formatter', default: () => {} },
     textSize: { name: 'Text Size', precision: 0.01, default: 0.1 },
     color: { name: 'Colour', type: 'color', default: '#000000' },
-    length: { name: 'Length', precision: 0.05, default: 2 },
+    length: { name: 'Length', precision: 0.05, default: 1 },
     prefix: { name: 'Prefix', default: '' },
     suffix: { name: 'Suffix', default: '' },
     onClick: { name: 'onClick', default: () => {} },
@@ -146,11 +165,20 @@ export default defineEntity({
 
     root.add(textBox);
 
-    const [x, z, s, e] = createCrosshairs(params);
-    root.add(x);
-    root.add(z);
-    root.add(s);
-    root.add(e);
+    const [
+      startXAxisLine,
+      startZAxisLine,
+      endXAxisLine,
+      endZAxisLine,
+      startCrosshair,
+      endCrosshair,
+    ] = createCrosshairs(params);
+    root.add(startXAxisLine);
+    root.add(startZAxisLine);
+    root.add(endXAxisLine);
+    root.add(endZAxisLine);
+    root.add(startCrosshair);
+    root.add(endCrosshair);
 
     // Let the text render before using its dimensions
     // to calculate the central position
@@ -168,13 +196,13 @@ export default defineEntity({
       lineObject,
       textObject,
       textBox,
-      xAxisLine,
-      zAxisLine,
+      startXAxisLine,
+      startZAxisLine,
+      endXAxisLine,
+      endZAxisLine,
       startCrosshair,
       endCrosshair,
     ] = root.children;
-
-    const overflowLineLength = newParams.textSize / 4;
 
     lineObject.geometry.dispose();
     const points = [
@@ -189,11 +217,22 @@ export default defineEntity({
     textObject.geometry.dispose();
     textObject.geometry = createTextGeometry(textValue, textSize);
 
-    const overflowLinePosition = extension - newParams.textSize;
+    const overflowLineStartPosition = extension - newParams.textSize;
+    const overflowLineXPosition = extension;
 
-    xAxisLine.position.z = overflowLinePosition;
-    zAxisLine.position.z = overflowLinePosition;
+    startXAxisLine.position.z = overflowLineStartPosition;
+    startZAxisLine.position.z = overflowLineStartPosition;
     startCrosshair.position.z = extension;
+
+    endXAxisLine.position.z = overflowLineStartPosition;
+    endZAxisLine.position.z = overflowLineStartPosition;
+
+    //endXAxisLine.position.x = 0;
+    //endZAxisLine.position.x = 0;
+
+    //endCrosshair.position.x = 0;
+    endCrosshair.position.z = extension;
+    //endCrosshair.position.x = length;
 
     requestAnimationFrame(() => {
       setTextPosition(textObject, textBox, newParams);

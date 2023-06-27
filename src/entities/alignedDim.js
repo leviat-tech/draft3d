@@ -125,9 +125,7 @@ export default defineEntity({
     const root = new Object3D();
 
     const { length, textSize, color, extension } = params;
-
     const [mainLine, startLine, endLine] = createLines(params);
-
     const [startCrosshair, endCrosshair] = createCrosshairs(params);
 
     startCrosshair.position.z = extension;
@@ -149,13 +147,15 @@ export default defineEntity({
     const textBox = new Mesh(boxGeometry, boxMaterial);
     textBox.setRotationFromAxisAngle(new Vector3(1, 0, 0), Math.PI / -2);
 
-    root.add(mainLine);
-    root.add(startLine);
-    root.add(endLine);
-    root.add(startCrosshair);
-    root.add(endCrosshair);
-    root.add(textObject);
-    root.add(textBox);
+    [
+      mainLine,
+      startLine,
+      endLine,
+      startCrosshair,
+      endCrosshair,
+      textObject,
+      textBox,
+    ].forEach((x) => root.add(x));
 
     // Let the text render before using its dimensions
     // to calculate the central position
@@ -181,10 +181,9 @@ export default defineEntity({
       textBox,
     ] = root.children;
 
-    mainLine.geometry.dispose();
-    startLine.geometry.dispose();
-    endLine.geometry.dispose();
-    textObject.geometry.dispose();
+    [mainLine, startLine, endLine, textObject].forEach((x) =>
+      x.geometry.dispose()
+    );
 
     const [main, start, end] = createLines(newParams);
 

@@ -19,7 +19,6 @@ import {
 import { configureInteractivity } from '../utils/helpers';
 import { defineEntity } from '../defineEntity';
 
-
 function getTextValue({ length, prefix, suffix, formatter }) {
   const lengthAsString = formatter(length) || length.toFixed(2);
 
@@ -53,7 +52,7 @@ function setTextPosition(textObject, textBox, params, retryCount = 0) {
 function createCrosshair(crosshairParams) {
   const { plotPoint, color, size, extension } = crosshairParams;
   const circleGeometry = new BufferGeometry().setFromPoints(
-    new Path().absarc(plotPoint, 0, size, 0, Math.PI * 2).getSpacedPoints(32),
+    new Path().absarc(plotPoint, 0, size, 0, Math.PI * 2).getSpacedPoints(32)
   );
 
   const circleMaterial = new LineBasicMaterial({ color });
@@ -64,31 +63,23 @@ function createCrosshair(crosshairParams) {
   return crosshair;
 }
 
-function createCrosshairs(root, params) {
+function createCrosshairs(params) {
   const { length, textSize, color, extension } = params;
 
   // Overflow lines
-  const lineLength = textSize / 4;
+  const overflowLineLength = textSize / 4;
 
-  const xAxisOverflowPoints = [
-    [-lineLength * 2, 0, -lineLength],
-    [length + lineLength * 2, 0, -lineLength],
+  const startXAxisOverflowPoints = [
+    [0, 0, extension],
+    [-overflowLineLength, 0, extension],
   ];
+  const startXAxisLine = createPolyLine(startXAxisOverflowPoints, '#ff0000');
 
-  const xAxisLine = createPolyLine(xAxisOverflowPoints);
-  xAxisLine.position.z = extension + lineLength;
-  root.add(xAxisLine);
-
-  const zAxisOverflowPoints = [
-    [0, 0, lineLength],
-    [0, 0, -lineLength],
-    [length, 0, -lineLength],
-    [length, 0, lineLength],
+  const startZAxisOverflowPoints = [
+    [0, 0, extension],
+    [0, 0, extension + overflowLineLength],
   ];
-
-  const zAxisLine = createPolyLine(zAxisOverflowPoints);
-  zAxisLine.position.z = extension + lineLength;
-  root.add(zAxisLine);
+  const startZAxisLine = createPolyLine(startZAxisOverflowPoints, '#00ff00');
 
   // Circles
   const crosshairDefaults = {
@@ -100,13 +91,13 @@ function createCrosshairs(root, params) {
 
   const startCrosshair = createCrosshair(crosshairDefaults);
 
-  root.add(startCrosshair);
-
   const endCrosshair = createCrosshair({
     ...crosshairDefaults,
     plotPoint: length,
+    extension,
   });
-  root.add(endCrosshair);
+
+  return [startXAxisLine, startZAxisLine, startCrosshair, endCrosshair];
 }
 
 export default defineEntity({
@@ -137,8 +128,6 @@ export default defineEntity({
     const lineObject = createPolyLine(points);
     root.add(lineObject);
 
-    createCrosshairs(root, params);
-
     // Render text
     const textValue = getTextValue(params);
     const textObject = createText(textValue, color, textSize);
@@ -157,6 +146,12 @@ export default defineEntity({
 
     root.add(textBox);
 
+    const [x, z, s, e] = createCrosshairs(params);
+    root.add(x);
+    root.add(z);
+    root.add(s);
+    root.add(e);
+
     // Let the text render before using its dimensions
     // to calculate the central position
     requestAnimationFrame(() => {
@@ -169,23 +164,42 @@ export default defineEntity({
   },
   update(root, newParams) {
     const { length, textSize, extension } = newParams;
-    const [line, text, textBox] = root.children;
+    let [
+      lineObject,
+      textObject,
+      textBox,
+      xAxisLine,
+      zAxisLine,
+      startCrosshair,
+      endCrosshair,
+    ] = root.children;
 
-    line.geometry.dispose();
+    lineObject.geometry.dispose();
     const points = [
       [0, 0, 0],
       [0, 0, extension],
       [length, 0, extension],
       [length, 0, 0],
     ];
-    line.geometry = createPolyLineGeometry(points);
+    lineObject.geometry = createPolyLineGeometry(points);
 
     const textValue = getTextValue(newParams);
-    text.geometry.dispose();
-    text.geometry = createTextGeometry(textValue, textSize);
+    textObject.geometry.dispose();
+    textObject.geometry = createTextGeometry(textValue, textSize);
+
+    const [x, z, s, e] = createCrosshairs(newParams);
+
+    xAxisLine.geometry.dispose();
+    zAxisLine.geometry.dispose();
+    startCrosshair.geometry.dispose();
+    endCrosshair.geometry.dispose();
+    //xAxisLine = x;
+    //zAxisLine = z;
+    //startCrosshair = s;
+    //endCrosshair = e;
 
     requestAnimationFrame(() => {
-      setTextPosition(text, textBox, newParams);
+      setTextPosition(textObject, textBox, newParams);
     });
 
     configureInteractivity(textBox, newParams);

@@ -107,22 +107,22 @@ export default defineEntity({
 
     //need to be overflow length/2 at each end
     const mainLinePoints = [
-      [-overflowLineLength, 0, textSize],
-      [length + overflowLineLength, 0, textSize],
+      [-overflowLineLength, 0, extension],
+      [length + overflowLineLength, 0, extension],
     ];
     const mainLine = createPolyLine(mainLinePoints);
 
-    const xLinePoints = [
+    const startLinePoints = [
       [0, 0, 0],
       [0, 0, extension + overflowLineLength],
     ];
-    const xLine = createPolyLine(xLinePoints);
+    const startLine = createPolyLine(startLinePoints);
 
-    const zLinePoints = [
+    const endLinePoints = [
       [length, 0, 0],
       [length, 0, extension + overflowLineLength],
     ];
-    const zLine = createPolyLine(zLinePoints);
+    const endLine = createPolyLine(endLinePoints);
 
     const [startCrosshair, endCrosshair] = createCrosshairs(params);
 
@@ -146,8 +146,8 @@ export default defineEntity({
     textBox.setRotationFromAxisAngle(new Vector3(1, 0, 0), Math.PI / -2);
 
     root.add(mainLine);
-    root.add(xLine);
-    root.add(zLine);
+    root.add(startLine);
+    root.add(endLine);
     root.add(startCrosshair);
     root.add(endCrosshair);
     root.add(textObject);
@@ -171,8 +171,8 @@ export default defineEntity({
 
     let [
       mainLine,
-      xLine,
-      zLine,
+      startLine,
+      endLine,
       startCrosshair,
       endCrosshair,
       textObject,
@@ -181,28 +181,26 @@ export default defineEntity({
 
     mainLine.geometry.dispose();
     const mainLinePoints = [
-      [-overflowLineLength, 0, textSize],
-      [length + overflowLineLength, 0, textSize],
+      [-overflowLineLength, 0, extension],
+      [length + overflowLineLength, 0, extension],
     ];
     mainLine.geometry = createPolyLineGeometry(mainLinePoints);
 
-    const xLinePoints = [
+    const startLinePoints = [
       [0, 0, 0],
       [0, 0, extension + overflowLineLength],
     ];
 
-    //xLine.geometry.dispose();
-    //xLine.geometry = createPolyLineGeometry(xLinePoints);
-    //root.add(xLine);
+    startLine.geometry.dispose();
+    startLine.geometry = createPolyLineGeometry(startLinePoints);
 
-    const zLinePoints = [
+    const endLinePoints = [
       [length, 0, 0],
       [length, 0, extension + overflowLineLength],
     ];
 
-    //zLine.geometry.dispose();
-    //zLine = createPolyLineGeometry(zLinePoints);
-    //root.add(zLine);
+    endLine.geometry.dispose();
+    endLine.geometry = createPolyLineGeometry(endLinePoints);
 
     const textValue = getTextValue(newParams);
     textObject.geometry.dispose();

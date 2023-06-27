@@ -80,7 +80,7 @@ function createCrosshairs(params) {
 function createLines(params) {
   const { length, textSize, extension } = params;
 
-  const overflowLineLength = textSize / 4;
+  const overflowLineLength = textSize / 2;
 
   //mainLine.geometry.dispose();
   const mainLinePoints = [

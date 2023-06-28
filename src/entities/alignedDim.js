@@ -77,7 +77,7 @@ function createCrosshairs(params) {
   return [startCrosshair, endCrosshair];
 }
 
-function createLines(params) {
+function createExtensionLines(params) {
   const { length, textSize, extension } = params;
 
   const overflowLineLength = textSize / 2;
@@ -123,7 +123,7 @@ export default defineEntity({
 
     const { length, textSize, color, extension } = params;
     const [mainLine, startExtensionLine, endExtensionLine] =
-      createLines(params);
+      createExtensionLines(params);
     const [startCrosshair, endCrosshair] = createCrosshairs(params);
 
     startCrosshair.position.z = extension;
@@ -183,7 +183,7 @@ export default defineEntity({
       x.geometry.dispose()
     );
 
-    const [main, start, end] = createLines(newParams);
+    const [main, start, end] = createExtensionLines(newParams);
 
     mainLine.geometry = main.geometry;
     startExtensionLine.geometry = start.geometry;

@@ -82,30 +82,27 @@ function createLines(params) {
 
   const overflowLineLength = textSize / 2;
 
-  //mainLine.geometry.dispose();
   const mainLinePoints = [
     [-overflowLineLength, 0, extension],
     [length + overflowLineLength, 0, extension],
   ];
   const mainLine = createPolyLine(mainLinePoints);
 
-  const startLinePoints = [
+  const startExtensionLinePoints = [
     [0, 0, 0],
     [0, 0, extension + overflowLineLength],
   ];
 
-  //startLine.geometry.dispose();
-  const startLine = createPolyLine(startLinePoints);
+  const startExtensionLine = createPolyLine(startExtensionLinePoints);
 
-  const endLinePoints = [
+  const endExtensionLinePoints = [
     [length, 0, 0],
     [length, 0, extension + overflowLineLength],
   ];
 
-  //endLine.geometry.dispose();
-  const endLine = createPolyLine(endLinePoints);
+  const endExtensionLine = createPolyLine(endExtensionLinePoints);
 
-  return [mainLine, startLine, endLine];
+  return [mainLine, startExtensionLine, endExtensionLine];
 }
 
 export default defineEntity({
@@ -125,7 +122,8 @@ export default defineEntity({
     const root = new Object3D();
 
     const { length, textSize, color, extension } = params;
-    const [mainLine, startLine, endLine] = createLines(params);
+    const [mainLine, startExtensionLine, endExtensionLine] =
+      createLines(params);
     const [startCrosshair, endCrosshair] = createCrosshairs(params);
 
     startCrosshair.position.z = extension;
@@ -149,8 +147,8 @@ export default defineEntity({
 
     [
       mainLine,
-      startLine,
-      endLine,
+      startExtensionLine,
+      endExtensionLine,
       startCrosshair,
       endCrosshair,
       textObject,
@@ -173,23 +171,23 @@ export default defineEntity({
 
     let [
       mainLine,
-      startLine,
-      endLine,
+      startExtensionLine,
+      endExtensionLine,
       startCrosshair,
       endCrosshair,
       textObject,
       textBox,
     ] = root.children;
 
-    [mainLine, startLine, endLine, textObject].forEach((x) =>
+    [mainLine, startExtensionLine, endExtensionLine, textObject].forEach((x) =>
       x.geometry.dispose()
     );
 
     const [main, start, end] = createLines(newParams);
 
     mainLine.geometry = main.geometry;
-    startLine.geometry = start.geometry;
-    endLine.geometry = end.geometry;
+    startExtensionLine.geometry = start.geometry;
+    endExtensionLine.geometry = end.geometry;
 
     const textValue = getTextValue(newParams);
     textObject.geometry = createTextGeometry(textValue, textSize);

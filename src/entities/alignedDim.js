@@ -169,7 +169,7 @@ export default defineEntity({
   update(root, newParams) {
     const { length, textSize, extension } = newParams;
 
-    let [
+    const [
       mainLine,
       startExtensionLine,
       endExtensionLine,

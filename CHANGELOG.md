@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/leviat-tech/draft3d/compare/v1.0.0...v1.0.1) (2023-06-30)
+
+
+### Bug Fixes
+
+* dimensions update bug ([426281a](https://github.com/leviat-tech/draft3d/commit/426281a8a8a5c6d6993de6823d3288b12c97fba3))
+
 ## [1.0.0](https://github.com/leviat-tech/draft3d/compare/v0.6.0...v1.0.0) (2023-06-21)
 
 

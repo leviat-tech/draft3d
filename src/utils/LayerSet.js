@@ -61,19 +61,6 @@ class LayerSet {
     this.applyToCameras();
   }
 
-  showOnly(name) {
-    if (Array.isArray(name)) {
-      this.layers.forEach((layer) => {
-        layer.visible = name.includes(layer.name);
-      });
-    } else {
-      this.layers.forEach((layer) => {
-        layer.visible = layer.name === name;
-      });
-    }
-    this.applyToCameras();
-  }
-
   hide(name) {
     if (Array.isArray(name)) {
       this.layers.forEach((layer) => {
@@ -94,6 +81,7 @@ class LayerSet {
 
   applyToCameras() {
     this.cameras.forEach((c) => c.layers.disableAll());
+
     this.cameras.forEach((c) => {
       this.layers.forEach((l) => {
         if (l.visible) {
@@ -107,6 +95,6 @@ class LayerSet {
     this.layers = [{ id: 0, name: 'default', visible: true }];
     this.cameras = [];
   }
-};
+}
 
 export default LayerSet;

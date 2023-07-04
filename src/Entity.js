@@ -1,6 +1,6 @@
 import { Object3D } from 'three';
 import draft3d from './draft3d';
-
+import orthographicView from './EntityOrthographicView';
 
 class Entity {
   /**
@@ -148,6 +148,10 @@ class Entity {
     return { ...defaults, ...userParams };
   }
 
+  orthographicView(axis, precision = 0.9) {
+    return orthographicView(this,...arguments)
+  }
+  
   destroy() {
     console.log('I\'m dead.');
   }

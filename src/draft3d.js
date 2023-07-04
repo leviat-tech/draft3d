@@ -8,6 +8,7 @@ const draft3d = {
   get repository() {
     return { ...this.entities, ...this.features };
   },
+  registerFeature: function(){},
 };
 
 export function registerEntity(entity, registerTo) {

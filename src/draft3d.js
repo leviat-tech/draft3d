@@ -11,8 +11,27 @@ const draft3d = {
   registerFeature: function(){},
 };
 
+/**
+ * @typedef {{
+ *  config: {
+ *   name: string,
+ *  }
+ * }} entity
+ *
+ * @param {entity} entity
+ * @param {'entities'|'features'} registerTo
+ * @returns
+ */
 export function registerEntity(entity, registerTo) {
   const { name } = entity.config;
+
+  if (registerTo !== 'entities' && registerTo !== 'features') {
+    throw new Error('Specify correct registerTo value');
+  }
+
+  if (!name) {
+    throw new Error('Specify entity name');
+  }
 
   if (draft3d.repository[name]) {
     throw new Error(`Cannot register ${name} as it already exists`);

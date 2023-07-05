@@ -1,24 +1,46 @@
 import { Object3D } from 'three';
 import draft3d from './draft3d';
 
+// eslint-disable-next-line no-unused-vars
+import LayerSet from './utils/LayerSet';
+
 
 class Entity {
   /**
-   * @typedef entityConfig
-   * @property { string } name
-   * @property { object } parameters
-   * @property { function } render
-   * @property { function } [update]
+   * @typedef {{
+   *  name: string,
+   *  parameters: {
+   *   rotation: {
+   *    default: number[]
+   *   },
+   *   position: {
+   *    default: number[]
+   *   },
+   *  },
+   *  render: function,
+   *  update?: function,
+   *  formatParams?: function
+   * }} entityConfig
    *
+   * @typedef {{
+   *  visible? : boolean
+   * }} entityParams
    *
-   * @param { entityConfig } entityConfig
-   * @param { object } params
+   * @param { entityConfig} entityConfig
+   * @param { entityParams } params
+   * @param { LayerSet } layerSet
    */
   constructor(entityConfig, params = {}, layerSet) {
+    if (!entityConfig.name?.trim().length) {
+      throw new Error('Specify entity name');
+    }
+
     this.name = entityConfig.name;
+
     this.params = Entity.getParams(entityConfig.parameters, params, entityConfig.name);
     this.features = {};
     this.layerSet = layerSet;
+
 
     if (typeof entityConfig.formatParams === 'function') {
       this.formatParams = entityConfig.formatParams;
@@ -42,9 +64,6 @@ class Entity {
     this.object3d.position.set(...this.params.position);
     this.setRotation(this.params.rotation);
 
-    // TODO: not sure if this is needed yet
-    // this.object3d.getEntity = () => this;
-
     if (typeof entityConfig.update === 'function') {
       this.onUpdate = entityConfig.update;
     }
@@ -54,6 +73,18 @@ class Entity {
     return params;
   }
 
+
+  /**
+   *
+   *  @typedef {{
+   *   visible : boolean
+   *   position: number[],
+   *   rotation: number[]
+   *  }} entityParams
+   *
+   * @param {updateParams} newParams
+   * @returns
+   */
   updateParams(newParams) {
     const mergedParams = { ...this.params, ...newParams };
 
@@ -83,6 +114,9 @@ class Entity {
     if (this.onUpdate) this.onUpdate(this.object3d, formattedParams);
   }
 
+  /**
+   * @param {number[]} rotation
+   */
   setRotation(rotation) {
     if (!rotation) return;
 
@@ -92,7 +126,15 @@ class Entity {
     object3d.rotation.set(degToRad(x), degToRad(y), degToRad(z));
   }
 
+  /**
+    *
+    * @param {Object3D} object3d
+    */
   addTo(object3d) {
+    if (!object3d) {
+      return;
+    }
+
     if (this.object3d === undefined) {
       this.object3d = new Object3D();
     }
@@ -100,7 +142,15 @@ class Entity {
     object3d.add(this.object3d);
   }
 
+  /**
+   *
+   * @param {Object3D} object3d
+   */
   add(object3d) {
+    if (!object3d) {
+      return;
+    }
+
     if (this.object3d === undefined) {
       this.object3d = new Object3D();
     }
@@ -108,12 +158,37 @@ class Entity {
     this.object3d.add(object3d);
   }
 
+  /**
+   *
+   * @typedef {{
+   *  position: object,
+   *  rotation?: number[]
+   * }} addFeatureParams
+   *
+   * @param {string} name
+   * @param {string} type
+   * @param {addFeatureParams} params
+   * @returns {Entity}
+   */
   addFeature(name, type, params) {
+    if (!name) {
+      throw new Error('Specify feature name');
+    }
+
+    if (!type) {
+      throw new Error('Specify feature type');
+    }
+
     if (this.features[name] !== undefined) {
       throw new Error('Feature Name already in use');
     }
 
     const constructor = draft3d.repository[type];
+
+    if (!constructor) {
+      throw new Error('Unknown feature type');
+    }
+
     const feat = constructor(params, this.layerSet);
     this.features[name] = feat;
     this.add(feat.object3d);
@@ -121,7 +196,23 @@ class Entity {
     return feat;
   }
 
+  /**
+  *
+  * @typedef {{
+  *  position: object,
+  *  rotation?: number[]
+  * }} addFeatureParams
+  *
+  * @param {string} arrayName
+  * @param {string} type
+  * @param {addFeatureParams} params
+  * @returns {Entity}
+  */
   addFeatureTo(arrayName, type, params) {
+    if (!arrayName) {
+      throw new Error('Specify features name');
+    }
+
     if (this.features[arrayName] === undefined) {
       this.features[arrayName] = [];
     } else if (!(this.features[arrayName] instanceof Array)) {
@@ -135,6 +226,10 @@ class Entity {
     return feat;
   }
 
+  /**
+   *
+   * @param {boolean} isVisible
+   */
   setVisibility(isVisible) {
     this.object3d.visible = isVisible;
   }

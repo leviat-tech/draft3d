@@ -9,8 +9,10 @@
     "build-app": "rollup --config && npm install --prefix ./app && npm run build --prefix ./app",
     "build-electron-app": "rollup --config && npm run electron-build --prefix ./app",
     "build:watch": "chokidar \"src/**/*.js\" --initial -c \"rollup --config\"",
-    "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test": "vitest",
+    "test:watch": "vitest --watch=true",
+    "coverage": "vitest --coverage --ui --watch=true",
+    "prepare": "husky install"
   },
   "author": "CRH Technology Studio",
   "main": "src/index.js",
@@ -22,17 +24,15 @@
     "@babel/preset-env": "^7.17.10",
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
-    "babel-jest": "^28.1.0",
+    "@vitest/coverage-istanbul": "^0.32.4",
+    "@vitest/ui": "^0.32.4",
     "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-vue": "^7.6.0",
-    "husky": "^8.0.3",
-    "jest": "^28.1.0",
-    "jest-environment-jsdom": "^28.1.0",
-    "jest-extended": "^2.0.0",
+    "husky": "^8.0.0",
     "svg-parser": "^2.0.4",
-    "vue-jest": "^3.0.7"
+    "vitest": "^0.32.2"
   },
   "files": [
     "src"

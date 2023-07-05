@@ -1,6 +1,5 @@
-#!/bin/sh
-
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
 echo ""
 echo "Your commit message should begin with one of the following:"
@@ -13,5 +12,4 @@ echo ""
 echo "More info: https://github.com/googleapis/release-please"
 echo ""
 
-npx --no-install commitlint --edit
-
+npx --no-install commitlint --edit 

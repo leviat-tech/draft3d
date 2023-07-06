@@ -178,8 +178,17 @@ class ThreeScene {
     animate();
   }
 
+  /**
+   *
+   * @typedef {{
+   *  isEnabled: boolean,
+   * }} axisIndicatorConfig
+   *
+   * @param {HTMLElement} el
+   * @param {axisIndicatorConfig} axisIndicatorConfig
+   */
   async createAxisIndicator(el, axisIndicatorConfig) {
-    if (!axisIndicatorConfig.isEnabled) return;
+    if (!axisIndicatorConfig?.isEnabled) return;
 
     this.axisIndicator.isEnabled = true;
 
@@ -268,7 +277,7 @@ class ThreeScene {
     camera.position.set(newPosition.x, newPosition.y, newPosition.z);
 
     // Reset position to prevent panning in axes view
-    camera.lookAt(0,0,0);
+    camera.lookAt(0, 0, 0);
 
     renderer.render(scene, camera);
   }

@@ -1,54 +1,43 @@
 import { Object3D } from 'three';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+
 import * as entities from '@/entities';
-import { castParameters } from '../src/utils/helpers';
+import { castParameters } from '@/utils/helpers';
 
 
 describe.each(Object.values(entities))('$name entity', (entity) => {
-  it('temporary test', () => {
-    expect(true).toBeTruthy();
+  beforeEach(() => {
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => cb());
   });
-  // it('should contain mandatory properties', () => {
-  //   const mandatoryKeys = ['name', 'parameters', 'render'];
 
-  //   expect(entity).toContainKeys(mandatoryKeys);
-  // });
+  it('should contain mandatory properties', () => {
+    const mandatoryKeys = ['name', 'parameters', 'render', 'update'];
+    const entityKeys = Object.keys(entity.config);
 
-  // it('should not contain any unsupported keys', () => {
-  //   const { name, parameters, render, ...optionalKeys } = entity;
-  //   const supportedKeys = ['update'];
+    expect(entityKeys).toStrictEqual(mandatoryKeys);
+  });
 
-  //   Object.keys(optionalKeys).forEach((key) => {
-  //     expect(supportedKeys).toContain(key);
-  //   });
-  // });
+  it('should contain predefined parameters', () => {
+    const predefinedParameters = [
+      'layer',
+      'position',
+      'rotation',
+      'onClick',
+      'onDbClick',
+      'onMouseOut',
+      'onMouseOver',
+    ];
 
-  // it('should not contain any predefined parameters', () => {
-  //   const predefinedParameters = ['position', 'rotation'];
+    const predefinedKeys = Object.keys(entity.config.parameters);
 
-  //   Object.keys(entity.parameters).forEach((paramName) => {
-  //     expect(predefinedParameters).not.toContain(paramName);
-  //   });
-  // });
+    predefinedParameters.forEach((parameter) => {
+      expect(predefinedKeys).toContain(parameter);
+    });
+  });
 
-  // it('should return a three Object3D in the render function', () => {
-  //   const object3d = entity.render(castParameters(entity.parameters));
+  it('should return a three Object3D in the render function', () => {
+    const object3d = entity.config.render(castParameters(entity.config.parameters));
 
-  //   expect(object3d).toBeInstanceOf(Object3D);
-  // });
-
-  // it('should update with new parameters if update is present', () => {
-  //   if (!entity.update) return;
-
-  //   const params = castParameters(entity.parameters);
-  //   const object3d = entity.render(params);
-  //   const newParams = {
-  //     ...params,
-  //     position: [1, 2, 3],
-  //   };
-
-  //   const update = () => entity.update(object3d, newParams);
-
-  //   expect(update).not.toThrowError();
-  // });
+    expect(object3d).toBeInstanceOf(Object3D);
+  });
 });

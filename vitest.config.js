@@ -9,6 +9,7 @@ export default defineConfig({
       reporter: ['html'],
     },
     watch: false, // Set to false for husky
+    environment: 'jsdom',
   },
   resolve: {
     alias: {

@@ -50,8 +50,11 @@ class Entity {
     const formattedParams = this.formatParams(this.params);
 
     const object3d = entityConfig.render.call(this, formattedParams);
+
     if ((object3d instanceof Object3D)) {
       this.object3d = object3d;
+    } else {
+      this.object3d = new Object3D();
     }
 
     this.object3d.name = entityConfig.name;

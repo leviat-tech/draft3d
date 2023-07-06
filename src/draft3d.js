@@ -20,7 +20,6 @@ const draft3d = {
  *
  * @param {entity} entity
  * @param {'entities'|'features'} registerTo
- * @returns
  */
 export function registerEntity(entity, registerTo) {
   const { name } = entity.config;

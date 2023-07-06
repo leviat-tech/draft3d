@@ -2,9 +2,20 @@ import Entity from './Entity';
 import { registerEntity } from './draft3d';
 
 
-const noop = () => {};
+const noop = () => { };
 
-function createFactory(entity) {
+/**
+  * @typedef {{
+  *  name: string,
+  *  parameters: object,
+  *  render: function,
+  *  update?: function,
+  * }} entityConfig
+  *
+  * @param {entityConfig} entity
+  * @returns
+  */
+export function createFactory(entity) {
   const predefinedParameters = {
     position: { name: 'Position', default: [0, 0, 0] },
     rotation: { name: 'Rotation', default: [0, 0, 0] },
@@ -32,6 +43,13 @@ function createFactory(entity) {
   return factory;
 }
 
+/**
+  * @typedef {{
+  *    name: string,
+  * }} defineEntityParams
+  *
+  * @param {defineEntityParams} entityConfig
+  */
 export function defineEntity(entityConfig) {
   return registerEntity(createFactory(entityConfig), 'entities');
 }

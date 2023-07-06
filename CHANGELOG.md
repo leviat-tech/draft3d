@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.2](https://github.com/leviat-tech/draft3d/compare/v1.0.1...v1.0.2) (2023-07-06)
+
+
+### Bug Fixes
+
+* add unit tests for defineFeatures ([88a0520](https://github.com/leviat-tech/draft3d/commit/88a0520bf4d5fe06475b6ec7b502426ac323f936))
+* add unit tests for draft3d and entity ([2ee1b76](https://github.com/leviat-tech/draft3d/commit/2ee1b768dc7648a1e5f85778106c9f13f489d5ed))
+* change layers tests ([#115](https://github.com/leviat-tech/draft3d/issues/115)) ([d9b75cf](https://github.com/leviat-tech/draft3d/commit/d9b75cf5af11eda0414892af2529942cbd7b2014))
+* remove only in tests ([5d33c14](https://github.com/leviat-tech/draft3d/commit/5d33c14aa699cd28720a5fd18811485df586f6cb))
+
 ## [1.0.1](https://github.com/leviat-tech/draft3d/compare/v1.0.0...v1.0.1) (2023-06-30)
 
 

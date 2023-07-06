@@ -151,7 +151,7 @@ describe('featureStore', () => {
     expect(twoCubes.object3d.rotation.y.toFixed(5)).toEqual((104 * (Math.PI / 180)).toFixed(5));
   });
 
-  it.only('supports arbitrary number of subfeatures', () => {
+  it('supports arbitrary number of subfeatures', () => {
     defineFeature(stringOfCubes);
 
     const instance1 = draft3d.features.StringOfCubes({});

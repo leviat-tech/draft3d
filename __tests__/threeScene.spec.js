@@ -42,7 +42,7 @@ describe('Three scene', () => {
     checkAxisIndicatorDefaultState(scene);
   });
 
-  it.only('should create axis indicator', async () => {
+  it('should create axis indicator', async () => {
     const scene = new ThreeScene();
     const el = document.createElement('canvas');
 

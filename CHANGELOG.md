@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/leviat-tech/draft3d/compare/v1.0.2...v1.0.3) (2023-07-07)
+
+
+### Bug Fixes
+
+* default entity object ([#119](https://github.com/leviat-tech/draft3d/issues/119)) ([06e283c](https://github.com/leviat-tech/draft3d/commit/06e283cb6af06f83c4030596b8c7641005816ef4))
+
 ## [1.0.2](https://github.com/leviat-tech/draft3d/compare/v1.0.1...v1.0.2) (2023-07-06)
 
 

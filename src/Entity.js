@@ -52,8 +52,6 @@ class Entity {
 
     if ((object3d instanceof Object3D)) {
       this.object3d = object3d;
-    } else {
-      this.object3d = new Object3D();
     }
 
     this.object3d.name = entityConfig.name;

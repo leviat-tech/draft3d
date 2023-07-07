@@ -1,4 +1,5 @@
 // @ts-check
+import { Object3D } from 'three';
 import { describe, it, expect, beforeEach } from 'vitest';
 
 import ThreeScene from '@/ThreeScene.js';
@@ -70,7 +71,7 @@ describe('featureStore', () => {
     draft3d.features = {};
     draft3d.scene = new ThreeScene();
 
-    defineFeature({ name: 'box', parameters: {}, render: () => { } });
+    defineFeature({ name: 'box', parameters: {}, render: () => new Object3D() });
     defineFeature(twoCubesParams);
   });
 

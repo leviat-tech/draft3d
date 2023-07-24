@@ -10,7 +10,7 @@ const config = {
     },
     camera: {
       fov: 50,
-      position: { x: 4, y: 4, z: 4 },
+      position: { x: 0, y: 2, z: 8 },
     },
     controls: {
       target: [0, 0, 0],

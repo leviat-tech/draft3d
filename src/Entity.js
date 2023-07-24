@@ -1,10 +1,6 @@
-import { Object3D } from 'three';
+import { Object3D, Vector3 } from 'three';
 import draft3d from './draft3d';
 
-// eslint-disable-next-line no-unused-vars
-import LayerSet from './utils/LayerSet';
-
-import orthographicView from './EntityOrthographicView';
 
 class Entity {
   /**
@@ -53,8 +49,6 @@ class Entity {
 
     if ((object3d instanceof Object3D)) {
       this.object3d = object3d;
-    } else {
-      this.object3d = new Object3D();
     }
 
     this.object3d.name = entityConfig.name;
@@ -231,14 +225,13 @@ class Entity {
   }
 
   /**
-   *
    * @param {boolean} isVisible
    */
   setVisibility(isVisible) {
     this.object3d.visible = isVisible;
   }
 
-  static getParams(definedParameters, userParams, entityName) {
+  static getParams(definedParameters, userParams) {
     const defaults = Object.entries(definedParameters).reduce((params, [name, param]) => ({
       ...params,
       [name]: param.default ?? param,
@@ -247,8 +240,74 @@ class Entity {
     return { ...defaults, ...userParams };
   }
 
-  orthographicView(axis, precision = 0.9) {
-    return orthographicView(this,...arguments)
+  /**
+   * Returns a vector representing the position of the object in world space.
+   * @return { Vector3 }
+   */
+  getWorldPosition() {
+    return this.object3d.getWorldPosition(new Vector3());
+  }
+
+  /**
+   * Returns a vector representing the direction of object's positive z-axis in world space.
+   * @return { Vector3 }
+   */
+  getWorldRotation() {
+    const worldRotation = new Vector3();
+
+    const getRotation = (obj3d) => {
+      const { rotation } = obj3d;
+
+      worldRotation.x += rotation.x;
+      worldRotation.y += rotation.y;
+      worldRotation.z += rotation.z;
+
+      if (!obj3d?.parent || obj3d.parent.type === 'Scene') {
+        return worldRotation;
+      }
+
+      return getRotation(obj3d.parent);
+    };
+
+    return getRotation(this.object3d);
+  }
+
+  /**
+   * Retrieve the min and max position, and depth for each axis
+   * @return {{zMin: number, yMin: number, zMax: number, yMax: number, xMax: number, xMin: number}}
+   */
+  getExtents() {
+    this.object3d.updateWorldMatrix(true, true);
+
+    const { matrixWorld } = this.object3d;
+    const position = this.object3d.geometry.attributes.position;
+    const end = position.count;
+
+    const extents = {
+      xMin: Infinity,
+      yMin: Infinity,
+      zMin: Infinity,
+      xMax: -Infinity,
+      yMax: -Infinity,
+      zMax: -Infinity,
+    };
+
+    for (let i = 0; i < end; i++) {
+      const { x, y, z } = new Vector3().fromBufferAttribute(position, i).applyMatrix4(matrixWorld);
+
+      if (x < extents.xMin) extents.xMin = x;
+      if (y < extents.yMin) extents.yMin = y;
+      if (z < extents.zMin) extents.zMin = z;
+      if (x > extents.xMax) extents.xMax = x;
+      if (y > extents.yMax) extents.yMax = y;
+      if (z > extents.zMax) extents.zMax = z;
+    }
+
+    extents.xDepth = extents.xMax - extents.xMin;
+    extents.yDepth = extents.yMax - extents.yMin;
+    extents.zDepth = extents.zMax - extents.zMin;
+
+    return extents;
   }
 
   destroy() {

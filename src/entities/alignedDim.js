@@ -19,6 +19,7 @@ import {
 import { configureInteractivity } from '../utils/helpers';
 import { defineEntity } from '../defineEntity';
 
+
 function getTextValue({ length, prefix, suffix, formatter }) {
   const lengthAsString = formatter(length) || length.toFixed(2);
 
@@ -52,7 +53,7 @@ function setTextPosition(textObject, textBox, params, retryCount = 0) {
 function createCrosshair(crosshairParams) {
   const { color, size } = crosshairParams;
   const circleGeometry = new BufferGeometry().setFromPoints(
-    new Path().absarc(0, 0, size, 0, Math.PI * 2).getSpacedPoints(32)
+    new Path().absarc(0, 0, size, 0, Math.PI * 2).getSpacedPoints(32),
   );
 
   const circleMaterial = new LineBasicMaterial({ color });
@@ -122,8 +123,7 @@ export default defineEntity({
     const root = new Object3D();
 
     const { length, textSize, color, extension } = params;
-    const [mainLine, startExtensionLine, endExtensionLine] =
-      createExtensionLines(params);
+    const [mainLine, startExtensionLine, endExtensionLine] = createExtensionLines(params);
     const [startCrosshair, endCrosshair] = createCrosshairs(params);
 
     startCrosshair.position.z = extension;
@@ -179,9 +179,7 @@ export default defineEntity({
       textBox,
     ] = root.children;
 
-    [mainLine, startExtensionLine, endExtensionLine, textObject].forEach((x) =>
-      x.geometry.dispose()
-    );
+    [mainLine, startExtensionLine, endExtensionLine, textObject].forEach((x) => x.geometry.dispose());
 
     const [main, start, end] = createExtensionLines(newParams);
 

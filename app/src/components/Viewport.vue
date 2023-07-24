@@ -18,7 +18,9 @@
     <div class="absolute right-0 top-0 px-4 w-[280px] z-10 border-b border-l bg-white">
       <parameter-list v-if="entity" :name="entity" :parameters="parameterConfig" @update="onUpdate" />
     </div>
+
   </div>
+
 </template>
 
 <script setup>

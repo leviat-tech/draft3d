@@ -1,5 +1,15 @@
 import ThreeScene from './ThreeScene';
 
+/**
+ * @typedef {{
+ *   config: {
+ *     name: string,
+ *     parameters: object,
+ *     render: function,
+ *     update: function,
+ *   }
+ * }} entityFactory
+ */
 
 const draft3d = {
   entities: {},
@@ -8,21 +18,16 @@ const draft3d = {
   get repository() {
     return { ...this.entities, ...this.features };
   },
-  registerFeature: function(){},
+  registerFeature() {},
 };
 
 /**
- * @typedef {{
- *  config: {
- *   name: string,
- *  }
- * }} entity
- *
- * @param {entity} entity
+ * @param {function(params, Entity.layerSet): Entity} entityFactory
  * @param {'entities'|'features'} registerTo
+ * @yields { Entity }
  */
-export function registerEntity(entity, registerTo) {
-  const { name } = entity.config;
+export function registerEntity(entityFactory, registerTo) {
+  const { name } = entityFactory.config;
 
   if (registerTo !== 'entities' && registerTo !== 'features') {
     throw new Error('Specify correct registerTo value');
@@ -36,9 +41,9 @@ export function registerEntity(entity, registerTo) {
     throw new Error(`Cannot register ${name} as it already exists`);
   }
 
-  draft3d[registerTo][name] = entity;
+  draft3d[registerTo][name] = entityFactory;
 
-  return entity;
+  return entityFactory;
 }
 
 export default draft3d;

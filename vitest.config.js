@@ -8,7 +8,6 @@ export default defineConfig({
       provider: 'istanbul',
       reporter: ['html'],
     },
-    watch: false, // Set to false for husky
     environment: 'jsdom',
   },
   resolve: {

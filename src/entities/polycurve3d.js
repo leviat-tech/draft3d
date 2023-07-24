@@ -15,7 +15,8 @@ export default defineEntity({
     path: {
       name: 'Path',
       items: { type: 'curve', precision: 0.1, default: [0, 0] },
-      default: [[0, 0],
+      default: [
+        [0, 0],
         [1, 0],
         [2, 0, 1.5, 0.5],
         [3, 0],

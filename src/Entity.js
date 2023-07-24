@@ -244,7 +244,7 @@ class Entity {
   }
 
   /**
-   * Returns a vector representing the position of the object in world space.
+   * Returns a vector representing the position of the object in world space
    * @return { Vector3 }
    */
   getWorldPosition() {
@@ -252,7 +252,7 @@ class Entity {
   }
 
   /**
-   * Returns a vector representing the direction of object's positive z-axis in world space.
+   * Returns a vector representing the rotation of the object by summing the rotation values of all ancestor objects
    * @return { Vector3 }
    */
   getWorldRotation() {

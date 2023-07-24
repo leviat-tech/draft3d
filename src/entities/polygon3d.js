@@ -1,4 +1,4 @@
-import { Mesh } from 'three';
+import { Mesh, Shape, ShapeGeometry, MathUtils } from 'three';
 
 import { configureInteractivity } from '../utils/helpers';
 import { createMaterial, updateMaterial } from '../utils/material';
@@ -18,9 +18,12 @@ export default defineEntity({
       default: [
         [0, 0],
         [2, 0],
-        [1, 1],
         [2, 2],
-        [0, 2],
+        [1.5, 2],
+        [1.5, 1],
+        [1.3, 1],
+        [1.3, 2],
+        [0.8, 2],
         [0, 0],
       ],
     },
@@ -46,7 +49,7 @@ export default defineEntity({
     const newShape = createPolygon(path);
 
     object3d.geometry?.dispose();
-    object3d.geometry = createExtrudeGeometry(newShape, depth);
+    object3d.geometry = new ShapeGeometry(newShape);
 
     configureInteractivity(object3d, newParams);
   },

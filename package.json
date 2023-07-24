@@ -9,8 +9,8 @@
     "build-app": "rollup --config && npm install --prefix ./app && npm run build --prefix ./app",
     "build-electron-app": "rollup --config && npm run electron-build --prefix ./app",
     "build:watch": "chokidar \"src/**/*.js\" --initial -c \"rollup --config\"",
-    "test": "vitest",
-    "test:watch": "vitest --watch=true",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "coverage": "vitest --coverage --ui --watch=true",
     "prepare": "husky install"
   },

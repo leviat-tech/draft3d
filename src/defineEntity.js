@@ -1,20 +1,21 @@
 import Entity from './Entity';
 import { registerEntity } from './draft3d';
 
+/**
+ * @typedef {{
+ *   name: string,
+ *   parameters: object,
+ *   render: function,
+ *   update: function,
+ * }} entityConfig
+ */
 
 const noop = () => { };
 
 /**
-  * @typedef {{
-  *  name: string,
-  *  parameters: object,
-  *  render: function,
-  *  update?: function,
-  * }} entityConfig
-  *
-  * @param {entityConfig} entity
-  * @returns
-  */
+ * @param {entityConfig} entity
+ * @returns { function(params, layerSet): Entity }
+ */
 export function createFactory(entity) {
   const predefinedParameters = {
     position: { name: 'Position', default: [0, 0, 0] },
@@ -44,12 +45,9 @@ export function createFactory(entity) {
 }
 
 /**
-  * @typedef {{
-  *    name: string,
-  * }} defineEntityParams
-  *
-  * @param {defineEntityParams} entityConfig
-  */
+ * @param { entityConfig } entityConfig
+ * @yields { Entity }
+ */
 export function defineEntity(entityConfig) {
   return registerEntity(createFactory(entityConfig), 'entities');
 }

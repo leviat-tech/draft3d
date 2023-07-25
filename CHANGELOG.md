@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/leviat-tech/draft3d/compare/v1.0.3...v1.1.0) (2023-07-25)
+
+
+### Features
+
+* add getWorldPosition and getWorldRotation methods to Entity class ([50e7d48](https://github.com/leviat-tech/draft3d/commit/50e7d486f2635a7b93fa6d024816c3ca59b24365))
+
 ## [1.0.3](https://github.com/leviat-tech/draft3d/compare/v1.0.2...v1.0.3) (2023-07-07)
 
 

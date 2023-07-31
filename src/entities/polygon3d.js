@@ -49,7 +49,7 @@ export default defineEntity({
     const newShape = createPolygon(path);
 
     object3d.geometry?.dispose();
-    object3d.geometry = new ShapeGeometry(newShape);
+    object3d.geometry = createExtrudeGeometry(newShape, depth);
 
     configureInteractivity(object3d, newParams);
   },

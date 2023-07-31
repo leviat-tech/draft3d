@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/leviat-tech/draft3d/compare/v1.1.0...v1.1.1) (2023-07-31)
+
+
+### Bug Fixes
+
+* revert changes introduced when debugging ([b1f8e2b](https://github.com/leviat-tech/draft3d/commit/b1f8e2b6cfe14d88a2ee88c822c014ffbf6bba23))
+
 ## [1.1.0](https://github.com/leviat-tech/draft3d/compare/v1.0.3...v1.1.0) (2023-07-25)
 
 

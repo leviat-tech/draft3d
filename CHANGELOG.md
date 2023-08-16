@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/leviat-tech/draft3d/compare/v1.1.1...v1.2.0) (2023-08-16)
+
+
+### Features
+
+* add hole to polygon ([2fc1ad4](https://github.com/leviat-tech/draft3d/commit/2fc1ad48f857316c503f7cd6b28f7bedb3e4bb3e))
+
 ## [1.1.1](https://github.com/leviat-tech/draft3d/compare/v1.1.0...v1.1.1) (2023-07-31)
 
 

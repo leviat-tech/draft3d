@@ -31,7 +31,7 @@ export function createOrthographicCamera(cameraConfig) {
 
   const width = 20;
   const height = 20;
-  const camera = new OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 1, 30);
+  const camera = new OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 1, 100);
   if (position) Object.assign(camera.position, position);
 
   return camera;

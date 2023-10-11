@@ -81,11 +81,12 @@ class ThreeScene {
 
     if (use2DCamera) {
       this.orthoCamera = createOrthographicCamera(camera);
-      this.planControls = planControls(this.orthoCamera, this.canvas);
+      this.planControls = planControls(this.orthoCamera, this.canvas, controls);
       this.layerSet.addCamera(this.orthoCamera);
+      this.camera = this.orthoCamera;
     }
 
-    this.renderer = this.createRenderer(this.originalScene, this.perspectiveCamera, this.canvas, 'animationFrame');
+    this.renderer = this.createRenderer(this.originalScene, this.camera, this.canvas, 'animationFrame');
     this.createAxisIndicator(el, axisIndicator);
 
     this.mouse = new Vector2();
@@ -419,15 +420,91 @@ class ThreeScene {
     return obj;
   }
 
-  renderToImage(...options) {
+  /**
+   * Render the scene to a base64 image
+   * @param userOptions {{ contain: boolean, type: string, encoderOptions: number }}
+   * @return {string} the scene as a base64 image string
+   */
+  async renderToImage(userOptions = { contain: false }) {
+
+    const defaultOptions = {
+      type: 'image/png', // A string indicating the image format.
+      encoderOptions: 1, // A Number between 0 and 1 indicating the image quality
+    }
+
+    const options = Object.assign(defaultOptions, userOptions);
+
     // In order to be able to call the toDataURL method on the canvas element
     // without detrimental performance by preserving the drawing buffer
     // we need to call render synchronously and call toDataURL immediately.
     // See issue below for more info
     // https://stackoverflow.com/questions/15558418/how-do-you-save-an-image-from-a-three-js-canvas
-    this.renderer.render(this.originalScene, this.perspectiveCamera);
+    this.renderer.render(this.originalScene, this.orthoCamera);
 
-    return this.canvas.toDataURL(...options);
+    const dataUrl = this.canvas.toDataURL();
+
+    return new Promise(resolve => {
+      if (!options.contain) return dataUrl;
+
+      // The threejs canvas uses the webgl context.
+      // However, we need the 2d context in order to be able to analyse empty for cropping.
+      // Therefore, we need to create a separate canvas with a 2d context and do all of our processing there.
+
+      // Create an image to draw onto the canvas
+      const img = new Image();
+      this.el.appendChild(img);
+
+      img.src = dataUrl;
+      img.onload = () => {
+        const canvasCrop = document.createElement('canvas');
+        canvasCrop.width = this.width;
+        canvasCrop.height = this.height;
+        const ctx = canvasCrop.getContext('2d');
+
+        ctx.drawImage(img, 0, 0, this.width, this.height);
+
+        const imgData = ctx.getImageData(0, 0, this.width, this.height);
+
+        let cropHeight = null;
+
+        // Find the last non-empty row in order to determine the crop height
+        for (let row = this.height - 1; row >= 0; row--) {
+
+          let rowContainsData = false;
+
+          for (let col = 0; col < this.width; col++) {
+            const index = (col + (row * imgData.width)) * 4;
+
+            const r = imgData.data[index];
+            const g = imgData.data[index + 1];
+            const b = imgData.data[index + 2];
+
+            const pixelContainsData = r + g + b > 0;
+
+            if (pixelContainsData) {
+              rowContainsData = true;
+              break;
+            }
+          }
+
+          if (rowContainsData) {
+            // Provide a small margin as for some reason the image still occasionally gets cut off too short
+            const margin = 8;
+            cropHeight = row + margin;
+            break;
+          }
+        }
+
+        canvasCrop.height = cropHeight;
+        ctx.drawImage(img, 0, 0, this.width, cropHeight, 0, 0, this.width, cropHeight);
+
+        const croppedDataURL = canvasCrop.toDataURL(options.type, options.encoderOptions);
+
+        this.el.removeChild(img);
+
+        resolve(croppedDataURL);
+      }
+    });
   }
 
   destroy() {

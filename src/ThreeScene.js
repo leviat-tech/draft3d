@@ -448,7 +448,8 @@ class ThreeScene {
 
       // The threejs canvas uses the webgl context.
       // However, we need the 2d context in order to be able to analyse empty for cropping.
-      // Therefore, we need to create a separate canvas with a 2d context and do all of our processing there.
+      // Therefore, we need to create a separate canvas with a 2d context
+      // and do all of our processing there.
 
       // Create an image to draw onto the canvas
       const img = new Image();
@@ -488,7 +489,8 @@ class ThreeScene {
           }
 
           if (rowContainsData) {
-            // Provide a small margin as for some reason the image still occasionally gets cut off too short
+            // Provide a small margin as for some reason
+            // the image still occasionally gets cut off too short
             const margin = 8;
             cropHeight = row + margin;
             break;

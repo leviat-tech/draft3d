@@ -422,7 +422,7 @@ class ThreeScene {
 
   /**
    * Render the scene to a base64 image
-   * @param userOptions {{ contain: boolean, type: string, encoderOptions: number }}
+   * @param userOptions {{ contain: boolean, [type]: string, [encoderOptions]: number }}
    * @return {string} the scene as a base64 image string
    */
   async renderToImage(userOptions = { contain: false }) {

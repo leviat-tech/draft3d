@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/leviat-tech/draft3d/compare/v1.2.0...v1.3.0) (2023-10-12)
+
+
+### Features
+
+* add contain option when rendering scene to image ([bf935ce](https://github.com/leviat-tech/draft3d/commit/bf935cedbfdb2c98ce063eb9b5aa9cfad67a6b87))
+
 ## [1.2.0](https://github.com/leviat-tech/draft3d/compare/v1.1.1...v1.2.0) (2023-08-16)
 
 

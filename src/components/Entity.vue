@@ -5,7 +5,7 @@
 
 import draft3d from 'draft3d';
 import { computed, ref, watch } from 'vue';
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep } from 'lodash-es';
 import { destroyObject } from '../utils/helpers';
 
 

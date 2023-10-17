@@ -13,6 +13,10 @@
           {{ i.config.name }}
         </router-link>
       </div>
+
+      <div v-if="entity === 'bim'">
+        <input type="file" @change="onFileChange">
+      </div>
     </div>
 
     <div class="absolute right-0 top-0 px-4 w-[280px] z-10 border-b border-l bg-white">
@@ -57,6 +61,20 @@ watch(entity, (newEntity) => {
   parameterConfig.value = entities[newEntity].config.parameters;
   params.value = castParameters(parameterConfig.value);
 });
+
+function onFileChange(e) {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    const json = JSON.parse(e.target.result);
+    const parts = json[0].bim.parts;
+    params.value.parts = json[0].bim.parts;
+  };
+
+  // Read in the image file as a data URL.
+  reader.readAsText(file);
+}
 
 </script>
 

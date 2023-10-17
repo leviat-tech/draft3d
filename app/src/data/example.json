@@ -1,0 +1,337 @@
+[
+  {
+    "general": { 
+      "reference": "HTA-CE 40/22-A4-300-2",
+      "type": "HTA-CE 40/22",
+      "hierarchy": {
+        "level_1": "Anchoring & Fixing",
+        "level_2": "Cast-in Channels & T-Bolts & Accessories",
+        "level_3": "Cast-in Channels & T-Bolts (premium level): HALFEN HTA-CE Cast-in Channels & HALFEN HS and HSR T-Bolts [hot-rolled]",
+        "level_4": "HTA-CE"
+      },
+      "attributes": {
+        "brand": "Halfen",
+        "article_number": "040-00104",
+        "language": "en_DE",
+        "country": "DE",
+        "sold_in_country": true,
+        "material": "A4",
+        "copyright": "Leviat",
+        "leviat_design_software_url": "",
+        "version": "2-01-18/en_DE/Beta"
+      },
+      "approvals_and_certifications":{
+        "approvals": ["eta"],
+        "epd": true
+      },
+      "geometry": {
+        "length": 0.3,
+        "height": 0.091,
+        "height_installation": 0.097,
+        "width": 0.023,
+        "profile": { 
+          "bch": 0.0395, 
+          "hch": 0.023,
+          "tnomb": 0.0026,
+          "tnoml": 0.0024,
+          "d": 0.018,
+          "f": 0.006
+        },
+        "anchors": { 
+          "type": "I",
+          "quantity": 2,
+          "anchor_height": 0.074,
+          "head_width": 0.02,
+          "head_height": 0.0022,
+          "shaft_height": 0.0614, 
+          "shaft_diameter": 0.01,
+          "section_area": 0.000198,
+          "positions": [
+            0.025,
+            0.275
+          ],
+          "available_bolts": [
+            "HS 40/22-M10-FV4.6-20",
+            "HS 40/22-M10-FV4.6-30",
+            "HS 40/22-M10-FV4.6-40",
+            "HS 40/22-M10-FV4.6-50",
+            "HS 40/22-M10-FV4.6-60",
+            "HS 40/22-M10-FV4.6-80",
+            "HS 40/22-M10-FV4.6-100",
+            "HS 40/22-M10-FV4.6-125",
+            "HS 40/22-M10-FV8.8-30",
+            "HS 40/22-M10-FV8.8-40",
+            "HS 40/22-M10-FV8.8-60",
+            "HS 40/22-M10-A4-30",
+            "HS 40/22-M10-A4-40",
+            "HS 40/22-M10-A4-50",
+            "HS 40/22-M12-FV4.6-30",
+            "HS 40/22-M12-FV4.6-40",
+            "HS 40/22-M12-FV4.6-50",
+            "HS 40/22-M12-FV4.6-60",
+            "HS 40/22-M12-FV4.6-80",
+            "HS 40/22-M12-FV4.6-100",
+            "HS 40/22-M12-FV4.6-125",
+            "HS 40/22-M12-FV8.8-30",
+            "HS 40/22-M12-FV8.8-40",
+            "HS 40/22-M12-FV8.8-45",
+            "HS 40/22-M12-FV8.8-50",
+            "HS 40/22-M12-FV8.8-60",
+            "HS 40/22-M12-FV8.8-80",
+            "HS 40/22-M12-FV8.8-100",
+            "HS 40/22-M12-A4-30",
+            "HS 40/22-M12-A4-40",
+            "HS 40/22-M12-A4-50",
+            "HS 40/22-M12-A4-80",
+            "HS 40/22-M12-GVs4.6-150",
+            "HS 40/22-M12-GVs4.6-200",
+            "HS 40/22-M16-FV4.6-40",
+            "HS 40/22-M16-FV4.6-50",
+            "HS 40/22-M16-FV4.6-60",
+            "HS 40/22-M16-FV4.6-80",
+            "HS 40/22-M16-FV4.6-100",
+            "HS 40/22-M16-FV4.6-125",
+            "HS 40/22-M16-FV4.6-150",
+            "HS 40/22-M16-FV8.8-40",
+            "HS 40/22-M16-FV8.8-50",
+            "HS 40/22-M16-FV8.8-60",
+            "HS 40/22-M16-FV8.8-80",
+            "HS 40/22-M16-FV8.8-100",
+            "HS 40/22-M16-A4-40",
+            "HS 40/22-M16-A4-50",
+            "HS 40/22-M16-A4-60",
+            "HS 40/22-M16-A4-80",
+            "HS 40/22-M16-FA-80",
+            "HS 40/22-M16-GVs4.6-200",
+            "HS 40/22-M16-GVs4.6-250",
+            "HS 40/22-M16-GVs4.6-300"
+          ]
+        }
+      }
+    },
+    "calculation": {
+      "characteristic_values": {
+        "fuk": 400000000,
+        "fyk": 240000000,
+        "inertia": 2.0029e-8,
+        "wpl": 2152,
+        "hef": 0.091,
+        "hmin": 0.105,
+        "hnom": 0.107,
+        "ea": 32970000,
+        "k12": {
+          "cracked": 7.5,
+          "not_cracked": 10.5
+        },
+        "nrkp_c1215": {
+          "cracked": 17800,
+          "not_cracked": 24900
+        },
+        "mrk_s_flex": 1208,
+        "n0rk_s_l": 21100,
+        "v0rk_s_l": 19400,
+        "vsa_x": 0,
+        "vsc_x": 0,
+        "s1n": 0.065
+      }
+    },
+    "bim": {
+      "insertion_points": {
+        "insertion_box": {
+          "min_point": { "x": -0.01975, "y": 0.0, "z": -0.09320 },
+          "max_point": { "x": 0.01975, "y": 0.3, "z": 0.0 }
+        },
+        "available_points": {
+          "z_min": { 
+            "y_min": { "x_min": false, "x_mid": false, "x_max": false }, 
+            "y_mid": { "x_min": false, "x_mid": false, "x_max": false }, 
+            "y_max": { "x_min": false, "x_mid": false, "x_max": false } 
+          },
+          "z_mid": { 
+            "y_min": { "x_min": false, "x_mid": false, "x_max": false }, 
+            "y_mid": { "x_min": false, "x_mid": false, "x_max": false }, 
+            "y_max": { "x_min": false, "x_mid": false, "x_max": false } 
+          },
+          "z_max": { 
+            "y_min": {"x_min": true, "x_mid": true, "x_max": true }, 
+            "y_mid": { "x_min": false, "x_mid": false, "x_max": false }, 
+            "y_max": { "x_min": true, "x_mid": true, "x_max": true } 
+          }
+        }
+      },
+      "parts": {
+        "channel": {
+          "extrusion": [
+            {
+              "profile": [
+                { "x": 0.019750, "y": 0.00000, "z": -0.02300, "Type": "polyline_point" },
+                { "x": 0.019750, "y": 0.00000, "z": 0.00000, "Type": "polyline_point" },
+                { "x": 0.009000, "y": 0.00000, "z": 0.00000, "Type": "polyline_point" },
+                { "x": 0.009000, "y": 0.00000, "z": -0.00500, "Type": "polyline_point" },
+                { "x": 0.01044, "y": 0.00000, "z": -0.00582, "Type": "arc_end_point" },
+                { "x": 0.01621, "y": 0.00000, "z": -0.00249, "Type": "polyline_point" },
+                { "x": 0.01735, "y": 0.00000, "z": -0.00315, "Type": "arc_end_point" },
+                { "x": 0.01735, "y": 0.00000, "z": -0.01959, "Type": "polyline_point" },
+                { "x": 0.01635, "y": 0.00000, "z": -0.020600, "Type": "arc_end_point" },
+                { "x": -0.01635, "y": 0.00000, "z": -0.020600, "Type": "polyline_point" },
+                { "x": -0.01735, "y": 0.00000, "z": -0.01959, "Type": "arc_end_point" },
+                { "x": -0.01735, "y": 0.00000, "z": -0.00315, "Type": "polyline_point" },
+                { "x": -0.01621, "y": 0.00000, "z": -0.00249, "Type": "arc_end_point" },
+                { "x": -0.01044, "y": 0.00000, "z": -0.00582, "Type": "polyline_point" },
+                { "x": -0.009000, "y": 0.00000, "z": -0.00500, "Type": "arc_end_point" },
+                { "x": -0.009000, "y": 0.00000, "z": 0.00000, "Type": "polyline_point" },
+                { "x": -0.019750, "y": 0.00000, "z": 0.00000, "Type": "polyline_point" },
+                { "x": -0.019750, "y": 0.00000, "z": -0.02300, "Type": "polyline_point"},
+                { "x": 0.019750, "y": 0.00000, "z": -0.02300, "Type": "polyline_point"}
+              ],
+              "path": [
+                { "x": 0.00000, "y": 0.00000, "z": 0.00000, "Type": "polyline_point" },
+                { "x": 0.00000, "y": 0.30000, "z": 0.00000, "Type": "polyline_point" }
+              ],
+              "length": 0.3,
+              "cutout": {
+              },
+              "is_solid":true,
+              "origin": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "alpha": 0,
+                "beta": 0,
+                "gamma": 0
+              }
+            }
+          ]
+        },
+        "anchors": {
+          "anchor_1": {
+            "revolution": [
+              {
+                "profile": [
+                  { "x": 0.00000, "y": 0.02500, "z": -0.02300, "Type": "polyline_point" },
+                  { "x": 0.00000, "y": 0.02500, "z": -0.09320, "Type": "polyline_point" },
+                  { "x": 0.01090, "y": 0.02500, "z": -0.09320, "Type": "polyline_point" },
+                  { "x": 0.01090, "y": 0.02500, "z": -0.09100, "Type": "polyline_point" },
+                  { "x": 0.01000, "y": 0.02500, "z": -0.09100, "Type": "polyline_point" },
+                  { "x": 0.00500, "y": 0.02500, "z": -0.08820, "Type": "polyline_point" },
+                  { "x": 0.00500, "y": 0.02500, "z": -0.02720, "Type": "polyline_point" },
+                  { "x": 0.01235, "y": 0.02500, "z": -0.02300, "Type": "polyline_point" }
+                ],
+                "cutout": {},
+                "axis_origin": { "x": 0.00000, "y": 0.02500, "z": 0.00000 },
+                "axis_direction": [ 0, 0, 1 ],
+                "sweep_angle": 6.283185307,
+                "origin": { "x": 0, "y": 0, "z": 0, "alpha": 0, "beta": 0, "gamma": 0 }
+              }
+            ]
+          },
+          "anchor_2": {
+            "revolution": [
+              {
+                "profile": [
+                  { "x": 0.00000, "y": 0.27500, "z": -0.02300, "Type": "polyline_point" },
+                  { "x": 0.00000, "y": 0.27500, "z": -0.09320, "Type": "polyline_point" },
+                  { "x": 0.01090, "y": 0.27500, "z": -0.09320, "Type": "polyline_point" },
+                  { "x": 0.01090, "y": 0.27500, "z": -0.09100, "Type": "polyline_point" },
+                  { "x": 0.01000, "y": 0.27500, "z": -0.09100, "Type": "polyline_point" },
+                  { "x": 0.00500, "y": 0.27500, "z": -0.08820, "Type": "polyline_point" },
+                  { "x": 0.00500, "y": 0.27500, "z": -0.02720, "Type": "polyline_point" },
+                  { "x": 0.01235, "y": 0.27500, "z": -0.02300, "Type": "polyline_point" }
+                ],
+                "cutout": {},
+                "axis_origin": { "x": 0.00000, "y": 0.00000, "z": 0.00000 },
+                "axis_direction": [ 0, 0, 1 ],
+                "sweep_angle": 6.283185307,
+                "origin": { "x": 0, "y": 0, "z": 0, "alpha": 0, "beta": 0, "gamma": 0 }
+              }
+            ]
+          }
+        },
+        "channel_bounding_box": {
+          "min_point": { "x": -0.01975, "y": 0.00000, "z": -0.02300 },
+          "max_point": { "x": 0.01975, "y": 0.30000, "z": 0.00000 }
+        },
+        "anchors_bounding_box": {
+          "anchor_1": {
+            "min_point": { "x": -0.01235, "y": 0.01265, "z": -0.09320 },
+            "max_point": { "x": 0.01235, "y": 0.03735, "z": -0.09320 }
+          },
+          "anchor_2": {
+            "min_point": { "x": -0.01235, "y": 0.26265, "z": -0.09320 },
+            "max_point": { "x": 0.01235, "y": 0.28735, "z": -0.09320 }
+          }
+        }
+      },
+      "log": {
+        "high": [
+          "channel",
+          "anchors"
+        ],
+        "medium": [
+          "channel",
+          "anchors_bounding_box"
+        ],
+        "low": [
+          "channel_bounding_box",
+          "anchors_bounding_box"
+        ]
+      },
+      "classification": {
+        "uniclass2015_code": "Pr_20_85_84_84",
+        "uniclass2015_description": "Stainless steel cast-in channels",
+        "omniclass_code": "23-13 23 11 17",
+        "omniclass_description": "Mechanical Fasteners for Metal Structures",
+        "ifc_export_as": "IfcMechanicalFastener",
+        "ifc_export_type": "",
+        "ifc_description": ""
+      }
+    }
+  },
+  {
+    "general": {
+      "reference": "HS 40/22-M10-100-FV-4.6",
+      "type": "HS 40/22",
+      "hierarchy": {
+        "level_1": "Anchoring & Fixing",
+        "level_2": "Cast-in Channels & T-Bolts & Accessories",
+        "level_3": "Cast-in Channels & T-Bolts (premium level): HALFEN HTA-CE Cast-in Channels & HALFEN HS and HSR T-Bolts [hot-rolled]",
+        "level_4": "HS 40/22"
+      },
+      "attributes": {
+        "brand": "Halfen",
+        "article_number": "070-00106",
+        "language": "en_DE",
+        "country": "DE",
+        "sold_in_country": true,
+        "material": "FV",
+        "strength_class": "4.6",
+        "copyright": "Leviat",
+        "leviat_design_software_url": "?",
+        "version": "2-01-18/en_DE/Beta"
+      },
+      "approvals_and_certifications":{
+        "approvals": [],
+        "epd": false
+      },
+      "geometry": {
+        "length": 0.100,
+        "width": 0.0338,
+        "diameter": 0.010,
+        "vmin": 0.0145
+      }
+    },
+    "calculation": {
+      "characteristic_values": {
+        "nrkss": 11600,
+        "vrkss": 8300,
+        "m0rks": 17.9
+      }
+    },
+    "bim": {
+      "insertion_points": {},
+      "parts": {},
+      "log": {},
+      "classification": {}
+    }
+  }
+]

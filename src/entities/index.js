@@ -1,4 +1,5 @@
 import box from './box';
+import bim from './bim';
 import line from './line';
 import axes from './axes';
 import cylinder from './cylinder';
@@ -14,6 +15,7 @@ import cylindricalArrowWithClickableText from './cylindricalArrowWithClickableTe
 
 export {
   box,
+  bim,
   line,
   axes,
   cylinder,

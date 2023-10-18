@@ -16,10 +16,11 @@ const props = defineProps({
 
 const params = computed(() => cloneDeep(props.params));
 const entityName = computed(() => props.entity);
-let entity = draft3d.entities[props.entity](props.params);
+let entity = draft3d.entities[props.entity](cloneDeep(props.params));
 entity.addTo(draft3d.scene);
 
-watch(params, (newParams) => {
+watch(params, (val) => {
+  const newParams = cloneDeep(val);
   entity.updateParams(newParams);
 }, { deep: true });
 

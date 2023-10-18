@@ -1,7 +1,7 @@
 import { BoxGeometry, Mesh } from 'three';
 
 import { configureInteractivity } from '../utils/helpers';
-import { createMaterial, updateMaterial } from '../utils/material';
+import { createMaterial } from '../utils/material';
 import { defineEntity } from '../defineEntity';
 
 
@@ -24,17 +24,5 @@ export default defineEntity({
     configureInteractivity(mesh, params);
 
     return mesh;
-  },
-  update(object3d, newParams) {
-    const { dimensions, color, opacity } = newParams;
-
-    if (color) {
-      updateMaterial(object3d, color, opacity);
-    }
-
-    object3d.geometry?.dispose();
-    object3d.geometry = new BoxGeometry(...dimensions);
-
-    configureInteractivity(object3d, newParams);
   },
 });

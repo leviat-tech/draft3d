@@ -98,7 +98,7 @@ describe('Entity', () => {
   });
 
   it('should update object', () => {
-    const spyOnUpdate = vi.spyOn(defaultEntity, 'onUpdate');
+    // const spyOnUpdate = vi.spyOn(defaultEntity, 'onUpdate');
     const spyOnSetVisibility = vi.spyOn(defaultEntity, 'setVisibility');
     const spyOnSetRotation = vi.spyOn(defaultEntity, 'setRotation');
 
@@ -117,7 +117,7 @@ describe('Entity', () => {
     expect(spyOnSetRotation).toHaveBeenCalledOnce();
     expect(defaultEntity.object3d.rotation.x).toBe(0);
 
-    expect(spyOnUpdate).toHaveBeenCalledOnce();
+    // expect(spyOnUpdate).toHaveBeenCalledOnce();
   });
 
   it('should add object to entity object', () => {

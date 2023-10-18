@@ -35,7 +35,9 @@ class Entity {
       throw new Error('Specify entity name');
     }
 
+    this.isInitialRenderComplete = false;
     this.name = entityConfig.name;
+    this.render = entityConfig.render;
 
     this.params = Entity.getParams(entityConfig.parameters, params, entityConfig.name);
     this.features = {};
@@ -46,15 +48,46 @@ class Entity {
       this.formatParams = entityConfig.formatParams;
     }
 
-    const formattedParams = this.formatParams(this.params);
+    this._render();
 
-    const object3d = entityConfig.render.call(this, formattedParams);
+    if (typeof entityConfig.update === 'function') {
+      this.onUpdate = entityConfig.update;
+    }
+  }
 
-    if ((object3d instanceof Object3D)) {
-      this.object3d = object3d;
+  formatParams(params) {
+    return params;
+  }
+
+  _render() {
+    const isUpdate = this.isInitialRenderComplete;
+
+    if (isUpdate) {
+      this._clear();
     }
 
-    this.object3d.name = entityConfig.name;
+    const formattedParams = this.formatParams(this.params);
+    const object3d = this.render.call(this, formattedParams);
+
+    // If the render function calls this.addFeature then object3d is stored on the instance
+    if (!this.object3d) {
+      // Otherwise try using the return value from the render method
+      if (object3d) {
+        this.object3d = object3d;
+      } else {
+        throw new Error(`Error rendering feature: ${this.name}. 
+        An Object3D must either be returned the render config method, 
+        or attached to the instance by calling 
+        this.addFeature or this.addFeatureTo`);
+      }
+    }
+
+    this.object3d.name = this.name;
+
+    if (isUpdate) {
+      if (!this.parent) console.warn(`Entity '${this.name} does not have a parent'`);
+      this.parent?.add(this.object3d);
+    }
 
     this.layerSet?.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
 
@@ -65,13 +98,13 @@ class Entity {
     this.object3d.position.set(...this.params.position);
     this.setRotation(this.params.rotation);
 
-    if (typeof entityConfig.update === 'function') {
-      this.onUpdate = entityConfig.update;
-    }
+    this.isInitialRenderComplete = true;
   }
 
-  formatParams(params) {
-    return params;
+  _clear() {
+    this.object3d.clear();
+    this.parent?.remove(this.object3d);
+    this.features = {};
   }
 
 
@@ -95,24 +128,16 @@ class Entity {
 
     if (!shouldUpdate) return;
 
-    if (typeof newParams.visible === 'boolean') {
-      this.setVisibility(newParams.visible);
+    this._render(newParams);
+
+    // Retain backwards compatibility for entities with update methods
+    if (this.onUpdate) {
+      const formattedParams = this.formatParams(this.params);
+      this.onUpdate(this.object3d, formattedParams);
+    } else {
+      this._render();
     }
 
-    if (newParams.position) {
-      this.object3d.position.set(...newParams.position);
-    }
-
-    if (newParams.rotation) {
-      this.setRotation(newParams.rotation);
-    }
-
-    const formattedParams = this.formatParams(this.params);
-
-    this.layerSet?.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
-
-    // TODO refector entities so object3d isnt needed
-    if (this.onUpdate) this.onUpdate(this.object3d, formattedParams);
   }
 
   /**
@@ -141,6 +166,7 @@ class Entity {
     }
 
     object3d.add(this.object3d);
+    this.parent = this.object3d.parent;
   }
 
   /**

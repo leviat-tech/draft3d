@@ -9,9 +9,9 @@ import { createExtrudeGeometry, createPolyCurve } from '../utils/geometry';
 
 
 const geometryTypes = {
+  cuboid: 'cuboid',
   extrusion: 'extrusion',
   revolution: 'revolution',
-  // cuboid: 'cuboid',
   // sphere: 'sphere',
 };
 
@@ -36,6 +36,21 @@ function generateGeometry(type, params) {
       const path = getProfilePath(params.profile, y);
       const shape = createPolyCurve(path);
       return new LatheGeometry(shape.getPoints(), 32).translate(0, 0, y);
+    }
+
+    case geometryTypes.cuboid: {
+      const { min_point: min, max_point: max } = params;
+
+      const path = [
+        [min.x, min.z],
+        [min.x, max.z],
+        [max.x, max.z],
+        [max.x, min.z],
+      ];
+
+      const shape = createPolyCurve(path);
+
+      return createExtrudeGeometry(shape, max.y);
     }
 
     default:
@@ -89,8 +104,6 @@ export default defineEntity({
     return obj3d;
   },
   update(object3d, newParams) {
-    console.log(this.render);
-
     object3d.clear();
 
     const { parts, color, opacity } = newParams;

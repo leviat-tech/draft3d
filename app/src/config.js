@@ -1,3 +1,5 @@
+const cameraDistance = 4;
+
 const config = {
   three: {
     axisIndicator: {
@@ -10,7 +12,7 @@ const config = {
     },
     camera: {
       fov: 50,
-      position: { x: 0.5, y: 0.5, z: 0.5 },
+      position: { x: cameraDistance, y: cameraDistance, z: cameraDistance },
     },
     controls: {
       target: [0, 0, 0],

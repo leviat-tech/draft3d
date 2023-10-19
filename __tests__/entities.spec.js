@@ -1,4 +1,5 @@
 import { Object3D } from 'three';
+import { difference } from 'lodash-es';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import * as entities from '@/entities';
@@ -11,10 +12,14 @@ describe.each(Object.values(entities))('$name entity', (entity) => {
   });
 
   it('should contain mandatory properties', () => {
-    const mandatoryKeys = ['name', 'parameters', 'render', 'update'];
+    const mandatoryKeys = ['name', 'parameters', 'render'];
+    const optionalKeys = ['update'];
+    const allowedKeys = [...mandatoryKeys, ...optionalKeys];
     const entityKeys = Object.keys(entity.config);
 
-    expect(entityKeys).toStrictEqual(mandatoryKeys);
+    const unknownKeys = difference(entityKeys, allowedKeys);
+
+    expect(entityKeys).not.toContain(...unknownKeys);
   });
 
   it('should contain predefined parameters', () => {

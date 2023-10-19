@@ -1,12 +1,56 @@
 import { each } from 'lodash-es';
 import { LatheGeometry, Mesh, Object3D } from 'three';
-import json from '../../app/src/data/example2.json';
 
 import { configureInteractivity } from '../utils/helpers';
 import { createMaterial, updateMaterial } from '../utils/material';
 import { defineEntity } from '../defineEntity';
 import { createExtrudeGeometry, createPolyCurve } from '../utils/geometry';
 
+
+const partsTemp = {
+  channel: {
+    extrusion: [
+      {
+        profile: [
+          { x: 0.019750, y: 0.00000, z: -0.02300, Type: 'polyline_point' },
+          { x: 0.019750, y: 0.00000, z: 0.00000, Type: 'polyline_point' },
+          { x: 0.009000, y: 0.00000, z: 0.00000, Type: 'polyline_point' },
+          { x: 0.009000, y: 0.00000, z: -0.00500, Type: 'polyline_point' },
+          { x: 0.01044, y: 0.00000, z: -0.00582, Type: 'arc_end_point' },
+          { x: 0.01621, y: 0.00000, z: -0.00249, Type: 'polyline_point' },
+          { x: 0.01735, y: 0.00000, z: -0.00315, Type: 'arc_end_point' },
+          { x: 0.01735, y: 0.00000, z: -0.01959, Type: 'polyline_point' },
+          { x: 0.01635, y: 0.00000, z: -0.020600, Type: 'arc_end_point' },
+          { x: -0.01635, y: 0.00000, z: -0.020600, Type: 'polyline_point' },
+          { x: -0.01735, y: 0.00000, z: -0.01959, Type: 'arc_end_point' },
+          { x: -0.01735, y: 0.00000, z: -0.00315, Type: 'polyline_point' },
+          { x: -0.01621, y: 0.00000, z: -0.00249, Type: 'arc_end_point' },
+          { x: -0.01044, y: 0.00000, z: -0.00582, Type: 'polyline_point' },
+          { x: -0.009000, y: 0.00000, z: -0.00500, Type: 'arc_end_point' },
+          { x: -0.009000, y: 0.00000, z: 0.00000, Type: 'polyline_point' },
+          { x: -0.019750, y: 0.00000, z: 0.00000, Type: 'polyline_point' },
+          { x: -0.019750, y: 0.00000, z: -0.02300, Type: 'polyline_point' },
+          { x: 0.019750, y: 0.00000, z: -0.02300, Type: 'polyline_point' },
+        ],
+        path: [
+          { x: 0.00000, y: 0.00000, z: 0.00000, Type: 'polyline_point' },
+          { x: 0.00000, y: 0.30000, z: 0.00000, Type: 'polyline_point' },
+        ],
+        length: 0.3,
+        cutout: {},
+        is_solid: true,
+        origin: {
+          x: 0,
+          y: 0,
+          z: 0,
+          alpha: 0,
+          beta: 0,
+          gamma: 0,
+        },
+      },
+    ],
+  },
+};
 
 const geometryTypes = {
   cuboid: 'cuboid',
@@ -83,7 +127,7 @@ function generatePartsGeometries(parts) {
 export default defineEntity({
   name: 'bim',
   parameters: {
-    parts: { default: json[0].bim.parts },
+    parts: { default: partsTemp },
     color: { name: 'Colour', type: 'color', default: '#6666cc' },
     opacity: { name: 'Opacity', type: 'number', precision: 0.05, default: 1 },
   },

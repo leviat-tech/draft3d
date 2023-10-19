@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.0](https://github.com/leviat-tech/draft3d/compare/v1.3.0...v1.4.0) (2023-10-19)
+
+
+### Features
+
+* add bim cuboid ([288809e](https://github.com/leviat-tech/draft3d/commit/288809e1d77d3ad28cb37c9781bf341a0a38c3cf))
+* create bim entity ([6ef3d5f](https://github.com/leviat-tech/draft3d/commit/6ef3d5f8b1234c747a296f0b50d24c7e35d77d67))
+* enable single method for render and update ([60ad50d](https://github.com/leviat-tech/draft3d/commit/60ad50d54f41e34569f4b2813e98b905d116a6ea))
+
 ## [1.3.0](https://github.com/leviat-tech/draft3d/compare/v1.2.0...v1.3.0) (2023-10-12)
 
 

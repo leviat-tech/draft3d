@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/leviat-tech/draft3d/compare/v1.4.0...v1.4.1) (2023-10-19)
+
+
+### Bug Fixes
+
+* move demo bim data to entity ([02bb947](https://github.com/leviat-tech/draft3d/commit/02bb947fe097c9d17e8e986c1dcbc3a84f930bf6))
+
 ## [1.4.0](https://github.com/leviat-tech/draft3d/compare/v1.3.0...v1.4.0) (2023-10-19)
 
 

@@ -50,6 +50,54 @@ const partsTemp = {
       },
     ],
   },
+  anchors: {
+    anchor_1: {
+      revolution: [
+        {
+          profile: [
+            { x: 0.00000, y: 0.02500, z: -0.02300, Type: 'polyline_point' },
+            { x: 0.00000, y: 0.02500, z: -0.09320, Type: 'polyline_point' },
+            { x: 0.01090, y: 0.02500, z: -0.09320, Type: 'polyline_point' },
+            { x: 0.01090, y: 0.02500, z: -0.09100, Type: 'polyline_point' },
+            { x: 0.01000, y: 0.02500, z: -0.09100, Type: 'polyline_point' },
+            { x: 0.00500, y: 0.02500, z: -0.08820, Type: 'polyline_point' },
+            { x: 0.00500, y: 0.02500, z: -0.02720, Type: 'polyline_point' },
+            { x: 0.01235, y: 0.02500, z: -0.02300, Type: 'polyline_point' },
+          ],
+          cutout: {},
+          axis_origin: { x: 0.00000, y: 0.02500, z: 0.00000 },
+          axis_direction: [0, 0, 1],
+          sweep_angle: 6.283185307,
+          origin: {
+            x: 0, y: 0.02500, z: 0, alpha: 0, beta: 0, gamma: 0,
+          },
+        },
+      ],
+    },
+    anchor_2: {
+      revolution: [
+        {
+          profile: [
+            { x: 0.00000, y: 0.27500, z: -0.02300, Type: 'polyline_point' },
+            { x: 0.00000, y: 0.27500, z: -0.09320, Type: 'polyline_point' },
+            { x: 0.01090, y: 0.27500, z: -0.09320, Type: 'polyline_point' },
+            { x: 0.01090, y: 0.27500, z: -0.09100, Type: 'polyline_point' },
+            { x: 0.01000, y: 0.27500, z: -0.09100, Type: 'polyline_point' },
+            { x: 0.00500, y: 0.27500, z: -0.08820, Type: 'polyline_point' },
+            { x: 0.00500, y: 0.27500, z: -0.02720, Type: 'polyline_point' },
+            { x: 0.01235, y: 0.27500, z: -0.02300, Type: 'polyline_point' },
+          ],
+          cutout: {},
+          axis_origin: { x: 0.00000, y: 0.00000, z: 0.00000 },
+          axis_direction: [0, 0, 1],
+          sweep_angle: 6.283185307,
+          origin: {
+            x: 0, y: 0.27500, z: 0, alpha: 0, beta: 0, gamma: 0,
+          },
+        },
+      ],
+    },
+  },
 };
 
 const geometryTypes = {
@@ -67,19 +115,28 @@ function getProfilePath(profile, yOffset = 0) {
   return profile.map(({ x, y, z }) => [x, z]);
 }
 
-function generateGeometry(type, params) {
+function generateGeometry(type, params, elementName) {
   switch (type) {
     case geometryTypes.extrusion: {
       const path = getProfilePath(params.profile);
       const shape = createPolyCurve(path);
-      return createExtrudeGeometry(shape, params.length);
+
+      const geometry = createExtrudeGeometry(shape, params.length);
+      geometry.name = elementName;
+
+      return geometry
+        .translate(0, 0, params.origin.y);
     }
 
     case geometryTypes.revolution: {
       const y = params.profile[0].y;
       const path = getProfilePath(params.profile, y);
       const shape = createPolyCurve(path);
-      return new LatheGeometry(shape.getPoints(), 32).translate(0, 0, y);
+
+      const geometry = new LatheGeometry(shape.getPoints(), 32).translate(0, 0, params.origin.y);
+      geometry.name = elementName;
+
+      return geometry;
     }
 
     case geometryTypes.cuboid: {
@@ -94,7 +151,10 @@ function generateGeometry(type, params) {
 
       const shape = createPolyCurve(path);
 
-      return createExtrudeGeometry(shape, max.y);
+      const geometry = createExtrudeGeometry(shape, max.y);
+      geometry.name = elementName;
+
+      return geometry;
     }
 
     default:
@@ -105,7 +165,7 @@ function generateGeometry(type, params) {
 }
 
 
-function generatePartsGeometries(parts) {
+function generatePartsGeometries(parts, rootElementName = '') {
   if (Array.isArray(parts)) return null;
 
   const geometries = [];
@@ -114,8 +174,8 @@ function generatePartsGeometries(parts) {
     if (name.match(/bounding_box/)) return null;
 
     const partGeometries = (name in geometryTypes)
-      ? part.map((item) => generateGeometry(name, item))
-      : generatePartsGeometries(part);
+      ? part.map((item) => generateGeometry(name, item, rootElementName))
+      : generatePartsGeometries(part, name);
 
     if (partGeometries?.length) geometries.push(...partGeometries);
   });
@@ -141,7 +201,6 @@ export default defineEntity({
 
     const obj3d = new Object3D();
     obj3d.add(...meshes);
-
 
     configureInteractivity(obj3d, params);
 

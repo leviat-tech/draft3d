@@ -1,14 +1,20 @@
 <template>
   <div ref="el" class="viewport z-10">
-    <Entity v-if="entity" :key="entity?.name" :params="params" :entity="entity" />
+    <Entity
+      v-if="entity"
+      :key="entity?.name"
+      :params="params"
+      :entity="entity"
+    />
 
     <div class="absolute z-10 border-r border-b">
       <ThreeDevTools :scene="scene" class="pr-4" />
 
       <div class="w-48">
-        <router-link v-for="i in entities"
-                     :to="`/entity/${i.config.name}`"
-                     class="py-2 px-4 block border-t"
+        <router-link
+          v-for="i in entities"
+          :to="`/entity/${i.config.name}`"
+          class="py-2 px-4 block border-t"
         >
           {{ i.config.name }}
         </router-link>
@@ -19,8 +25,15 @@
       </div>
     </div>
 
-    <div class="absolute right-0 top-0 px-4 w-[280px] z-10 border-b border-l bg-white">
-      <parameter-list v-if="entity" :name="entity" :parameters="parameterConfig" @update="onUpdate" />
+    <div
+      class="absolute right-0 top-0 px-4 w-[280px] z-10 border-b border-l bg-white"
+    >
+      <parameter-list
+        v-if="entity"
+        :name="entity"
+        :parameters="filteredParameters"
+        @update="onUpdate"
+      />
     </div>
   </div>
 </template>
@@ -57,6 +70,20 @@ const onUpdate = (val) => {
   params.value = val;
 };
 
+const filteredParameters = computed(() => {
+  const paramsToOmit = [
+    'layer',
+    'onClick',
+    'onDbClick',
+    'onMouseOut',
+    'onMouseOver',
+  ];
+
+  return Object.fromEntries(
+    Object.entries(parameterConfig.value).filter(([key]) => !paramsToOmit.includes(key)),
+  );
+});
+
 watch(entity, (newEntity) => {
   parameterConfig.value = entities[newEntity].config.parameters;
   params.value = castParameters(parameterConfig.value);
@@ -75,7 +102,6 @@ function onFileChange(e) {
   // Read in the image file as a data URL.
   reader.readAsText(file);
 }
-
 </script>
 
 <style lang="scss">
@@ -85,5 +111,4 @@ function onFileChange(e) {
   overflow: hidden;
   position: relative;
 }
-
 </style>

@@ -120,12 +120,7 @@ function generateGeometry(type, params, elementName) {
     case geometryTypes.extrusion: {
       const path = getProfilePath(params.profile);
       const shape = createPolyCurve(path);
-
-      const geometry = createExtrudeGeometry(shape, params.length);
-      geometry.name = elementName;
-
-      return geometry
-        .translate(0, 0, params.origin.y);
+      return createExtrudeGeometry(shape, params.length).translate(0, 0, params.origin.y);
     }
 
     case geometryTypes.revolution: {
@@ -133,10 +128,7 @@ function generateGeometry(type, params, elementName) {
       const path = getProfilePath(params.profile, y);
       const shape = createPolyCurve(path);
 
-      const geometry = new LatheGeometry(shape.getPoints(), 32).translate(0, 0, params.origin.y);
-      geometry.name = elementName;
-
-      return geometry;
+      return new LatheGeometry(shape.getPoints(), 32).translate(0, 0, params.origin.y);
     }
 
     case geometryTypes.cuboid: {
@@ -151,10 +143,7 @@ function generateGeometry(type, params, elementName) {
 
       const shape = createPolyCurve(path);
 
-      const geometry = createExtrudeGeometry(shape, max.y);
-      geometry.name = elementName;
-
-      return geometry;
+      return createExtrudeGeometry(shape, max.y);
     }
 
     default:
@@ -174,7 +163,10 @@ function generatePartsGeometries(parts, rootElementName = '') {
     if (name.match(/bounding_box/)) return null;
 
     const partGeometries = (name in geometryTypes)
-      ? part.map((item) => generateGeometry(name, item, rootElementName))
+      ? part.map((item) => ({
+        geometry: generateGeometry(name, item, rootElementName),
+        name: rootElementName,
+      }))
       : generatePartsGeometries(part, name);
 
     if (partGeometries?.length) geometries.push(...partGeometries);
@@ -197,7 +189,13 @@ export default defineEntity({
     const geometries = generatePartsGeometries(parts);
     const material = createMaterial(color, opacity);
 
-    const meshes = geometries.map((geometry) => new Mesh(geometry, material));
+    const meshes = geometries.map(({ name, geometry }) => {
+      const mesh = new Mesh(geometry, material);
+
+      mesh.name = name;
+
+      return mesh;
+    });
 
     const obj3d = new Object3D();
     obj3d.add(...meshes);
@@ -205,19 +203,5 @@ export default defineEntity({
     configureInteractivity(obj3d, params);
 
     return obj3d;
-  },
-  update(object3d, newParams) {
-    object3d.clear();
-
-    const { parts, color, opacity } = newParams;
-
-    const geometries = generatePartsGeometries(parts);
-    const material = createMaterial(color, opacity);
-
-    const meshes = geometries.map((geometry) => new Mesh(geometry, material));
-
-    object3d.add(...meshes);
-
-    configureInteractivity(object3d, newParams);
   },
 });

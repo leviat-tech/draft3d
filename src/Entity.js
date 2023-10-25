@@ -3,6 +3,7 @@ import draft3d from './draft3d';
 
 // eslint-disable-next-line no-unused-vars
 import LayerSet from './utils/LayerSet';
+import { updateMaterial } from './utils/material';
 
 
 class Entity {
@@ -55,6 +56,16 @@ class Entity {
     }
   }
 
+  updateMaterial(children) {
+    children.forEach((child) => {
+      if (!child.children.length) {
+        updateMaterial(child, this.params.color, this.params.opacity);
+        return;
+      }
+      this.updateMaterial(child);
+    });
+  }
+
   formatParams(params) {
     return params;
   }
@@ -69,17 +80,17 @@ class Entity {
     const formattedParams = this.formatParams(this.params);
     const object3d = this.render.call(this, formattedParams);
 
+    if (object3d) {
+      this.object3d = object3d;
+    }
+
     // If the render function calls this.addFeature then object3d is stored on the instance
     if (!this.object3d) {
-      // Otherwise try using the return value from the render method
-      if (object3d) {
-        this.object3d = object3d;
-      } else {
-        throw new Error(`Error rendering feature: ${this.name}. 
-        An Object3D must either be returned the render config method, 
-        or attached to the instance by calling 
-        this.addFeature or this.addFeatureTo`);
-      }
+      throw new Error(`Error rendering feature: ${this.name}. 
+          An Object3D must either be returned the render config method,
+          or attached to the instance by calling
+          this.addFeature or this.addFeatureTo`);
+
     }
 
     this.object3d.name = this.name;
@@ -97,6 +108,10 @@ class Entity {
 
     this.object3d.position.set(...this.params.position);
     this.setRotation(this.params.rotation);
+
+    if (this.params.color && this.params.opacity) {
+      this.updateMaterial(this.object3d.children);
+    }
 
     this.isInitialRenderComplete = true;
   }
@@ -127,8 +142,6 @@ class Entity {
     this.params = mergedParams;
 
     if (!shouldUpdate) return;
-
-    this._render(newParams);
 
     // Retain backwards compatibility for entities with update methods
     if (this.onUpdate) {

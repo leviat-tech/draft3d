@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/leviat-tech/draft3d/compare/v1.4.1...v1.4.2) (2023-10-26)
+
+
+### Bug Fixes
+
+* update bim object name and translation ([cdebb23](https://github.com/leviat-tech/draft3d/commit/cdebb23101575fc8a69f675bb0f004ed78e2e7a2))
+
 ## [1.4.1](https://github.com/leviat-tech/draft3d/compare/v1.4.0...v1.4.1) (2023-10-19)
 
 

@@ -98,26 +98,23 @@ describe('Entity', () => {
   });
 
   it('should update object', () => {
-    // const spyOnUpdate = vi.spyOn(defaultEntity, 'onUpdate');
-    const spyOnSetVisibility = vi.spyOn(defaultEntity, 'setVisibility');
-    const spyOnSetRotation = vi.spyOn(defaultEntity, 'setRotation');
+    const spyOnUpdate = vi.spyOn(defaultEntity, 'onUpdate');
 
-    defaultEntity.updateParams({
-      ...baseConfig,
-      visible: false,
+    const newParams = {
       position: [0, 0, 0],
       rotation: [0, 0, 0],
-    });
+      srcValue: 0,
+    };
 
-    expect(spyOnSetVisibility).toHaveBeenCalledOnce();
-    expect(spyOnSetVisibility).toHaveBeenCalledWith(false);
+    defaultEntity.updateParams(newParams);
 
-    expect(defaultEntity.object3d.position).toStrictEqual(new Vector3(0, 0, 0));
-
-    expect(spyOnSetRotation).toHaveBeenCalledOnce();
-    expect(defaultEntity.object3d.rotation.x).toBe(0);
-
-    // expect(spyOnUpdate).toHaveBeenCalledOnce();
+    expect(spyOnUpdate).toHaveBeenCalledOnce();
+    expect(spyOnUpdate.mock.calls[0][0]).toStrictEqual(
+      defaultEntity.object3d,
+    );
+    expect(spyOnUpdate.mock.calls[0][1]).toStrictEqual(
+      newParams,
+    );
   });
 
   it('should add object to entity object', () => {

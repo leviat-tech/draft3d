@@ -14,9 +14,6 @@ const twoCubesParams = {
     this.addFeature('cube1', 'box', { position: [0, 0, 0] });
     this.addFeature('cube2', 'box', { position: [params.distance, 0, 0] });
   },
-  update(obj3d, newParams) {
-    this.features.cube2.updateParams({ position: [newParams.distance, 0, 0] });
-  },
 };
 
 const fourCubesParams = {
@@ -87,7 +84,7 @@ describe('featureStore', () => {
       'isInteractive',
     ];
 
-    const factory = createFactory(twoCubesParams);
+    const factory = createFactory(fourCubesParams);
 
     predefinedParams.forEach((param) => {
       expect(Object.keys(factory.config.parameters)).toContain(param);
@@ -95,7 +92,7 @@ describe('featureStore', () => {
 
     expect(factory.config).toHaveProperty('render');
     expect(factory.config).toHaveProperty('update');
-    expect(factory.config.name).toBe('TwoCubes');
+    expect(factory.config.name).toBe('FourCubes');
   });
 
   it('should define entity', () => {

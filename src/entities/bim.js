@@ -50,6 +50,54 @@ const partsTemp = {
       },
     ],
   },
+  anchors: {
+    anchor_1: {
+      revolution: [
+        {
+          profile: [
+            { x: 0.00000, y: 0.02500, z: -0.02300, Type: 'polyline_point' },
+            { x: 0.00000, y: 0.02500, z: -0.09320, Type: 'polyline_point' },
+            { x: 0.01090, y: 0.02500, z: -0.09320, Type: 'polyline_point' },
+            { x: 0.01090, y: 0.02500, z: -0.09100, Type: 'polyline_point' },
+            { x: 0.01000, y: 0.02500, z: -0.09100, Type: 'polyline_point' },
+            { x: 0.00500, y: 0.02500, z: -0.08820, Type: 'polyline_point' },
+            { x: 0.00500, y: 0.02500, z: -0.02720, Type: 'polyline_point' },
+            { x: 0.01235, y: 0.02500, z: -0.02300, Type: 'polyline_point' },
+          ],
+          cutout: {},
+          axis_origin: { x: 0.00000, y: 0.02500, z: 0.00000 },
+          axis_direction: [0, 0, 1],
+          sweep_angle: 6.283185307,
+          origin: {
+            x: 0, y: 0.02500, z: 0, alpha: 0, beta: 0, gamma: 0,
+          },
+        },
+      ],
+    },
+    anchor_2: {
+      revolution: [
+        {
+          profile: [
+            { x: 0.00000, y: 0.27500, z: -0.02300, Type: 'polyline_point' },
+            { x: 0.00000, y: 0.27500, z: -0.09320, Type: 'polyline_point' },
+            { x: 0.01090, y: 0.27500, z: -0.09320, Type: 'polyline_point' },
+            { x: 0.01090, y: 0.27500, z: -0.09100, Type: 'polyline_point' },
+            { x: 0.01000, y: 0.27500, z: -0.09100, Type: 'polyline_point' },
+            { x: 0.00500, y: 0.27500, z: -0.08820, Type: 'polyline_point' },
+            { x: 0.00500, y: 0.27500, z: -0.02720, Type: 'polyline_point' },
+            { x: 0.01235, y: 0.27500, z: -0.02300, Type: 'polyline_point' },
+          ],
+          cutout: {},
+          axis_origin: { x: 0.00000, y: 0.00000, z: 0.00000 },
+          axis_direction: [0, 0, 1],
+          sweep_angle: 6.283185307,
+          origin: {
+            x: 0, y: 0.27500, z: 0, alpha: 0, beta: 0, gamma: 0,
+          },
+        },
+      ],
+    },
+  },
 };
 
 const geometryTypes = {
@@ -72,14 +120,16 @@ function generateGeometry(type, params) {
     case geometryTypes.extrusion: {
       const path = getProfilePath(params.profile);
       const shape = createPolyCurve(path);
-      return createExtrudeGeometry(shape, params.length);
+      return createExtrudeGeometry(shape, params.length).translate(0, 0, params.origin.y);
     }
 
     case geometryTypes.revolution: {
+      const radialSegments = 32;
       const y = params.profile[0].y;
       const path = getProfilePath(params.profile, y);
       const shape = createPolyCurve(path);
-      return new LatheGeometry(shape.getPoints(), 32).translate(0, 0, y);
+
+      return new LatheGeometry(shape.getPoints(), radialSegments).translate(0, 0, params.origin.y);
     }
 
     case geometryTypes.cuboid: {
@@ -105,7 +155,7 @@ function generateGeometry(type, params) {
 }
 
 
-function generatePartsGeometries(parts) {
+function generatePartsGeometries(parts, rootElementName = '') {
   if (Array.isArray(parts)) return null;
 
   const geometries = [];
@@ -114,8 +164,11 @@ function generatePartsGeometries(parts) {
     if (name.match(/bounding_box/)) return null;
 
     const partGeometries = (name in geometryTypes)
-      ? part.map((item) => generateGeometry(name, item))
-      : generatePartsGeometries(part);
+      ? part.map((item) => ({
+        geometry: generateGeometry(name, item),
+        name: rootElementName,
+      }))
+      : generatePartsGeometries(part, name);
 
     if (partGeometries?.length) geometries.push(...partGeometries);
   });
@@ -137,28 +190,19 @@ export default defineEntity({
     const geometries = generatePartsGeometries(parts);
     const material = createMaterial(color, opacity);
 
-    const meshes = geometries.map((geometry) => new Mesh(geometry, material));
+    const meshes = geometries.map(({ name, geometry }) => {
+      const mesh = new Mesh(geometry, material);
+
+      mesh.name = name;
+
+      return mesh;
+    });
 
     const obj3d = new Object3D();
     obj3d.add(...meshes);
 
-
     configureInteractivity(obj3d, params);
 
     return obj3d;
-  },
-  update(object3d, newParams) {
-    object3d.clear();
-
-    const { parts, color, opacity } = newParams;
-
-    const geometries = generatePartsGeometries(parts);
-    const material = createMaterial(color, opacity);
-
-    const meshes = geometries.map((geometry) => new Mesh(geometry, material));
-
-    object3d.add(...meshes);
-
-    configureInteractivity(object3d, newParams);
   },
 });

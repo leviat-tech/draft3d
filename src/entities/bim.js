@@ -115,7 +115,7 @@ function getProfilePath(profile, yOffset = 0) {
   return profile.map(({ x, y, z }) => [x, z]);
 }
 
-function generateGeometry(type, params, elementName) {
+function generateGeometry(type, params) {
   switch (type) {
     case geometryTypes.extrusion: {
       const path = getProfilePath(params.profile);
@@ -124,11 +124,12 @@ function generateGeometry(type, params, elementName) {
     }
 
     case geometryTypes.revolution: {
+      const radialSegments = 32;
       const y = params.profile[0].y;
       const path = getProfilePath(params.profile, y);
       const shape = createPolyCurve(path);
 
-      return new LatheGeometry(shape.getPoints(), 32).translate(0, 0, params.origin.y);
+      return new LatheGeometry(shape.getPoints(), radialSegments).translate(0, 0, params.origin.y);
     }
 
     case geometryTypes.cuboid: {
@@ -164,7 +165,7 @@ function generatePartsGeometries(parts, rootElementName = '') {
 
     const partGeometries = (name in geometryTypes)
       ? part.map((item) => ({
-        geometry: generateGeometry(name, item, rootElementName),
+        geometry: generateGeometry(name, item),
         name: rootElementName,
       }))
       : generatePartsGeometries(part, name);

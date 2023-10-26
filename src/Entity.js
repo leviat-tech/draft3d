@@ -62,7 +62,7 @@ class Entity {
         updateMaterial(child, this.params.color, this.params.opacity);
         return;
       }
-      this.updateMaterial(child);
+      this.updateMaterial(child.children);
     });
   }
 

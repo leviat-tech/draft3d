@@ -129,6 +129,49 @@ const defaultBim = {
         },
       ],
     },
+    anchors_bounding_box: {
+      type: 'cuboid',
+      min_point: { x: -0.019, y: 0.0, z: -0.01800 },
+      max_point: { x: 0.019, y: 0.0, z: -0.08100 },
+      origin: [
+        {
+          x: 0, y: 0.025, z: 0, alpha: 0, beta: 0, gamma: 0,
+        },
+        {
+          x: 0, y: 0.150, z: 0, alpha: 0, beta: 0, gamma: 0,
+        },
+        {
+          x: 0, y: 0.275, z: 0, alpha: 0, beta: 0, gamma: 0,
+        },
+      ],
+    },
+  },
+  log: {
+    high: [
+      'channel',
+      'anchors',
+    ],
+    medium: [
+      'channel_bounding_box',
+      'anchors_bounding_box',
+    ],
+    low: [
+      'channel_bounding_box',
+      'anchors_bounding_box',
+    ],
+  },
+  styles: {
+    common: ['bounding_box', 'channel_bounding_box', 'anchors_bounding_box'],
+    steel: ['channel', 'anchors'],
+  },
+  classification: {
+    uniclass2015_code: 'Pr_20_85_84_84',
+    uniclass2015_description: 'Stainless steel cast-in channels',
+    omniclass_code: '23-13 23 11 17',
+    omniclass_description: 'Mechanical Fasteners for Metal Structures',
+    ifc_export_as: 'IfcMechanicalFastener',
+    ifc_export_type: '',
+    ifc_description: '',
   },
   log: {
     high: [

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/leviat-tech/draft3d/compare/v1.4.2...v1.4.3) (2023-10-31)
+
+
+### Bug Fixes
+
+* change bim element ([#146](https://github.com/leviat-tech/draft3d/issues/146)) ([f89d2a5](https://github.com/leviat-tech/draft3d/commit/f89d2a531e226fcc78529f1b49a4025e422b64b6))
+
 ## [1.4.2](https://github.com/leviat-tech/draft3d/compare/v1.4.1...v1.4.2) (2023-10-26)
 
 

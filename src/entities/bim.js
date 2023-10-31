@@ -1,3 +1,5 @@
+import { pick } from 'lodash-es';
+
 import { LatheGeometry, Mesh, Object3D } from 'three';
 
 import { configureInteractivity } from '../utils/helpers';
@@ -246,9 +248,7 @@ export default defineEntity({
   render(params) {
     const { bimData, color, opacity } = params;
 
-    const filteredParts = Object.fromEntries(
-      Object.entries(bimData.parts).filter(([key]) => bimData.log[params.log].includes(key)),
-    );
+    const filteredParts = pick(bimData.parts, bimData.log[params.log]);
 
     const geometries = generatePartsGeometries(filteredParts);
     const material = createMaterial(color, opacity);

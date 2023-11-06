@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.4](https://github.com/leviat-tech/draft3d/compare/v1.4.3...v1.4.4) (2023-11-06)
+
+
+### Bug Fixes
+
+* add arc to bim ([77dbbd3](https://github.com/leviat-tech/draft3d/commit/77dbbd328df92e4ec3af6189d4f3aa5d63100f59))
+
 ## [1.4.3](https://github.com/leviat-tech/draft3d/compare/v1.4.2...v1.4.3) (2023-10-31)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.5](https://github.com/leviat-tech/draft3d/compare/v1.4.4...v1.4.5) (2023-11-13)
+
+
+### Bug Fixes
+
+* export bim function ([#150](https://github.com/leviat-tech/draft3d/issues/150)) ([a3c7842](https://github.com/leviat-tech/draft3d/commit/a3c784285e1058c5522f0363b70346a6541646a3))
+
 ## [1.4.4](https://github.com/leviat-tech/draft3d/compare/v1.4.3...v1.4.4) (2023-11-06)
 
 

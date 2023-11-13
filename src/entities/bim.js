@@ -85,7 +85,7 @@ function sortProfileData(params) {
   return profileDataSpliced;
 }
 
-function findExtrusionPath(profile) {
+export function findExtrusionPath(profile) {
   const path = new Path();
   const sortedProfile = sortProfileData(profile);
 

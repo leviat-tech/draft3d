@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.6](https://github.com/leviat-tech/draft3d/compare/v1.4.5...v1.4.6) (2023-11-20)
+
+
+### Bug Fixes
+
+* revised font ([#152](https://github.com/leviat-tech/draft3d/issues/152)) ([de5e08b](https://github.com/leviat-tech/draft3d/commit/de5e08bc64b96639db2b2cb83db88b959f30564d))
+
 ## [1.4.5](https://github.com/leviat-tech/draft3d/compare/v1.4.4...v1.4.5) (2023-11-13)
 
 

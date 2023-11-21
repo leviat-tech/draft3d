@@ -1,10 +1,11 @@
 import { Mesh } from 'three';
 
 import { configureInteractivity } from '../utils/helpers';
-import { createMaterial, updateMaterial } from '../utils/material';
+import { createMaterial } from '../utils/material';
 import { createExtrudeGeometry, createPolyCurve } from '../utils/geometry';
 import { defineEntity } from '../defineEntity';
 
+import { CSG } from 'three-csg-ts';
 
 export default defineEntity({
   name: 'polycurve3d',
@@ -25,9 +26,10 @@ export default defineEntity({
         [0, 3],
       ],
     },
+    cutouts: { name: 'Cutouts', default: [] },
   },
   render(params) {
-    const { depth, color, opacity, path } = params;
+    const { depth, color, opacity, path, cutouts } = params;
 
     const shape = createPolyCurve(path);
     const material = createMaterial(color, opacity);
@@ -35,20 +37,19 @@ export default defineEntity({
 
     const mesh = new Mesh(geometry, material);
 
-    configureInteractivity(mesh, params);
+    const result = cutouts?.reduce((acc, cutout) => {
+      if (cutout && cutout?.isMesh) {
+        acc.updateMatrix();
+        cutout.updateMatrix();
 
-    return mesh;
-  },
-  update(object3d, newParams) {
-    const { path, depth, color, opacity } = newParams;
+        acc = CSG.subtract(acc, cutout);
 
-    updateMaterial(object3d, color, opacity);
+        return acc;
+      }
+    }, mesh) || mesh;
 
-    const newShape = createPolyCurve(path);
+    configureInteractivity(result, params);
 
-    object3d.geometry?.dispose();
-    object3d.geometry = createExtrudeGeometry(newShape, depth);
-
-    configureInteractivity(object3d, newParams);
+    return result;
   },
 });

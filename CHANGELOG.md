@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/leviat-tech/draft3d/compare/v1.4.6...v1.5.0) (2023-11-22)
+
+
+### Features
+
+* add cutouts to polycurve ([#154](https://github.com/leviat-tech/draft3d/issues/154)) ([9da5c53](https://github.com/leviat-tech/draft3d/commit/9da5c5309f9a4bb0d1821cc375856e0423abfe6b))
+
 ## [1.4.6](https://github.com/leviat-tech/draft3d/compare/v1.4.5...v1.4.6) (2023-11-20)
 
 

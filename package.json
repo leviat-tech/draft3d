@@ -18,7 +18,8 @@
   "main": "src/index.js",
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "three": "^0.139.2"
+    "three": "^0.139.2",
+    "three-csg-ts": "^3.1.13"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.17.10",

@@ -6,18 +6,22 @@ import { createMaterial, updateMaterial } from '../utils/material';
 import { defineEntity } from '../defineEntity';
 
 
+const radialSegments = 32;
+
 export default defineEntity({
   name: 'cylindricalArrow',
   parameters: {
     color: { name: 'color', default: '#6666aa' },
     length: { name: 'length', default: 0.1, precision: 0.1 },
+    radius: { name: 'radius', default: 0.02, precision: 0.02 },
+    coneHeight: { name: 'coneHeight', default: 0.1, precision: 0.1 },
   },
   render(params) {
-    const { length, color } = params;
+    const { length, color, radius, coneHeight } = params;
     const object3D = new Object3D();
 
-    const cylinderGeometry = new CylinderGeometry(0.02, 0.02, length, 32);
-    const coneGeometry = new ConeGeometry(0.04, 0.1, 32);
+    const cylinderGeometry = new CylinderGeometry(radius, radius, length, radialSegments);
+    const coneGeometry = new ConeGeometry(radius * 2, coneHeight, radialSegments);
 
     const material = createMaterial(color, 1);
     const cylinder = new Mesh(cylinderGeometry, material);
@@ -25,7 +29,7 @@ export default defineEntity({
 
     requestAnimationFrame(() => {
       cylinder.position.y += length / 2;
-      cone.position.y += 0.05 + length;
+      cone.position.y += length;
     });
 
     object3D.add(cylinder);
@@ -35,13 +39,14 @@ export default defineEntity({
   },
   update(root, params) {
     const [cylinder, cone] = root.children;
-    const { length, color } = params;
+    const { length, color, radius, coneHeight } = params;
 
     updateMaterial(cylinder, color, 1);
     updateMaterial(cone, color, 1);
 
     cylinder.geometry.dispose();
-    cylinder.geometry = new CylinderGeometry(0.02, 0.02, length, 32);
+    cylinder.geometry = new CylinderGeometry(radius, radius, length, radialSegments);
+    cone.geometry = new ConeGeometry(radius * 2, coneHeight, radialSegments);
 
     requestAnimationFrame(() => {
       cone.position.set(0, 0, 0);

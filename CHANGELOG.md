@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/leviat-tech/draft3d/compare/v1.5.0...v1.6.0) (2023-11-22)
+
+
+### Features
+
+* configure radius and cone height for cylindricalArrow ([#156](https://github.com/leviat-tech/draft3d/issues/156)) ([94a7b87](https://github.com/leviat-tech/draft3d/commit/94a7b8710d6c4f1846ee9221c91f91d803e57e0c))
+
 ## [1.5.0](https://github.com/leviat-tech/draft3d/compare/v1.4.6...v1.5.0) (2023-11-22)
 
 

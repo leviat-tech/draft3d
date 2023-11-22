@@ -6,6 +6,8 @@ import { createMaterial, updateMaterial } from '../utils/material';
 import { defineEntity } from '../defineEntity';
 
 
+const radialSegments = 32;
+
 export default defineEntity({
   name: 'cylindricalArrow',
   parameters: {
@@ -18,8 +20,8 @@ export default defineEntity({
     const { length, color, radius, coneHeight } = params;
     const object3D = new Object3D();
 
-    const cylinderGeometry = new CylinderGeometry(radius, radius, length, 32);
-    const coneGeometry = new ConeGeometry(radius * 2, coneHeight, 32);
+    const cylinderGeometry = new CylinderGeometry(radius, radius, length, radialSegments);
+    const coneGeometry = new ConeGeometry(radius * 2, coneHeight, radialSegments);
 
     const material = createMaterial(color, 1);
     const cylinder = new Mesh(cylinderGeometry, material);
@@ -43,8 +45,8 @@ export default defineEntity({
     updateMaterial(cone, color, 1);
 
     cylinder.geometry.dispose();
-    cylinder.geometry = new CylinderGeometry(radius, radius, length, 32);
-    cone.geometry = new ConeGeometry(radius * 2, coneHeight, 32);
+    cylinder.geometry = new CylinderGeometry(radius, radius, length, radialSegments);
+    cone.geometry = new ConeGeometry(radius * 2, coneHeight, radialSegments);
 
     requestAnimationFrame(() => {
       cone.position.set(0, 0, 0);

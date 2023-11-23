@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/leviat-tech/draft3d/compare/v1.6.0...v1.6.1) (2023-11-23)
+
+
+### Bug Fixes
+
+* ensure dim text box is invisible ([8df42be](https://github.com/leviat-tech/draft3d/commit/8df42bece167d385aa163c4fcd007d4ce98f296d))
+
 ## [1.6.0](https://github.com/leviat-tech/draft3d/compare/v1.5.0...v1.6.0) (2023-11-22)
 
 

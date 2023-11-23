@@ -142,6 +142,7 @@ export default defineEntity({
       opacity: 0,
       transparent: true,
     });
+    boxMaterial.alphaTest = 0.1;
     const textBox = new Mesh(boxGeometry, boxMaterial);
     textBox.setRotationFromAxisAngle(new Vector3(1, 0, 0), Math.PI / -2);
 

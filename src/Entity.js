@@ -95,10 +95,6 @@ class Entity {
 
     this.object3d.name = this.name;
 
-    if (isUpdate) {
-      if (!this.parent) console.warn(`Entity '${this.name} does not have a parent'`);
-      this.parent?.add(this.object3d);
-    }
 
     this.layerSet?.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
 

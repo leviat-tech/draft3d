@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.2](https://github.com/leviat-tech/draft3d/compare/v1.6.1...v1.6.2) (2023-11-27)
+
+
+### Bug Fixes
+
+* remove entity parent check ([17ba98c](https://github.com/leviat-tech/draft3d/commit/17ba98c5e842cc4e381fb09ee480a5fafd979769))
+
 ## [1.6.1](https://github.com/leviat-tech/draft3d/compare/v1.6.0...v1.6.1) (2023-11-23)
 
 

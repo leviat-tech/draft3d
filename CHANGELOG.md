@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/leviat-tech/draft3d/compare/v1.6.2...v1.7.0) (2023-12-12)
+
+
+### Features
+
+* extend configuration for rounded cylindrical arrow ([#162](https://github.com/leviat-tech/draft3d/issues/162)) ([e6c7246](https://github.com/leviat-tech/draft3d/commit/e6c7246f68bdb0ad0d682aa8aee450164ab205ba))
+
 ## [1.6.2](https://github.com/leviat-tech/draft3d/compare/v1.6.1...v1.6.2) (2023-11-27)
 
 

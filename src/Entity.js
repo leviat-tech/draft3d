@@ -5,7 +5,6 @@ import draft3d from './draft3d';
 import LayerSet from './utils/LayerSet';
 import { updateMaterial } from './utils/material';
 
-
 class Entity {
   /**
    * @typedef {{
@@ -44,7 +43,6 @@ class Entity {
     this.features = {};
     this.layerSet = layerSet;
 
-
     if (typeof entityConfig.formatParams === 'function') {
       this.formatParams = entityConfig.formatParams;
     }
@@ -54,6 +52,10 @@ class Entity {
     if (typeof entityConfig.update === 'function') {
       this.onUpdate = entityConfig.update;
     }
+  }
+
+  setColor(color) {
+    this.object3d.material.color.set(color);
   }
 
   updateMaterial(children) {
@@ -90,11 +92,9 @@ class Entity {
           An Object3D must either be returned the render config method,
           or attached to the instance by calling
           this.addFeature or this.addFeatureTo`);
-
     }
 
     this.object3d.name = this.name;
-
 
     this.layerSet?.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
 
@@ -117,7 +117,6 @@ class Entity {
     this.parent?.remove(this.object3d);
     this.features = {};
   }
-
 
   /**
    *
@@ -146,7 +145,6 @@ class Entity {
     } else {
       this._render();
     }
-
   }
 
   /**
@@ -162,9 +160,9 @@ class Entity {
   }
 
   /**
-    *
-    * @param {Object3D} object3d
-    */
+   *
+   * @param {Object3D} object3d
+   */
   addTo(object3d) {
     if (!object3d) {
       return;
@@ -233,17 +231,17 @@ class Entity {
   }
 
   /**
-  *
-  * @typedef {{
-  *  position: object,
-  *  rotation?: number[]
-  * }} addFeatureParams
-  *
-  * @param {string} arrayName
-  * @param {string} type
-  * @param {addFeatureParams} params
-  * @returns {Entity}
-  */
+   *
+   * @typedef {{
+   *  position: object,
+   *  rotation?: number[]
+   * }} addFeatureParams
+   *
+   * @param {string} arrayName
+   * @param {string} type
+   * @param {addFeatureParams} params
+   * @returns {Entity}
+   */
   addFeatureTo(arrayName, type, params) {
     if (!arrayName) {
       throw new Error('Specify features name');
@@ -270,10 +268,13 @@ class Entity {
   }
 
   static getParams(definedParameters, userParams) {
-    const defaults = Object.entries(definedParameters).reduce((params, [name, param]) => ({
-      ...params,
-      [name]: param.default ?? param,
-    }), {});
+    const defaults = Object.entries(definedParameters).reduce(
+      (params, [name, param]) => ({
+        ...params,
+        [name]: param.default ?? param,
+      }),
+      {}
+    );
 
     return { ...defaults, ...userParams };
   }
@@ -349,7 +350,7 @@ class Entity {
   }
 
   destroy() {
-    console.log('I\'m dead.');
+    console.log("I'm dead.");
   }
 }
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.1](https://github.com/leviat-tech/draft3d/compare/v1.7.0...v1.7.1) (2024-01-03)
+
+
+### Bug Fixes
+
+* github actions ([#165](https://github.com/leviat-tech/draft3d/issues/165)) ([018b77b](https://github.com/leviat-tech/draft3d/commit/018b77bd201484f4760db1f552521ecfe28a890d))
+
 ## [1.7.0](https://github.com/leviat-tech/draft3d/compare/v1.6.2...v1.7.0) (2023-12-12)
 
 

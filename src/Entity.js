@@ -58,6 +58,10 @@ class Entity {
     this.object3d.material.color.set(color);
   }
 
+  setOpacity(opacity) {
+    this.object3d.material.opacity = opacity;
+  }
+
   updateMaterial(children) {
     children.forEach((child) => {
       if (!child.children.length) {

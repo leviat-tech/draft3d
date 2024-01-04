@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.2](https://github.com/leviat-tech/draft3d/compare/v1.7.1...v1.7.2) (2024-01-04)
+
+
+### Bug Fixes
+
+* add setOpacity ([#168](https://github.com/leviat-tech/draft3d/issues/168)) ([bf07319](https://github.com/leviat-tech/draft3d/commit/bf073194289a88ae7acae96ac4c9388c6cad775a))
+
 ## [1.7.1](https://github.com/leviat-tech/draft3d/compare/v1.7.0...v1.7.1) (2024-01-03)
 
 

@@ -1,3 +1,5 @@
+import { omit } from 'lodash-es'
+
 import { Object3D, Vector3 } from 'three';
 import draft3d from './draft3d';
 
@@ -135,12 +137,13 @@ class Entity {
    */
   updateParams(newParams) {
     const mergedParams = { ...this.params, ...newParams };
+    const shouldUpdate =
+      JSON.stringify(omit(mergedParams, ['threeEntities'])) !== JSON.stringify(omit(this.params, ['threeEntities']));
 
-    const shouldUpdate = JSON.stringify(mergedParams) !== JSON.stringify(this.params);
+    if (!shouldUpdate) return;
 
     this.params = mergedParams;
 
-    if (!shouldUpdate) return;
 
     // Retain backwards compatibility for entities with update methods
     if (this.onUpdate) {

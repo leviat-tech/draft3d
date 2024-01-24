@@ -39,9 +39,11 @@ const axisIndicatorCameraConfig = {
 
 class ThreeScene {
   events = {
+    click: 'onClick',
     resize: 'onResize',
-    click: 'onMouseDown',
+    mouseup: 'onMouseUp',
     dblclick: 'onDbClick',
+    mousedown: 'onMouseDown',
     mousemove: 'onMouseMove',
   };
 
@@ -93,6 +95,8 @@ class ThreeScene {
 
     this.raycaster = new Raycaster();
     this.raycaster.layers.enableAll();
+
+    this.isDragging = false
 
     this.bindEvents();
     this.onResize();
@@ -334,7 +338,7 @@ class ThreeScene {
     return layer ? element?.visible && layer?.visible : element?.visible;
   }
 
-  onMouseDown(e) {
+  onClick(e) {
     const intersects = this.getIntersectObjects(e);
 
     if (intersects.length) {
@@ -366,6 +370,10 @@ class ThreeScene {
     }
   }
 
+  setCursor(type) {
+    this.canvas.style.cursor = type;
+  }
+
   onMouseMove(e) {
     const intersects = this.getIntersectObjects(e);
 
@@ -384,7 +392,12 @@ class ThreeScene {
         this.activeObject.onMouseOut(e);
       }
 
-      this.canvas.style.cursor = 'pointer';
+      if (this.isDragging) {
+        this.setCursor('move');
+      } else {
+        this.setCursor('pointer');
+      }
+
       this.activeObject = object;
 
       if (object?.onMouseOver) {
@@ -396,9 +409,21 @@ class ThreeScene {
         this.activeObject.onMouseOut();
       }
 
-      this.canvas.style.cursor = '';
+      if (this.isDragging) {
+        this.setCursor('move');
+      } else {
+        this.setCursor('auto');
+      }
       this.activeObject = null;
     }
+  }
+
+  onMouseDown(e) {
+    this.isDragging = true
+  }
+
+  onMouseUp(e) {
+    this.isDragging = false
   }
 
   getInteractiveChildren(object3d) {

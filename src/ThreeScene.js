@@ -427,7 +427,7 @@ class ThreeScene {
   }
 
   getInteractiveChildren(object3d) {
-    if (!object3d.children.length) {
+    if (!object3d.children.length || this.isDragging) {
       return [];
     }
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.5](https://github.com/leviat-tech/draft3d/compare/v1.7.4...v1.7.5) (2024-01-25)
+
+
+### Bug Fixes
+
+* disable interactivity on drag ([#174](https://github.com/leviat-tech/draft3d/issues/174)) ([3765070](https://github.com/leviat-tech/draft3d/commit/3765070ad3ec4d6e3b3c82b7baa5c30e291771bd))
+
 ## [1.7.4](https://github.com/leviat-tech/draft3d/compare/v1.7.3...v1.7.4) (2024-01-25)
 
 

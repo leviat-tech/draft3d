@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.4](https://github.com/leviat-tech/draft3d/compare/v1.7.3...v1.7.4) (2024-01-25)
+
+
+### Bug Fixes
+
+* change cursor on drag ([#172](https://github.com/leviat-tech/draft3d/issues/172)) ([511a97c](https://github.com/leviat-tech/draft3d/commit/511a97c9f46acde4178566256b34aef947c9d914))
+
 ## [1.7.3](https://github.com/leviat-tech/draft3d/compare/v1.7.2...v1.7.3) (2024-01-17)
 
 

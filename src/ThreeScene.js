@@ -392,7 +392,7 @@ class ThreeScene {
         this.activeObject.onMouseOut(e);
       }
 
-      if (this.isDragging) {
+      if (this.isDragging || object.isDraggable) {
         this.setCursor('move');
       } else {
         this.setCursor('pointer');

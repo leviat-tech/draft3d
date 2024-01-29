@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.6](https://github.com/leviat-tech/draft3d/compare/v1.7.5...v1.7.6) (2024-01-29)
+
+
+### Bug Fixes
+
+* add isDraggable prop to Entity ([#176](https://github.com/leviat-tech/draft3d/issues/176)) ([5bcc7e7](https://github.com/leviat-tech/draft3d/commit/5bcc7e7981b5ed708d523318052452599690c401))
+
 ## [1.7.5](https://github.com/leviat-tech/draft3d/compare/v1.7.4...v1.7.5) (2024-01-25)
 
 

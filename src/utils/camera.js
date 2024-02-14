@@ -41,6 +41,8 @@ function createControls(camera, canvas, userControlsConfig) {
   const controls = new OrbitControls(camera, canvas);
   const target = userControlsConfig.target || [0, 0, 0];
 
+  controls.zoomToCursor = !!userControlsConfig?.zoomToCursor;
+
   controls.target.set(...target);
   controls.update();
 

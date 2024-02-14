@@ -18,7 +18,7 @@
   "main": "src/index.js",
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "three": "^0.139.2",
+    "three": "^0.161.0",
     "three-csg-ts": "^3.1.13"
   },
   "devDependencies": {

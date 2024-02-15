@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.8](https://github.com/leviat-tech/draft3d/compare/v1.7.7...v1.7.8) (2024-02-15)
+
+
+### Bug Fixes
+
+* disable new color system management ([#180](https://github.com/leviat-tech/draft3d/issues/180)) ([8c888fd](https://github.com/leviat-tech/draft3d/commit/8c888fd4dec0679fe25791ccbb2fa1b1da5c12a9))
+
 ## [1.7.7](https://github.com/leviat-tech/draft3d/compare/v1.7.6...v1.7.7) (2024-02-14)
 
 

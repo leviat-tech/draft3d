@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",
+    "dev:clean": "vite --force",
     "build": "vite build",
     "serve": "vite preview",
     "electron-dev": "run-p electron-dev:*",

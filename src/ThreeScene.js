@@ -4,6 +4,8 @@ import {
   Raycaster,
   AmbientLight,
   WebGLRenderer,
+  ColorManagement,
+  LinearSRGBColorSpace,
   DirectionalLight as Light,
 } from 'three';
 
@@ -89,6 +91,17 @@ class ThreeScene {
     }
 
     this.renderer = this.createRenderer(this.originalScene, this.camera, this.canvas, 'animationFrame');
+
+    // Three.js 0.154 release has changed color/light management.
+    // This change is required to keep colors as close as posible to current ones
+    // Migration steps:
+    // https://discourse.threejs.org/t/updates-to-lighting-in-three-js-r155/53733
+    // https://discourse.threejs.org/t/updates-to-color-management-in-three-js-r152/50791
+    // Migration ticket https://crhleviat.atlassian.net/browse/DCIC-408
+    ColorManagement.enabled = false
+    this.renderer._outputColorSpace = LinearSRGBColorSpace
+    this.renderer.useLegacyLights = true // This property will be removed in future releases of Three.js
+
     this.createAxisIndicator(el, axisIndicator);
 
     this.mouse = new Vector2();

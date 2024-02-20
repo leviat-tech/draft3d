@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.9](https://github.com/leviat-tech/draft3d/compare/v1.7.8...v1.7.9) (2024-02-20)
+
+
+### Bug Fixes
+
+* translate bim entity in z direction ([#182](https://github.com/leviat-tech/draft3d/issues/182)) ([40ea6e6](https://github.com/leviat-tech/draft3d/commit/40ea6e691bc6fbeeb210a42ac9f956f8d50c5bca))
+
 ## [1.7.8](https://github.com/leviat-tech/draft3d/compare/v1.7.7...v1.7.8) (2024-02-15)
 
 

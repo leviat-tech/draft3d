@@ -411,15 +411,15 @@ function generatePartsGeometries(parts) {
 
     const positions = [];
     if (Array.isArray(part.origin)) {
-      part.origin.forEach(({ y }) => {
+      part.origin.forEach(({ y, z }) => {
         positions.push({
-          geometry: generateGeometry(part.type, part).translate(0, 0, y),
+          geometry: generateGeometry(part.type, part).translate(0, z, y),
           name: key,
         });
       });
     } else {
       positions.push({
-        geometry: generateGeometry(part.type, part).translate(0, 0, part.origin.y),
+        geometry: generateGeometry(part.type, part).translate(0, part.origin.z, part.origin.y),
         name: key,
       });
 

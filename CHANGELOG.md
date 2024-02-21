@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.8.0](https://github.com/leviat-tech/draft3d/compare/v1.7.9...v1.8.0) (2024-02-21)
+
+
+### Features
+
+* update github release-please ([#186](https://github.com/leviat-tech/draft3d/issues/186)) ([29ac56e](https://github.com/leviat-tech/draft3d/commit/29ac56e87715b12c84b1837f9643880cf2aaed28))
+
+
+### Bug Fixes
+
+* revised contain to fix unwanted padding and include width ([#184](https://github.com/leviat-tech/draft3d/issues/184)) ([b2327b5](https://github.com/leviat-tech/draft3d/commit/b2327b5c816bcadffea1b1a2b770e0958ace6a6b))
+
 ## [1.7.9](https://github.com/leviat-tech/draft3d/compare/v1.7.8...v1.7.9) (2024-02-20)
 
 

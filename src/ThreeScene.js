@@ -56,7 +56,7 @@ class ThreeScene {
       canvas: null,
       camera: null,
       renderer: null,
-    }
+    };
     this.animationFrame = null;
     this.layerSet = new LayerSet();
     this.originalScene = new Scene();
@@ -90,7 +90,12 @@ class ThreeScene {
       this.camera = this.orthoCamera;
     }
 
-    this.renderer = this.createRenderer(this.originalScene, this.camera, this.canvas, 'animationFrame');
+    this.renderer = this.createRenderer(
+      this.originalScene,
+      this.camera,
+      this.canvas,
+      'animationFrame'
+    );
 
     // Three.js 0.154 release has changed color/light management.
     // This change is required to keep colors as close as posible to current ones
@@ -98,9 +103,9 @@ class ThreeScene {
     // https://discourse.threejs.org/t/updates-to-lighting-in-three-js-r155/53733
     // https://discourse.threejs.org/t/updates-to-color-management-in-three-js-r152/50791
     // Migration ticket https://crhleviat.atlassian.net/browse/DCIC-408
-    ColorManagement.enabled = false
-    this.renderer._outputColorSpace = LinearSRGBColorSpace
-    this.renderer.useLegacyLights = true // This property will be removed in future releases of Three.js
+    ColorManagement.enabled = false;
+    this.renderer._outputColorSpace = LinearSRGBColorSpace;
+    this.renderer.useLegacyLights = true; // This property will be removed in future releases of Three.js
 
     this.createAxisIndicator(el, axisIndicator);
 
@@ -109,7 +114,7 @@ class ThreeScene {
     this.raycaster = new Raycaster();
     this.raycaster.layers.enableAll();
 
-    this.isDragging = false
+    this.isDragging = false;
 
     this.bindEvents();
     this.onResize();
@@ -217,7 +222,10 @@ class ThreeScene {
     axes.addTo(scene);
 
     const camera = createCamera(axisIndicatorCameraConfig);
-    const canvas = ThreeScene.createAxesIndicatorCanvas(el, axisIndicatorConfig);
+    const canvas = ThreeScene.createAxesIndicatorCanvas(
+      el,
+      axisIndicatorConfig
+    );
     const renderer = this.createRenderer(scene, camera, canvas);
 
     // Hacky but both timeouts are required in order for the labels to render correctly
@@ -229,7 +237,7 @@ class ThreeScene {
 
     this.onControlsChange = (e) => {
       this.updateAxisIndicator(renderer, scene, camera);
-    }
+    };
     this.perspectiveControls.addEventListener('change', this.onControlsChange);
 
     Object.assign(this.axisIndicator, {
@@ -260,7 +268,7 @@ class ThreeScene {
       opacity: 0,
     });
 
-    canvas.addEventListener('contextmenu', e => e.preventDefault());
+    canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 
     el.appendChild(canvas);
 
@@ -279,12 +287,12 @@ class ThreeScene {
       yAxisLength: axisLength,
       zAxisLength: axisLength,
       textSize: 1,
-      position: [0, 0, 0]
+      position: [0, 0, 0],
     });
   }
 
   updateAxisIndicator(renderer, scene, camera) {
-    const { position, rotation } = this.perspectiveCamera
+    const { position, rotation } = this.perspectiveCamera;
 
     const { x, y, z } = rotation;
     camera.rotation.set(x, y, z);
@@ -432,11 +440,11 @@ class ThreeScene {
   }
 
   onMouseDown(e) {
-    this.isDragging = true
+    this.isDragging = true;
   }
 
   onMouseUp(e) {
-    this.isDragging = false
+    this.isDragging = false;
   }
 
   getInteractiveChildren(object3d) {
@@ -464,11 +472,10 @@ class ThreeScene {
    * @return {string} the scene as a base64 image string
    */
   async renderToImage(userOptions = { contain: false }) {
-
     const defaultOptions = {
       type: 'image/png', // A string indicating the image format.
       encoderOptions: 1, // A Number between 0 and 1 indicating the image quality
-    }
+    };
 
     const options = Object.assign(defaultOptions, userOptions);
 
@@ -481,7 +488,7 @@ class ThreeScene {
 
     const dataUrl = this.canvas.toDataURL();
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (!options.contain) return dataUrl;
 
       // The threejs canvas uses the webgl context.
@@ -502,55 +509,26 @@ class ThreeScene {
 
         ctx.drawImage(img, 0, 0, this.width, this.height);
 
-        const imgData = ctx.getImageData(0, 0, this.width, this.height);
-
-        let cropHeight = null;
-
-        // Find the last non-empty row in order to determine the crop height
-        for (let row = this.height - 1; row >= 0; row--) {
-
-          let rowContainsData = false;
-
-          for (let col = 0; col < this.width; col++) {
-            const index = (col + (row * imgData.width)) * 4;
-
-            const r = imgData.data[index];
-            const g = imgData.data[index + 1];
-            const b = imgData.data[index + 2];
-
-            const pixelContainsData = r + g + b > 0;
-
-            if (pixelContainsData) {
-              rowContainsData = true;
-              break;
-            }
-          }
-
-          if (rowContainsData) {
-            // Provide a small margin as for some reason
-            // the image still occasionally gets cut off too short
-            const margin = 8;
-            cropHeight = row + margin;
-            break;
-          }
-        }
-
-        canvasCrop.height = cropHeight;
-        ctx.drawImage(img, 0, 0, this.width, cropHeight, 0, 0, this.width, cropHeight);
-
-        const croppedDataURL = canvasCrop.toDataURL(options.type, options.encoderOptions);
+        const trimmed = this.trim(canvasCrop);
+        const croppedDataURL = trimmed.toDataURL(
+          options.type,
+          options.encoderOptions
+        );
 
         this.el.removeChild(img);
 
         resolve(croppedDataURL);
-      }
+      };
     });
   }
 
   destroy() {
     if (this.axisIndicator.isEnabled) {
       this.el.removeChild(this.axisIndicator.canvas);
-      this.perspectiveCamera.removeEventListener('change', this.onControlsChange);
+      this.perspectiveCamera.removeEventListener(
+        'change',
+        this.onControlsChange
+      );
       this.onControlsChange = null;
       Object.assign(this.axisIndicator, {
         isEnabled: false,
@@ -571,6 +549,67 @@ class ThreeScene {
     this.perspectiveControls = null;
     this.el.removeChild(this.canvas);
     this.unbindEvents();
+  }
+
+  trim(canvas) {
+    let ctx = canvas.getContext('2d');
+    const copy = document.createElement('canvas').getContext('2d');
+    const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const length = pixels.data.length;
+    let i = 0;
+    let bound = {
+      top: null,
+      left: null,
+      right: null,
+      bottom: null,
+    };
+    let x;
+    let y;
+    const margin = 8;
+
+    for (i = 0; i < length; i += 4) {
+      if (pixels.data[i + 3] !== 0) {
+        x = (i / 4) % canvas.width;
+        y = Math.floor(i / 4 / canvas.width);
+
+        if (bound.top === null) {
+          bound.top = y;
+        }
+
+        if (bound.left === null) {
+          bound.left = x;
+        } else if (x < bound.left) {
+          bound.left = x;
+        }
+
+        if (bound.right === null) {
+          bound.right = x;
+        } else if (bound.right < x) {
+          bound.right = x;
+        }
+
+        if (bound.bottom === null) {
+          bound.bottom = y;
+        } else if (bound.bottom < y) {
+          bound.bottom = y;
+        }
+      }
+    }
+
+    const trimWidth = bound.right - bound.left + margin;
+    const trimHeight = bound.bottom - bound.top + margin;
+    const trimmed = ctx.getImageData(
+      bound.left,
+      bound.top,
+      trimWidth,
+      trimHeight
+    );
+
+    copy.canvas.width = trimWidth + margin;
+    copy.canvas.height = trimHeight + margin;
+    copy.putImageData(trimmed, margin, margin);
+
+    return copy.canvas;
   }
 }
 

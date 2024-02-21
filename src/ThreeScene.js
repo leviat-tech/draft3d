@@ -4,6 +4,8 @@ import {
   Raycaster,
   AmbientLight,
   WebGLRenderer,
+  ColorManagement,
+  LinearSRGBColorSpace,
   DirectionalLight as Light,
 } from 'three';
 
@@ -39,9 +41,11 @@ const axisIndicatorCameraConfig = {
 
 class ThreeScene {
   events = {
+    click: 'onClick',
     resize: 'onResize',
-    click: 'onMouseDown',
+    mouseup: 'onMouseUp',
     dblclick: 'onDbClick',
+    mousedown: 'onMouseDown',
     mousemove: 'onMouseMove',
   };
 
@@ -87,12 +91,25 @@ class ThreeScene {
     }
 
     this.renderer = this.createRenderer(this.originalScene, this.camera, this.canvas, 'animationFrame');
+
+    // Three.js 0.154 release has changed color/light management.
+    // This change is required to keep colors as close as posible to current ones
+    // Migration steps:
+    // https://discourse.threejs.org/t/updates-to-lighting-in-three-js-r155/53733
+    // https://discourse.threejs.org/t/updates-to-color-management-in-three-js-r152/50791
+    // Migration ticket https://crhleviat.atlassian.net/browse/DCIC-408
+    ColorManagement.enabled = false
+    this.renderer._outputColorSpace = LinearSRGBColorSpace
+    this.renderer.useLegacyLights = true // This property will be removed in future releases of Three.js
+
     this.createAxisIndicator(el, axisIndicator);
 
     this.mouse = new Vector2();
 
     this.raycaster = new Raycaster();
     this.raycaster.layers.enableAll();
+
+    this.isDragging = false
 
     this.bindEvents();
     this.onResize();
@@ -334,7 +351,7 @@ class ThreeScene {
     return layer ? element?.visible && layer?.visible : element?.visible;
   }
 
-  onMouseDown(e) {
+  onClick(e) {
     const intersects = this.getIntersectObjects(e);
 
     if (intersects.length) {
@@ -366,6 +383,10 @@ class ThreeScene {
     }
   }
 
+  setCursor(type) {
+    this.canvas.style.cursor = type;
+  }
+
   onMouseMove(e) {
     const intersects = this.getIntersectObjects(e);
 
@@ -384,7 +405,12 @@ class ThreeScene {
         this.activeObject.onMouseOut(e);
       }
 
-      this.canvas.style.cursor = 'pointer';
+      if (this.isDragging || object.isDraggable) {
+        this.setCursor('move');
+      } else {
+        this.setCursor('pointer');
+      }
+
       this.activeObject = object;
 
       if (object?.onMouseOver) {
@@ -396,13 +422,25 @@ class ThreeScene {
         this.activeObject.onMouseOut();
       }
 
-      this.canvas.style.cursor = '';
+      if (this.isDragging) {
+        this.setCursor('move');
+      } else {
+        this.setCursor('auto');
+      }
       this.activeObject = null;
     }
   }
 
+  onMouseDown(e) {
+    this.isDragging = true
+  }
+
+  onMouseUp(e) {
+    this.isDragging = false
+  }
+
   getInteractiveChildren(object3d) {
-    if (!object3d.children.length) {
+    if (!object3d.children.length || this.isDragging) {
       return [];
     }
 
@@ -464,43 +502,8 @@ class ThreeScene {
 
         ctx.drawImage(img, 0, 0, this.width, this.height);
 
-        const imgData = ctx.getImageData(0, 0, this.width, this.height);
-
-        let cropHeight = null;
-
-        // Find the last non-empty row in order to determine the crop height
-        for (let row = this.height - 1; row >= 0; row--) {
-
-          let rowContainsData = false;
-
-          for (let col = 0; col < this.width; col++) {
-            const index = (col + (row * imgData.width)) * 4;
-
-            const r = imgData.data[index];
-            const g = imgData.data[index + 1];
-            const b = imgData.data[index + 2];
-
-            const pixelContainsData = r + g + b > 0;
-
-            if (pixelContainsData) {
-              rowContainsData = true;
-              break;
-            }
-          }
-
-          if (rowContainsData) {
-            // Provide a small margin as for some reason
-            // the image still occasionally gets cut off too short
-            const margin = 8;
-            cropHeight = row + margin;
-            break;
-          }
-        }
-
-        canvasCrop.height = cropHeight;
-        ctx.drawImage(img, 0, 0, this.width, cropHeight, 0, 0, this.width, cropHeight);
-
-        const croppedDataURL = canvasCrop.toDataURL(options.type, options.encoderOptions);
+        const trimmed = this.trim(canvasCrop)
+        const croppedDataURL = trimmed.toDataURL(options.type, options.encoderOptions);
 
         this.el.removeChild(img);
 
@@ -533,6 +536,62 @@ class ThreeScene {
     this.perspectiveControls = null;
     this.el.removeChild(this.canvas);
     this.unbindEvents();
+  }
+
+  trim(canvas) {
+    let ctx = canvas.getContext('2d');
+      const copy = document.createElement('canvas').getContext('2d');
+      const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const length = pixels.data.length;
+      let i = 0;
+      let bound = {
+        top: null,
+        left: null,
+        right: null,
+        bottom: null
+      };
+      let x
+      let y;
+      const margin = 8;
+  
+    for (i = 0; i < length; i += 4) {
+      if (pixels.data[i+3] !== 0) {
+        x = (i / 4) % canvas.width;
+        y = ~~((i / 4) / canvas.width);
+    
+        if (bound.top === null) {
+          bound.top = y;
+        }
+        
+        if (bound.left === null) {
+          bound.left = x; 
+        } else if (x < bound.left) {
+          bound.left = x;
+        }
+        
+        if (bound.right === null) {
+          bound.right = x; 
+        } else if (bound.right < x) {
+          bound.right = x;
+        }
+        
+        if (bound.bottom === null) {
+          bound.bottom = y;
+        } else if (bound.bottom < y) {
+          bound.bottom = y;
+        }
+      }
+    }
+      
+    const trimWidth = (bound.right - bound.left) + margin;
+    const trimHeight = (bound.bottom - bound.top) + margin;    
+    const trimmed = ctx.getImageData(bound.left, bound.top, trimWidth, trimHeight);
+    
+    copy.canvas.width = trimWidth+ margin;
+    copy.canvas.height = trimHeight+ margin;
+    copy.putImageData(trimmed, margin,margin);
+
+    return copy.canvas;
   }
 }
 

@@ -552,11 +552,11 @@ class ThreeScene {
   }
 
   trim(canvas) {
-    let ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
     const copy = document.createElement('canvas').getContext('2d');
     const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const length = pixels.data.length;
-    let i = 0;
+    //let i = 0;
     let bound = {
       top: null,
       left: null,
@@ -567,7 +567,7 @@ class ThreeScene {
     let y;
     const margin = 8;
 
-    for (i = 0; i < length; i += 4) {
+    for (let i = 0; i < length; i += 4) {
       if (pixels.data[i + 3] !== 0) {
         x = (i / 4) % canvas.width;
         y = Math.floor(i / 4 / canvas.width);

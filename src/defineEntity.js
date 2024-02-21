@@ -25,6 +25,7 @@ export function createFactory(entity) {
     onDbClick: { name: 'onDbClick', default: noop },
     onMouseOut: { name: 'onMouseOut', default: noop },
     onMouseOver: { name: 'onMouseOver', default: noop },
+    isDraggable: { name: 'isDraggable', default: false },
     isInteractive: { name: 'isInteractive', default: false },
 
     layer: { name: 'Layer', type: 'string', default: 'default' },

@@ -19,7 +19,6 @@ import {
 import { configureInteractivity } from '../utils/helpers';
 import { defineEntity } from '../defineEntity';
 
-
 function getTextValue({ length, prefix, suffix, formatter }) {
   const lengthAsString = formatter(length) || length.toFixed(2);
 
@@ -48,12 +47,15 @@ function setTextPosition(textObject, textBox, params, retryCount = 0) {
   textBox.geometry.dispose();
 
   textBox.geometry = new BoxGeometry(x * 2, y * 2, 0);
+
+  textObject.material.visible = true;
+  textBox.material.visible = true;
 }
 
 function createCrosshair(crosshairParams) {
   const { color, size } = crosshairParams;
   const circleGeometry = new BufferGeometry().setFromPoints(
-    new Path().absarc(0, 0, size, 0, Math.PI * 2).getSpacedPoints(32),
+    new Path().absarc(0, 0, size, 0, Math.PI * 2).getSpacedPoints(32)
   );
 
   const circleMaterial = new LineBasicMaterial({ color });
@@ -156,6 +158,9 @@ export default defineEntity({
       textBox,
     ].forEach((x) => root.add(x));
 
+    textObject.material.visible = false;
+    textBox.material.visible = false;
+
     // Let the text render before using its dimensions
     // to calculate the central position
     requestAnimationFrame(() => {
@@ -180,7 +185,9 @@ export default defineEntity({
       textBox,
     ] = root.children;
 
-    [mainLine, startExtensionLine, endExtensionLine, textObject].forEach((x) => x.geometry.dispose());
+    [mainLine, startExtensionLine, endExtensionLine, textObject].forEach((x) =>
+      x.geometry.dispose()
+    );
 
     const [main, start, end] = createExtensionLines(newParams);
 

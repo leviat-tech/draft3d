@@ -143,6 +143,8 @@ export function createTextBox(onClick) {
   const boxMaterial = new MeshBasicMaterial({ opacity: 0, transparent: true });
   const textBox = new Mesh(boxGeometry, boxMaterial);
 
+  boxMaterial.alphaTest = 0.1;
+
   textBox.isInteractive = true;
   textBox.onClick = (e) => onClick(e);
 

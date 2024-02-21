@@ -28,6 +28,7 @@ export function configureInteractivity(element, params) {
   const configure = (el) => {
     setInteractivity(el, params);
 
+    el.isDraggable = params?.isDraggable;
     el.layerName = params?.layer || null;
   };
 

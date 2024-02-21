@@ -1,10 +1,7 @@
-import {
-  ConeGeometry, CylinderGeometry, Mesh, Object3D,
-} from 'three';
+import { ConeGeometry, CylinderGeometry, Mesh, Object3D } from 'three';
 
 import { createMaterial, updateMaterial } from '../utils/material';
 import { defineEntity } from '../defineEntity';
-
 
 const radialSegments = 32;
 
@@ -27,9 +24,15 @@ export default defineEntity({
     const cylinder = new Mesh(cylinderGeometry, material);
     const cone = new Mesh(coneGeometry, material);
 
+    cylinder.material.visible = false;
+    cone.material.visible = false;
+
     requestAnimationFrame(() => {
       cylinder.position.y += length / 2;
       cone.position.y += length;
+
+      cylinder.material.visible = true;
+      cone.material.visible = true;
     });
 
     object3D.add(cylinder);

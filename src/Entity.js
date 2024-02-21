@@ -1,10 +1,11 @@
+import { omit } from 'lodash-es'
+
 import { Object3D, Vector3 } from 'three';
 import draft3d from './draft3d';
 
 // eslint-disable-next-line no-unused-vars
 import LayerSet from './utils/LayerSet';
 import { updateMaterial } from './utils/material';
-
 
 class Entity {
   /**
@@ -44,7 +45,6 @@ class Entity {
     this.features = {};
     this.layerSet = layerSet;
 
-
     if (typeof entityConfig.formatParams === 'function') {
       this.formatParams = entityConfig.formatParams;
     }
@@ -54,6 +54,14 @@ class Entity {
     if (typeof entityConfig.update === 'function') {
       this.onUpdate = entityConfig.update;
     }
+  }
+
+  setColor(color) {
+    this.object3d.material.color.set(color);
+  }
+
+  setOpacity(opacity) {
+    this.object3d.material.opacity = opacity;
   }
 
   updateMaterial(children) {
@@ -90,11 +98,9 @@ class Entity {
           An Object3D must either be returned the render config method,
           or attached to the instance by calling
           this.addFeature or this.addFeatureTo`);
-
     }
 
     this.object3d.name = this.name;
-
 
     this.layerSet?.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
 
@@ -118,7 +124,6 @@ class Entity {
     this.features = {};
   }
 
-
   /**
    *
    *  @typedef {{
@@ -132,12 +137,13 @@ class Entity {
    */
   updateParams(newParams) {
     const mergedParams = { ...this.params, ...newParams };
+    const shouldUpdate =
+      JSON.stringify(omit(mergedParams, ['threeEntities'])) !== JSON.stringify(omit(this.params, ['threeEntities']));
 
-    const shouldUpdate = JSON.stringify(mergedParams) !== JSON.stringify(this.params);
+    if (!shouldUpdate) return;
 
     this.params = mergedParams;
 
-    if (!shouldUpdate) return;
 
     // Retain backwards compatibility for entities with update methods
     if (this.onUpdate) {
@@ -146,7 +152,6 @@ class Entity {
     } else {
       this._render();
     }
-
   }
 
   /**
@@ -162,9 +167,9 @@ class Entity {
   }
 
   /**
-    *
-    * @param {Object3D} object3d
-    */
+   *
+   * @param {Object3D} object3d
+   */
   addTo(object3d) {
     if (!object3d) {
       return;
@@ -233,17 +238,17 @@ class Entity {
   }
 
   /**
-  *
-  * @typedef {{
-  *  position: object,
-  *  rotation?: number[]
-  * }} addFeatureParams
-  *
-  * @param {string} arrayName
-  * @param {string} type
-  * @param {addFeatureParams} params
-  * @returns {Entity}
-  */
+   *
+   * @typedef {{
+   *  position: object,
+   *  rotation?: number[]
+   * }} addFeatureParams
+   *
+   * @param {string} arrayName
+   * @param {string} type
+   * @param {addFeatureParams} params
+   * @returns {Entity}
+   */
   addFeatureTo(arrayName, type, params) {
     if (!arrayName) {
       throw new Error('Specify features name');
@@ -270,10 +275,13 @@ class Entity {
   }
 
   static getParams(definedParameters, userParams) {
-    const defaults = Object.entries(definedParameters).reduce((params, [name, param]) => ({
-      ...params,
-      [name]: param.default ?? param,
-    }), {});
+    const defaults = Object.entries(definedParameters).reduce(
+      (params, [name, param]) => ({
+        ...params,
+        [name]: param.default ?? param,
+      }),
+      {}
+    );
 
     return { ...defaults, ...userParams };
   }
@@ -349,7 +357,7 @@ class Entity {
   }
 
   destroy() {
-    console.log('I\'m dead.');
+    console.log("I'm dead.");
   }
 }
 

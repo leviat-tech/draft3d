@@ -1,5 +1,75 @@
 # Changelog
 
+## [1.7.9](https://github.com/leviat-tech/draft3d/compare/v1.7.8...v1.7.9) (2024-02-20)
+
+
+### Bug Fixes
+
+* translate bim entity in z direction ([#182](https://github.com/leviat-tech/draft3d/issues/182)) ([40ea6e6](https://github.com/leviat-tech/draft3d/commit/40ea6e691bc6fbeeb210a42ac9f956f8d50c5bca))
+
+## [1.7.8](https://github.com/leviat-tech/draft3d/compare/v1.7.7...v1.7.8) (2024-02-15)
+
+
+### Bug Fixes
+
+* disable new color system management ([#180](https://github.com/leviat-tech/draft3d/issues/180)) ([8c888fd](https://github.com/leviat-tech/draft3d/commit/8c888fd4dec0679fe25791ccbb2fa1b1da5c12a9))
+
+## [1.7.7](https://github.com/leviat-tech/draft3d/compare/v1.7.6...v1.7.7) (2024-02-14)
+
+
+### Bug Fixes
+
+* update three version ([#178](https://github.com/leviat-tech/draft3d/issues/178)) ([47209a3](https://github.com/leviat-tech/draft3d/commit/47209a331cfc34f140ee809b2947145cbc14311e))
+
+## [1.7.6](https://github.com/leviat-tech/draft3d/compare/v1.7.5...v1.7.6) (2024-01-29)
+
+
+### Bug Fixes
+
+* add isDraggable prop to Entity ([#176](https://github.com/leviat-tech/draft3d/issues/176)) ([5bcc7e7](https://github.com/leviat-tech/draft3d/commit/5bcc7e7981b5ed708d523318052452599690c401))
+
+## [1.7.5](https://github.com/leviat-tech/draft3d/compare/v1.7.4...v1.7.5) (2024-01-25)
+
+
+### Bug Fixes
+
+* disable interactivity on drag ([#174](https://github.com/leviat-tech/draft3d/issues/174)) ([3765070](https://github.com/leviat-tech/draft3d/commit/3765070ad3ec4d6e3b3c82b7baa5c30e291771bd))
+
+## [1.7.4](https://github.com/leviat-tech/draft3d/compare/v1.7.3...v1.7.4) (2024-01-25)
+
+
+### Bug Fixes
+
+* change cursor on drag ([#172](https://github.com/leviat-tech/draft3d/issues/172)) ([511a97c](https://github.com/leviat-tech/draft3d/commit/511a97c9f46acde4178566256b34aef947c9d914))
+
+## [1.7.3](https://github.com/leviat-tech/draft3d/compare/v1.7.2...v1.7.3) (2024-01-17)
+
+
+### Bug Fixes
+
+* change update function ([#170](https://github.com/leviat-tech/draft3d/issues/170)) ([11b43e2](https://github.com/leviat-tech/draft3d/commit/11b43e26c008db1395bc88fa973d8062b9e1b8f0))
+
+## [1.7.2](https://github.com/leviat-tech/draft3d/compare/v1.7.1...v1.7.2) (2024-01-04)
+
+
+### Bug Fixes
+
+* add setOpacity ([#168](https://github.com/leviat-tech/draft3d/issues/168)) ([bf07319](https://github.com/leviat-tech/draft3d/commit/bf073194289a88ae7acae96ac4c9388c6cad775a))
+
+## [1.7.1](https://github.com/leviat-tech/draft3d/compare/v1.7.0...v1.7.1) (2024-01-03)
+
+
+### Bug Fixes
+
+* github actions ([#165](https://github.com/leviat-tech/draft3d/issues/165)) ([018b77b](https://github.com/leviat-tech/draft3d/commit/018b77bd201484f4760db1f552521ecfe28a890d))
+
+## [1.7.0](https://github.com/leviat-tech/draft3d/compare/v1.6.2...v1.7.0) (2023-12-12)
+
+
+### Features
+
+* extend configuration for rounded cylindrical arrow ([#162](https://github.com/leviat-tech/draft3d/issues/162)) ([e6c7246](https://github.com/leviat-tech/draft3d/commit/e6c7246f68bdb0ad0d682aa8aee450164ab205ba))
+
 ## [1.6.2](https://github.com/leviat-tech/draft3d/compare/v1.6.1...v1.6.2) (2023-11-27)
 
 

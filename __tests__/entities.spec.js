@@ -1,10 +1,10 @@
+import 'vi-canvas-mock';
 import { Object3D } from 'three';
 import { difference } from 'lodash-es';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import * as entities from '@/entities';
 import { castParameters } from '@/utils/helpers';
-
 
 describe.each(Object.values(entities))('$name entity', (entity) => {
   beforeEach(() => {
@@ -41,7 +41,9 @@ describe.each(Object.values(entities))('$name entity', (entity) => {
   });
 
   it('should return a three Object3D in the render function', () => {
-    const object3d = entity.config.render(castParameters(entity.config.parameters));
+    const object3d = entity.config.render(
+      castParameters(entity.config.parameters)
+    );
 
     expect(object3d).toBeInstanceOf(Object3D);
   });

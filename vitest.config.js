@@ -1,7 +1,6 @@
 import { defineConfig } from 'vitest/config';
 import path from 'path';
 
-
 export default defineConfig({
   test: {
     coverage: {
@@ -9,6 +8,7 @@ export default defineConfig({
       reporter: ['html'],
     },
     environment: 'jsdom',
+    globals: true,
   },
   resolve: {
     alias: {

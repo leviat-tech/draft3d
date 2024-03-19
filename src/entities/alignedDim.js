@@ -7,6 +7,8 @@ import {
   Line,
   BufferGeometry,
   Path,
+  Sprite,
+  SpriteMaterial,
 } from 'three';
 
 import { createPolyLine } from '../utils/geometry';
@@ -111,21 +113,13 @@ export default defineEntity({
     textObject.renderOrder = 999;
     textObject.material.depthTest = false;
     textObject.material.depthWrite = false;
+
+    textObject.material.visible = true;
     textObject.backgroundColor = false;
     textObject.fontFace = 'Lucida Console, MS Mono, sans-serif';
 
     textObject.position.x = length / 2;
-    textObject.position.y = 0.001;
     textObject.position.z = extension;
-
-    // Text surface for pointer capture
-    const boxGeometry = new BoxGeometry(0, 0);
-    const boxMaterial = new MeshBasicMaterial({
-      opacity: 0,
-      transparent: true,
-    });
-    boxMaterial.alphaTest = 0.1;
-    const textBox = new Mesh(boxGeometry, boxMaterial);
 
     [
       mainLine,
@@ -134,22 +128,10 @@ export default defineEntity({
       startCrosshair,
       endCrosshair,
       textObject,
-      textBox,
     ].forEach((x) => root.add(x));
 
-    textBox.material.visible = true;
+    configureInteractivity(textObject, params);
 
-    textBox.position.x = params.length / 2;
-    textBox.position.z = params.extension;
-
-    textBox.geometry.dispose();
-    textBox.geometry = new BoxGeometry(0.05, 0.05, 0.05);
-
-    textObject.material.visible = true;
-    textBox.material.visible = true;
-
-    configureInteractivity(textBox, params);
-    console.warn(root);
     return root;
   },
 
@@ -163,7 +145,6 @@ export default defineEntity({
       startCrosshair,
       endCrosshair,
       textObject,
-      textBox,
     ] = root.children;
 
     [mainLine, startExtensionLine, endExtensionLine, textObject].forEach((x) =>
@@ -183,6 +164,6 @@ export default defineEntity({
     endCrosshair.position.z = extension;
     endCrosshair.position.x = length;
 
-    configureInteractivity(textBox, newParams);
+    configureInteractivity(textObject, newParams);
   },
 });

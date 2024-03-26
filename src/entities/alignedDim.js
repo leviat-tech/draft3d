@@ -113,7 +113,6 @@ export default defineEntity({
     textObject.renderOrder = 999;
     textObject.material.depthTest = false;
     textObject.material.depthWrite = false;
-
     textObject.material.visible = true;
     textObject.backgroundColor = false;
     textObject.fontFace = 'Lucida Console, MS Mono, sans-serif';

@@ -1,9 +1,7 @@
 import { Vector3, Object3D, ArrowHelper } from 'three';
-
-import { createText } from '../utils/geometry';
 import { createMaterial } from '../utils/material';
 import { defineEntity } from '../defineEntity';
-
+import SpriteText from 'three-spritetext';
 
 const COLORS = {
   RED: '#FF0000',
@@ -22,9 +20,29 @@ const AXIS_EXTENSION = 1.5;
 
 const halfPI = Math.PI / 2;
 
-const calculateLength = (length) => (length) + 0.03;
+const createSpriteText = (label, textSize, color) => {
+  const spriteText = new SpriteText(label, textSize, color);
+  spriteText.renderOrder = 999;
+  spriteText.material.depthTest = false;
+  spriteText.material.depthWrite = false;
+  spriteText.material.visible = true;
+  spriteText.backgroundColor = false;
+  spriteText.fontFace = 'Lucida Console, MS Mono, sans-serif';
+
+  return spriteText;
+};
+
+const calculateLength = (length) => length + 0.03;
+
 const createArrow = (vector, length, color, headLength, headWidth) => {
-  const arrow = new ArrowHelper(vector, ORIGIN, length, color, headLength, headWidth);
+  const arrow = new ArrowHelper(
+    vector,
+    ORIGIN,
+    length,
+    color,
+    headLength,
+    headWidth
+  );
   arrow.cone.material.dispose();
   arrow.cone.material = createMaterial(color, 1);
   return arrow;
@@ -37,23 +55,43 @@ const createAxesLength = (params) => ({
 });
 
 const createXAxis = (xAxisLength, textSize, color, headLength, headWidth) => {
-  const xAxis = createArrow(new Vector3(0, 0, -1), xAxisLength, color, headLength, headWidth);
-  const xAxisLabel = createText('X', color, textSize);
-  xAxisLabel.setRotationFromAxisAngle(new Vector3(0, 1, 0), halfPI);
+  const xAxis = createArrow(
+    new Vector3(0, 0, -1),
+    xAxisLength,
+    color,
+    headLength,
+    headWidth
+  );
+  const xAxisLabel = createSpriteText('X', textSize, color);
+  xAxisLabel.position.z = -xAxisLength - 0.1;
 
   return { xAxis, xAxisLabel };
 };
 
 const createYAxis = (yAxisLength, textSize, color, headLength, headWidth) => {
-  const yAxis = createArrow(new Vector3(-1, 0, 0), yAxisLength, color, headLength, headWidth);
-  const yAxisLabel = createText('Y', color, textSize);
+  const yAxis = createArrow(
+    new Vector3(-1, 0, 0),
+    yAxisLength,
+    color,
+    headLength,
+    headWidth
+  );
+  const yAxisLabel = createSpriteText('Y', textSize, color);
+  yAxisLabel.position.x = -yAxisLength - 0.1;
 
   return { yAxis, yAxisLabel };
 };
 
 const createZAxis = (zAxisLength, textSize, color, headLength, headWidth) => {
-  const zAxis = createArrow(new Vector3(0, 1, 0), zAxisLength, color, headLength, headWidth);
-  const zAxisLabel = createText('Z', color, textSize);
+  const zAxis = createArrow(
+    new Vector3(0, 1, 0),
+    zAxisLength,
+    color,
+    headLength,
+    headWidth
+  );
+  const zAxisLabel = createSpriteText('Z', textSize, color);
+  zAxisLabel.position.y = +zAxisLength + 0.1;
 
   return { zAxis, zAxisLabel };
 };
@@ -64,7 +102,11 @@ export default defineEntity({
     xAxisLength: { name: 'X axisLength', default: 0.8, precision: 0.1 },
     yAxisLength: { name: 'Y axisLength', default: 0.8, precision: 0.1 },
     zAxisLength: { name: 'Z axisLength', default: 0.8, precision: 0.1 },
-    textSize: { name: 'Text size', default: DEFAULT_AXIS_TEXT_SIZE, precision: 0.1 },
+    textSize: {
+      name: 'Text size',
+      default: DEFAULT_AXIS_TEXT_SIZE,
+      precision: 0.1,
+    },
     xColor: { name: 'X color', default: COLORS.RED },
     yColor: { name: 'Y color', default: COLORS.GREEN },
     zColor: { name: 'Z color', default: COLORS.BLUE },
@@ -72,16 +114,32 @@ export default defineEntity({
     headWidth: { name: 'Head width', default: DEFAULT_HEAD_WIDTH },
   },
   render(params) {
-    const {
-      textSize, xColor, yColor, zColor, headLength, headWidth,
-    } = params;
+    const { textSize, xColor, yColor, zColor, headLength, headWidth } = params;
     const { xAxisLength, yAxisLength, zAxisLength } = createAxesLength(params);
 
     const root = new Object3D();
 
-    const { xAxis, xAxisLabel } = createXAxis(xAxisLength, textSize, xColor, headLength, headWidth);
-    const { yAxis, yAxisLabel } = createYAxis(yAxisLength, textSize, yColor, headLength, headWidth);
-    const { zAxis, zAxisLabel } = createZAxis(zAxisLength, textSize, zColor, headLength, headWidth);
+    const { xAxis, xAxisLabel } = createXAxis(
+      xAxisLength,
+      textSize,
+      xColor,
+      headLength,
+      headWidth
+    );
+    const { yAxis, yAxisLabel } = createYAxis(
+      yAxisLength,
+      textSize,
+      yColor,
+      headLength,
+      headWidth
+    );
+    const { zAxis, zAxisLabel } = createZAxis(
+      zAxisLength,
+      textSize,
+      zColor,
+      headLength,
+      headWidth
+    );
 
     root.add(xAxis);
     root.add(yAxis);
@@ -96,7 +154,10 @@ export default defineEntity({
 
       if (!xAxisLabel.geometry.boundingSphere) {
         const RETRY_INTERVAL = 50;
-        return setTimeout(() => setLabelPostions(retryCount + 1), RETRY_INTERVAL);
+        return setTimeout(
+          () => setLabelPostions(retryCount + 1),
+          RETRY_INTERVAL
+        );
       }
 
       xAxisLabel.position.z = -calculateLength(xAxisLength);
@@ -109,8 +170,25 @@ export default defineEntity({
 
       zAxisLabel.position.y = calculateLength(zAxisLength);
       zAxisLabel.position.x -= zAxisLabel.geometry.boundingSphere.center.x;
-    }());
+    })();
 
     return root;
+  },
+  update(root, params) {
+    const { headLength, headWidth } = params;
+    const { xAxisLength, yAxisLength, zAxisLength } = createAxesLength(params);
+
+    const [xAxis, yAxis, zAxis, xAxisLabel, yAxisLabel, zAxisLabel] =
+      root.children;
+
+    xAxis.setLength(xAxisLength, headLength, headWidth);
+    yAxis.setLength(yAxisLength, headLength, headWidth);
+    zAxis.setLength(zAxisLength, headLength, headWidth);
+
+    requestAnimationFrame(() => {
+      xAxisLabel.position.z = -calculateLength(xAxisLength);
+      yAxisLabel.position.x = -calculateLength(yAxisLength);
+      zAxisLabel.position.y = calculateLength(zAxisLength);
+    });
   },
 });

@@ -81,6 +81,18 @@ function createExtensionLines(params) {
   return [mainLine, startExtensionLine, endExtensionLine];
 }
 
+const createSpriteText = (label, textSize, color) => {
+  const spriteText = new SpriteText(label, textSize, color);
+  spriteText.renderOrder = 999;
+  spriteText.material.depthTest = false;
+  spriteText.material.depthWrite = false;
+  spriteText.material.visible = true;
+  spriteText.backgroundColor = false;
+  spriteText.fontFace = 'Lucida Console, MS Mono, sans-serif';
+
+  return spriteText;
+};
+
 export default defineEntity({
   name: 'alignedDim',
   parameters: {
@@ -108,15 +120,7 @@ export default defineEntity({
 
     // Render text
     const textValue = getTextValue(params);
-    const textObject = new SpriteText(textValue, textSize, color);
-
-    textObject.renderOrder = 999;
-    textObject.material.depthTest = false;
-    textObject.material.depthWrite = false;
-    textObject.material.visible = true;
-    textObject.backgroundColor = false;
-    textObject.fontFace = 'Lucida Console, MS Mono, sans-serif';
-
+    const textObject = createSpriteText(textValue, textSize, color);
     textObject.position.x = length / 2;
     textObject.position.z = extension;
 

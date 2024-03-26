@@ -5,10 +5,12 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import * as entities from '@/entities';
 import { castParameters } from '@/utils/helpers';
+import { setupVitestCanvasMock } from 'vi-canvas-mock';
 
 describe.each(Object.values(entities))('$name entity', (entity) => {
   beforeEach(() => {
     vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => cb());
+    setupVitestCanvasMock();
   });
 
   it('should contain mandatory properties', () => {

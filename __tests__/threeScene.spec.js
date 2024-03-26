@@ -3,6 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 
 import ThreeScene from '@/ThreeScene';
 import LayerSet from '@/utils/LayerSet';
+import { setupVitestCanvasMock } from 'vi-canvas-mock';
 
 
 function checkAxisIndicatorDefaultState(scene) {
@@ -15,6 +16,9 @@ function checkAxisIndicatorDefaultState(scene) {
 }
 
 describe('Three scene', () => {
+  beforeEach(()=>{
+    setupVitestCanvasMock();
+  })
   it('should create scene', () => {
     const scene = new ThreeScene();
 
@@ -43,6 +47,7 @@ describe('Three scene', () => {
   });
 
   it('should create axis indicator', async () => {
+    
     const scene = new ThreeScene();
     const el = document.createElement('canvas');
 
@@ -50,7 +55,7 @@ describe('Three scene', () => {
       addEventListener() { },
     };
 
-    HTMLCanvasElement.prototype.getContext = vi.fn();
+    //HTMLCanvasElement.prototype.getContext = vi.fn();
 
     vi.mock('three', async () => {
       const THREE = await vi.importActual('three');

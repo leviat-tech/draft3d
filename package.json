@@ -47,10 +47,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/leviat-tech/draft3d.git"
-  },
-  "jest": {
-    "setupFiles": [
-      "jest-canvas-mock"
-    ]
   }
 }

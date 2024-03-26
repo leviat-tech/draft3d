@@ -1,8 +1,4 @@
 import {
-  BoxGeometry,
-  Vector3,
-  Mesh,
-  MeshBasicMaterial,
   Object3D,
   LineBasicMaterial,
   Line,
@@ -10,12 +6,7 @@ import {
   Path,
 } from 'three';
 
-import {
-  createPolyLine,
-  createPolyLineGeometry,
-  createText,
-  createTextGeometry,
-} from '../utils/geometry';
+import { createPolyLine, createSpriteText } from '../utils/geometry';
 import { configureInteractivity } from '../utils/helpers';
 import { defineEntity } from '../defineEntity';
 
@@ -23,33 +14,6 @@ function getTextValue({ length, prefix, suffix, formatter }) {
   const lengthAsString = formatter(length) || length.toFixed(2);
 
   return [prefix, lengthAsString, suffix].filter((val) => val).join(' ');
-}
-
-function setTextPosition(textObject, textBox, params, retryCount = 0) {
-  const textOffset = 0.05;
-
-  if (retryCount === 10) return;
-
-  if (!textObject.geometry.boundingSphere) {
-    const RETRY_INTERVAL = 100;
-    return setTimeout(() => {
-      setTextPosition(textObject, textBox, params, retryCount + 1);
-    }, RETRY_INTERVAL);
-  }
-  const { x, y } = textObject.geometry.boundingSphere.center;
-
-  textObject.position.x = params.length / 2 - x;
-  textObject.position.z = params.extension + params.textSize + textOffset;
-
-  textBox.position.x = params.length / 2;
-  textBox.position.z = params.extension + params.textSize / 2 + textOffset;
-
-  textBox.geometry.dispose();
-
-  textBox.geometry = new BoxGeometry(x * 2, y * 2, 0);
-
-  textObject.material.visible = true;
-  textBox.material.visible = true;
 }
 
 function createCrosshair(crosshairParams) {
@@ -89,21 +53,24 @@ function createExtensionLines(params) {
     [-overflowLineLength, 0, extension],
     [length + overflowLineLength, 0, extension],
   ];
-  const mainLine = createPolyLine(mainLinePoints);
+  const mainLine = createPolyLine(mainLinePoints, '#959695');
 
   const startExtensionLinePoints = [
     [0, 0, 0],
     [0, 0, extension + overflowLineLength],
   ];
 
-  const startExtensionLine = createPolyLine(startExtensionLinePoints);
+  const startExtensionLine = createPolyLine(
+    startExtensionLinePoints,
+    '#959695'
+  );
 
   const endExtensionLinePoints = [
     [length, 0, 0],
     [length, 0, extension + overflowLineLength],
   ];
 
-  const endExtensionLine = createPolyLine(endExtensionLinePoints);
+  const endExtensionLine = createPolyLine(endExtensionLinePoints, '#959695');
 
   return [mainLine, startExtensionLine, endExtensionLine];
 }
@@ -125,7 +92,8 @@ export default defineEntity({
     const root = new Object3D();
 
     const { length, textSize, color, extension } = params;
-    const [mainLine, startExtensionLine, endExtensionLine] = createExtensionLines(params);
+    const [mainLine, startExtensionLine, endExtensionLine] =
+      createExtensionLines(params);
     const [startCrosshair, endCrosshair] = createCrosshairs(params);
 
     startCrosshair.position.z = extension;
@@ -134,19 +102,9 @@ export default defineEntity({
 
     // Render text
     const textValue = getTextValue(params);
-    const textObject = createText(textValue, color, textSize);
-    // Set initial rotation
-    textObject.setRotationFromAxisAngle(new Vector3(1, 0, 0), Math.PI / -2);
-
-    // Text surface for pointer capture
-    const boxGeometry = new BoxGeometry(0, 0);
-    const boxMaterial = new MeshBasicMaterial({
-      opacity: 0,
-      transparent: true,
-    });
-    boxMaterial.alphaTest = 0.1;
-    const textBox = new Mesh(boxGeometry, boxMaterial);
-    textBox.setRotationFromAxisAngle(new Vector3(1, 0, 0), Math.PI / -2);
+    const textObject = createSpriteText(textValue, textSize, color);
+    textObject.position.x = length / 2;
+    textObject.position.z = extension;
 
     [
       mainLine,
@@ -155,25 +113,15 @@ export default defineEntity({
       startCrosshair,
       endCrosshair,
       textObject,
-      textBox,
     ].forEach((x) => root.add(x));
 
-    textObject.material.visible = false;
-    textBox.material.visible = false;
-
-    // Let the text render before using its dimensions
-    // to calculate the central position
-    requestAnimationFrame(() => {
-      setTextPosition(textObject, textBox, params);
-    });
-
-    configureInteractivity(textBox, params);
+    configureInteractivity(textObject, params);
 
     return root;
   },
 
   update(root, newParams) {
-    const { length, textSize, extension } = newParams;
+    const { length, extension } = newParams;
 
     const [
       mainLine,
@@ -182,7 +130,6 @@ export default defineEntity({
       startCrosshair,
       endCrosshair,
       textObject,
-      textBox,
     ] = root.children;
 
     [mainLine, startExtensionLine, endExtensionLine, textObject].forEach((x) =>
@@ -196,16 +143,12 @@ export default defineEntity({
     endExtensionLine.geometry = end.geometry;
 
     const textValue = getTextValue(newParams);
-    textObject.geometry = createTextGeometry(textValue, textSize);
+    textObject.text = textValue;
 
     startCrosshair.position.z = extension;
     endCrosshair.position.z = extension;
     endCrosshair.position.x = length;
 
-    requestAnimationFrame(() => {
-      setTextPosition(textObject, textBox, newParams);
-    });
-
-    configureInteractivity(textBox, newParams);
+    configureInteractivity(textObject, newParams);
   },
 });

@@ -19,7 +19,8 @@
   "dependencies": {
     "lodash-es": "^4.17.21",
     "three": "^0.161.0",
-    "three-csg-ts": "^3.1.13"
+    "three-csg-ts": "^3.1.13",
+    "three-spritetext": "^1.8.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.17.10",
@@ -33,6 +34,7 @@
     "eslint-plugin-vue": "^7.6.0",
     "husky": "^8.0.0",
     "svg-parser": "^2.0.4",
+    "vi-canvas-mock": "^1.0.0",
     "vitest": "^0.32.2"
   },
   "files": [

@@ -14,6 +14,7 @@ import {
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { Font } from 'three/examples/jsm/loaders/FontLoader';
 import fontData from '../fonts/lucida_regular.typeface.json';
+import SpriteText from 'three-spritetext';
 
 const font = new Font(fontData);
 
@@ -155,3 +156,15 @@ export function replaceGeometry(object3d, newGeometry) {
   object3d.geometry?.dispose();
   object3d.geometry = newGeometry;
 }
+
+export function createSpriteText(label, textSize, color) {
+  const spriteText = new SpriteText(label, textSize, color);
+  spriteText.renderOrder = 999;
+  spriteText.material.depthTest = false;
+  spriteText.material.depthWrite = false;
+  spriteText.material.visible = true;
+  spriteText.backgroundColor = false;
+  spriteText.fontFace = 'Lucida Console, MS Mono, sans-serif';
+
+  return spriteText;
+};

@@ -1,7 +1,7 @@
 import { Vector3, Object3D, ArrowHelper } from 'three';
+import { createSpriteText } from '../utils/geometry';
 import { createMaterial } from '../utils/material';
 import { defineEntity } from '../defineEntity';
-import SpriteText from 'three-spritetext';
 
 const COLORS = {
   RED: '#FF0000',
@@ -11,26 +11,11 @@ const COLORS = {
 };
 
 const DEFAULT_AXIS_TEXT_SIZE = 0.1;
-
 const DEFAULT_HEAD_WIDTH = 0.1;
 const DEFAULT_HEAD_LENGTH = 0.2;
-
 const ORIGIN = new Vector3(0, 0, 0);
 const AXIS_EXTENSION = 1.5;
-
 const halfPI = Math.PI / 2;
-
-const createSpriteText = (label, textSize, color) => {
-  const spriteText = new SpriteText(label, textSize, color);
-  spriteText.renderOrder = 999;
-  spriteText.material.depthTest = false;
-  spriteText.material.depthWrite = false;
-  spriteText.material.visible = true;
-  spriteText.backgroundColor = false;
-  spriteText.fontFace = 'Lucida Console, MS Mono, sans-serif';
-
-  return spriteText;
-};
 
 const calculateLength = (length) => length + 0.03;
 

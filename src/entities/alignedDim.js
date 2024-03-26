@@ -1,20 +1,14 @@
 import {
-  BoxGeometry,
-  Mesh,
-  MeshBasicMaterial,
   Object3D,
   LineBasicMaterial,
   Line,
   BufferGeometry,
   Path,
-  Sprite,
-  SpriteMaterial,
 } from 'three';
 
-import { createPolyLine } from '../utils/geometry';
+import { createPolyLine, createSpriteText } from '../utils/geometry';
 import { configureInteractivity } from '../utils/helpers';
 import { defineEntity } from '../defineEntity';
-import SpriteText from 'three-spritetext';
 
 function getTextValue({ length, prefix, suffix, formatter }) {
   const lengthAsString = formatter(length) || length.toFixed(2);
@@ -80,18 +74,6 @@ function createExtensionLines(params) {
 
   return [mainLine, startExtensionLine, endExtensionLine];
 }
-
-const createSpriteText = (label, textSize, color) => {
-  const spriteText = new SpriteText(label, textSize, color);
-  spriteText.renderOrder = 999;
-  spriteText.material.depthTest = false;
-  spriteText.material.depthWrite = false;
-  spriteText.material.visible = true;
-  spriteText.backgroundColor = false;
-  spriteText.fontFace = 'Lucida Console, MS Mono, sans-serif';
-
-  return spriteText;
-};
 
 export default defineEntity({
   name: 'alignedDim',

@@ -3,7 +3,7 @@ import cylindricalArrow from './cylindricalArrow';
 import roundedCylindricalArrow from './roundedCylindricalArrow';
 import { configureInteractivity } from '../utils/helpers';
 import { defineEntity } from '../defineEntity';
-import SpriteText from 'three-spritetext';
+import { createSpriteText } from '../utils/geometry';
 
 export default defineEntity({
   name: 'cylindricalArrowWithClickableText',
@@ -55,13 +55,7 @@ export default defineEntity({
       textColor,
     } = params;
 
-    const textObject = new SpriteText(text, textSize, textColor);
-    textObject.renderOrder = 999;
-    textObject.material.depthTest = false;
-    textObject.material.depthWrite = false;
-    textObject.material.visible = true;
-    textObject.backgroundColor = false;
-    textObject.fontFace = 'Lucida Console, MS Mono, sans-serif';
+    const textObject = createSpriteText(text, textSize, textColor);
 
     if (textPosition) {
       const [x, y, z] = textPosition;

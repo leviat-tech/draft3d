@@ -13,7 +13,7 @@ jobs:
         with:
           release-type: node
           default-branch: main
-          package-name: test-release-please
+          package-name: draft3d
       # The logic below handles the npm publication:
       - uses: actions/checkout@v4
         # these if statements ensure that a publication only occurs when

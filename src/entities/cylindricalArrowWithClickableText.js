@@ -33,6 +33,7 @@ export default defineEntity({
     positionX: { name: 'positionX', default: 0.015, precision: 0.01 },
     positionZ: { name: 'positionZ', default: 0.096, precision: 0.01 },
     textColor: { name: 'textColor', default: 'black' },
+    textPosition: { name: 'textPosition', default: [0, 0, 0]},
   },
   render(params) {
     const {

@@ -159,21 +159,5 @@ export default defineEntity({
 
     return root;
   },
-  update(root, params) {
-    const { headLength, headWidth } = params;
-    const { xAxisLength, yAxisLength, zAxisLength } = createAxesLength(params);
-
-    const [xAxis, yAxis, zAxis, xAxisLabel, yAxisLabel, zAxisLabel] =
-      root.children;
-
-    xAxis.setLength(xAxisLength, headLength, headWidth);
-    yAxis.setLength(yAxisLength, headLength, headWidth);
-    zAxis.setLength(zAxisLength, headLength, headWidth);
-
-    requestAnimationFrame(() => {
-      xAxisLabel.position.z = -calculateLength(xAxisLength);
-      yAxisLabel.position.x = -calculateLength(yAxisLength);
-      zAxisLabel.position.y = calculateLength(zAxisLength);
-    });
-  },
+  
 });

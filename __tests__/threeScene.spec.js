@@ -17,6 +17,7 @@ function checkAxisIndicatorDefaultState(scene) {
 
 describe('Three scene', () => {
   beforeEach(()=>{
+    vi.clearAllMocks();
     setupVitestCanvasMock();
   })
   it('should create scene', () => {

@@ -9,7 +9,8 @@ import { setupVitestCanvasMock } from 'vi-canvas-mock';
 
 describe.each(Object.values(entities))('$name entity', (entity) => {
   beforeEach(() => {
-    vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => cb());
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => cb());    
+    vi.clearAllMocks();
     setupVitestCanvasMock();
   });
 

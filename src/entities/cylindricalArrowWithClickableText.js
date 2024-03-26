@@ -1,18 +1,10 @@
 import { Object3D } from 'three';
-
-import { createText, createTextBox } from '../utils/geometry';
-
 import cylindricalArrow from './cylindricalArrow';
 import roundedCylindricalArrow from './roundedCylindricalArrow';
-
 import { configureInteractivity } from '../utils/helpers';
 import { defineEntity } from '../defineEntity';
-
-
-const LABEL_COLOR = '#000000';
-
-const createLabel = (text, textSize) => createText(text, LABEL_COLOR, textSize);
-
+import SpriteText from 'three-spritetext';
+ 
 export default defineEntity({
   name: 'cylindricalArrowWithClickableText',
   parameters: {
@@ -37,7 +29,6 @@ export default defineEntity({
     const {
       color,
       length,
-      onClick,
       layer,
       isRounded,
       radius,
@@ -49,10 +40,26 @@ export default defineEntity({
       rotateZAngle,
       positionX,
       positionZ,
+      textPosition,
+      text,
+      textSize
     } = params;
 
-    const text = createLabel(params.text, params.textSize);
-    const textBox = createTextBox(onClick);
+    const textObject = new SpriteText(text, textSize, color);   
+    textObject.renderOrder = 999;
+    textObject.material.depthTest = false;
+    textObject.material.depthWrite = false;
+ 
+    textObject.material.visible = true;
+    textObject.backgroundColor = false;
+    textObject.fontFace="Lucida Console, MS Mono, sans-serif";
+
+    const [x,y,z] = textPosition;
+
+    textObject.position.x = x;
+    textObject.position.y = y;
+    textObject.position.z = z;
+ 
     const arrow = isRounded
       ? roundedCylindricalArrow.config.render({
         color,
@@ -66,14 +73,16 @@ export default defineEntity({
         layer,
       })
       : cylindricalArrow.config.render({ length, color, radius, coneHeight, layer });
-
-    configureInteractivity(textBox, params);
-
-    const object3D = new Object3D().add(arrow).add(text).add(textBox);
-
+ 
+    configureInteractivity(textObject, params);
+ 
+    const object3D = new Object3D()
+    .add(arrow)
+    .add(textObject);
+ 
     return object3D;
   },
-
+ 
   update(object3d, newParams) {
     configureInteractivity(object3d, newParams);
   },

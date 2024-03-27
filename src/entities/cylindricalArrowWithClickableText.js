@@ -88,6 +88,7 @@ export default defineEntity({
     configureInteractivity(textObject, params);
 
     const object3D = new Object3D().add(arrow).add(textObject);
+
     return object3D;
   },
 

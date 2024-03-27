@@ -1,11 +1,12 @@
 # Changelog
 
-## [1.9.0](https://github.com/leviat-tech/draft3d/compare/v1.8.0...v1.9.0) (2024-03-26)
 
+## [1.9.0](https://github.com/leviat-tech/draft3d/compare/v1.8.0...v1.9.0) (2024-03-27)
 
-### Features
 
 * render dims as sprite text ([#187](https://github.com/leviat-tech/draft3d/issues/187)) ([6e7e8ac](https://github.com/leviat-tech/draft3d/commit/6e7e8ace00906e3b83fcbbee76b85dd339b5cca1))
+* revised release please ([#189](https://github.com/leviat-tech/draft3d/issues/189)) ([32cbe9a](https://github.com/leviat-tech/draft3d/commit/32cbe9a7353b548848f815f6683971ce3d4acc99))
+
 
 ## [1.8.0](https://github.com/leviat-tech/draft3d/compare/v1.7.9...v1.8.0) (2024-02-21)
 

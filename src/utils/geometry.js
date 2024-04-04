@@ -13,8 +13,9 @@ import {
 } from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { Font } from 'three/examples/jsm/loaders/FontLoader';
-import fontData from '../fonts/lucida_regular.typeface.json';
 import SpriteText from 'three-spritetext';
+import fontData from '../fonts/lucida_regular.typeface.json';
+
 
 const font = new Font(fontData);
 
@@ -102,8 +103,7 @@ export function createPolyCurve(path) {
     const start = new Vector3(x1, y1, 0);
     const end = new Vector3(x2, y2, 0);
 
-    const controlPoint =
-      cx !== undefined ? new Vector3(cx, cy, 0) : new Vector3(x2, y2, 0);
+    const controlPoint = cx !== undefined ? new Vector3(cx, cy, 0) : new Vector3(x2, y2, 0);
     const curve = new QuadraticBezierCurve3(start, controlPoint, end);
 
     curvePath.add(curve);
@@ -125,7 +125,7 @@ export function create3dPath(
   path,
   closed,
   curveType = 'catmullrom',
-  tension = 0.5
+  tension = 0.5,
 ) {
   const points = [];
 
@@ -167,4 +167,37 @@ export function createSpriteText(label, textSize, color) {
   spriteText.fontFace = 'Lucida Console, MS Mono, sans-serif';
 
   return spriteText;
-};
+}
+
+/**
+ * Generate the geometry for a tube cap
+ * Based on https://jsfiddle.net/prisoner849/yueLpdb2/
+ * @param curve
+ * @param { number } t - 0 (start) or 1 (end)
+ * @param tubeGeometry - the geometry of the tube to be capped
+ * @return { BufferGeometry }
+ */
+export function getCapGeometry(curve, t, tubeGeometry) {
+  const pos = tubeGeometry.attributes.position;
+  const steps = tubeGeometry.parameters.tubularSegments;
+  const segments = tubeGeometry.parameters.radialSegments;
+
+  const points = [curve.getPoint(t)];
+
+  const start = 0;
+  const startIndex = t === start ? 0 : (segments + 1) * steps;
+  const maxIndex = t === start ? segments : pos.count - 1;
+
+  for (let i = startIndex; i <= maxIndex; i++) {
+    points.push(new Vector3().fromBufferAttribute(pos, i));
+  }
+
+  const pointsGeometry = new BufferGeometry().setFromPoints(points);
+  const index = [];
+  for (let i = 1; i < pointsGeometry.attributes.position.count - 1; i++) {
+    index.push(0, i + 1, i);
+  }
+  pointsGeometry.setIndex(index);
+
+  return pointsGeometry;
+}

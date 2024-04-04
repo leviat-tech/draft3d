@@ -57,6 +57,7 @@ module.exports = {
       { ignore: ['@/'] },
     ],
     'no-param-reassign': 'off',
+    'arrow-parens': 'off',
     'max-classes-per-file': 'off',
     'import/no-named-as-default': 0,
     'import/newline-after-import': ['error', { count: 2 }],

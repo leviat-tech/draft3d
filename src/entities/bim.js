@@ -1,11 +1,14 @@
 import { pick } from 'lodash-es';
 
-import { LatheGeometry, Mesh, Object3D, Path } from 'three';
+import {
+  BufferGeometry, LatheGeometry, Mesh, Object3D, Path, TubeGeometry,
+} from 'three';
+import Bend from '@crhio/bend';
 
 import { configureInteractivity } from '../utils/helpers';
 import { createMaterial } from '../utils/material';
 import { defineEntity } from '../defineEntity';
-import { createExtrudeGeometry, createPolyCurve } from '../utils/geometry';
+import { createExtrudeGeometry, createPolyCurve, getCapGeometry } from '../utils/geometry';
 
 
 function getArcX(item1, item2, item3, item4) {
@@ -123,249 +126,29 @@ export function findExtrusionPath(profile) {
   return path.getPoints();
 }
 
-const defaultBim = {
-  insertion_points: {
-    insertion_box: {
-      type: 'cuboid',
-      min_point: { x: -0.019, y: 0.0, z: -0.081 },
-      max_point: { x: 0.019, y: 0.3, z: 0.0 },
-    },
-    available_points: {
-      z_min: {
-        y_min: { x_min: false, x_mid: false, x_max: false },
-        y_mid: { x_min: false, x_mid: false, x_max: false },
-        y_max: { x_min: false, x_mid: false, x_max: false },
-      },
-      z_mid: {
-        y_min: { x_min: false, x_mid: false, x_max: false },
-        y_mid: { x_min: false, x_mid: false, x_max: false },
-        y_max: { x_min: false, x_mid: false, x_max: false },
-      },
-      z_max: {
-        y_min: { x_min: true, x_mid: true, x_max: true },
-        y_mid: { x_min: false, x_mid: false, x_max: false },
-        y_max: { x_min: true, x_mid: true, x_max: true },
-      },
-      default_point: ['z_max', 'y_min', 'x_mid'],
-    },
-  },
-  parts: {
-    channel: {
-      type: 'extrusion',
-      profile: [
-        { x: 0.0245, y: 0.15, z: -0.03, type: 'polyline_point' },
-        { x: 0.0245, y: 0.15, z: 0.0, type: 'polyline_point' },
-        { x: 0.01048, y: 0.15, z: 0.0, type: 'polyline_point' },
-        {
-          x: 0.01048,
-          y: 0.15,
-          z: -0.00652,
-          type: 'polyline_point',
-        },
-        { x: 0.01207, y: 0.15, z: -0.00774, type: 'arc_end_point' },
-        { x: 0.01959, y: 0.15, z: -0.0034, type: 'polyline_point' },
-        { x: 0.02137, y: 0.15, z: -0.00432, type: 'arc_end_point' },
-        {
-          x: 0.02137,
-          y: 0.15,
-          z: -0.02557,
-          type: 'polyline_point',
-        },
-        { x: 0.02007, y: 0.15, z: -0.02687, type: 'arc_end_point' },
-        {
-          x: -0.02007,
-          y: 0.15,
-          z: -0.02687,
-          type: 'polyline_point',
-        },
-        {
-          x: -0.02137,
-          y: 0.15,
-          z: -0.02557,
-          type: 'arc_end_point',
-        },
-        {
-          x: -0.02137,
-          y: 0.15,
-          z: -0.00432,
-          type: 'polyline_point',
-        },
-        { x: -0.01959, y: 0.15, z: -0.0034, type: 'arc_end_point' },
-        {
-          x: -0.01207,
-          y: 0.15,
-          z: -0.00774,
-          type: 'polyline_point',
-        },
-        {
-          x: -0.01048,
-          y: 0.15,
-          z: -0.00652,
-          type: 'arc_end_point',
-        },
-        {
-          x: -0.01048,
-          y: 0.15,
-          z: -0.00652,
-          type: 'polyline_point',
-        },
-        { x: -0.01048, y: 0.15, z: 0.0, type: 'polyline_point' },
-        { x: -0.0245, y: 0.15, z: 0.0, type: 'polyline_point' },
-        { x: -0.0245, y: 0.15, z: -0.03, type: 'polyline_point' },
-        { x: 0.0245, y: 0.15, z: -0.03, type: 'polyline_point' },
-      ],
-      path: [
-        { x: 0.0, y: 0.0, z: 0.0, type: 'polyline_point' },
-        { x: 0.0, y: 0.3, z: 0.0, type: 'polyline_point' },
-      ],
-      length: 0.3,
-      cutout: {},
-      origin: {
-        x: 0,
-        y: 0,
-        z: 0,
-        alpha: 0,
-        beta: 0,
-        gamma: 0,
-      },
-    },
-    anchors: {
-      type: 'revolution',
-      profile: [
-        { x: 0.01235, y: 0.0, z: -0.03, type: 'polyline_point' },
-        { x: 0.005, y: 0.0, z: -0.0342, type: 'polyline_point' },
-        { x: 0.005, y: 0.0, z: -0.107, type: 'polyline_point' },
-        { x: 0.01, y: 0.0, z: -0.1098, type: 'polyline_point' },
-        { x: 0.0109, y: 0.0, z: -0.1098, type: 'polyline_point' },
-        { x: 0.0109, y: 0.0, z: -0.112, type: 'polyline_point' },
-        { x: 0.0, y: 0.0, z: -0.112, type: 'polyline_point' },
-        { x: 0.0, y: 0.0, z: -0.03, type: 'polyline_point' },
-        { x: 0.01235, y: 0.0, z: -0.03, type: 'polyline_point' },
-      ],
-      axis_origin: { x: 0.0, y: 0.0, z: 0.0 },
-      axis_direction: [0, 0, 1],
-      sweep_angle: 6.283185307,
-      cutout: {},
-      origin: [
-        {
-          x: 0, y: 0.035, z: 0, alpha: 0, beta: 0, gamma: 0,
-        },
-        {
-          x: 0, y: 0.265, z: 0, alpha: 0, beta: 0, gamma: 0,
-        },
-      ],
-    },
-    channel_bounding_box: {
-      type: 'cuboid',
-      min_point: { x: -0.0245, y: 0.0, z: -0.03 },
-      max_point: { x: 0.0245, y: 0.3, z: 0.0 },
-      origin: [
-        {
-          x: 0, y: 0, z: 0, alpha: 0, beta: 0, gamma: 0,
-        },
-      ],
-    },
-    anchors_bounding_box: {
-      type: 'cuboid',
-      min_point: { x: -0.01235, y: -0.01235, z: -0.03 },
-      max_point: { x: 0.01235, y: 0.01235, z: -0.0112 },
-      origin: [
-        {
-          x: 0, y: 0.035, z: 0, alpha: 0, beta: 0, gamma: 0,
-        },
-        {
-          x: 0, y: 0.265, z: 0, alpha: 0, beta: 0, gamma: 0,
-        },
-      ],
-    },
-    anchors_bounding_box: {
-      type: 'cuboid',
-      min_point: { x: -0.019, y: 0.0, z: -0.01800 },
-      max_point: { x: 0.019, y: 0.0, z: -0.08100 },
-      origin: [
-        {
-          x: 0, y: 0.025, z: 0, alpha: 0, beta: 0, gamma: 0,
-        },
-        {
-          x: 0, y: 0.150, z: 0, alpha: 0, beta: 0, gamma: 0,
-        },
-        {
-          x: 0, y: 0.275, z: 0, alpha: 0, beta: 0, gamma: 0,
-        },
-      ],
-    },
-  },
-  log: {
-    high: [
-      'channel',
-      'anchors',
-    ],
-    medium: [
-      'channel_bounding_box',
-      'anchors_bounding_box',
-    ],
-    low: [
-      'channel_bounding_box',
-      'anchors_bounding_box',
-    ],
-  },
-  styles: {
-    common: ['bounding_box', 'channel_bounding_box', 'anchors_bounding_box'],
-    steel: ['channel', 'anchors'],
-  },
-  classification: {
-    uniclass2015_code: 'Pr_20_85_84_84',
-    uniclass2015_description: 'Stainless steel cast-in channels',
-    omniclass_code: '23-13 23 11 17',
-    omniclass_description: 'Mechanical Fasteners for Metal Structures',
-    ifc_export_as: 'IfcMechanicalFastener',
-    ifc_export_type: '',
-    ifc_description: '',
-  },
-  log: {
-    high: [
-      'channel',
-      'anchors',
-    ],
-    medium: [
-      'channel_bounding_box',
-      'anchors_bounding_box',
-    ],
-    low: [
-      'channel_bounding_box',
-      'anchors_bounding_box',
-    ],
-  },
-  styles: {
-    common: ['bounding_box', 'channel_bounding_box', 'anchors_bounding_box'],
-    steel: ['channel', 'anchors'],
-  },
-  classification: {
-    uniclass2015_code: 'Pr_20_85_84_84',
-    uniclass2015_description: 'Stainless steel cast-in channels',
-    omniclass_code: '23-13 23 11 17',
-    omniclass_description: 'Mechanical Fasteners for Metal Structures',
-    ifc_export_as: 'IfcMechanicalFastener',
-    ifc_export_type: '',
-    ifc_description: '',
-  },
-};
-
 const geometryTypes = {
   cuboid: 'cuboid',
   extrusion: 'extrusion',
   revolution: 'revolution',
+  rebar: 'rebar',
   // sphere: 'sphere',
 };
 
 /**
  * Convert a 3D point array to a 2D point array in order to create a 2D shape for extrusion/rotation
- * @param profile
+ * @param { [{ x, y, z }] } profile
+ * @returns { [x: number, z: number] }
  */
 function getProfilePath(profile, yOffset = 0) {
   return profile.map(({ x, y, z }) => [x, z]);
 }
 
+/**
+ * Generates a geometry for a bim parts based on its type
+ * @param { string: geometryTypes } type - the geometry types
+ * @param { object } params - the bim params for the  part
+ * @returns { BufferGeometry | BufferGeometry[] }
+ */
 function generateGeometry(type, params) {
   switch (type) {
     case geometryTypes.extrusion: {
@@ -398,6 +181,29 @@ function generateGeometry(type, params) {
       return createExtrudeGeometry(shape, max.y);
     }
 
+    case geometryTypes.rebar: {
+      const bend = Bend({ path: params.path_bend_code });
+      const pointTypeMap = {
+        arcto: 'arc_end_point',
+        lineto: 'polyline_point',
+      };
+
+      const commands = bend.commands().map((cmd) => ({
+        type: pointTypeMap[cmd.type],
+        x: cmd.params[0] / 1000,
+        y: 0,
+        z: cmd.params[1] / 1000,
+      }));
+      const radius = bend.instructions().find((inst) => inst.type === 'barRadius').radius / 1000;
+      const path = findExtrusionPath(commands);
+      const curve = createPolyCurve(path);
+      const tubeGeometry = new TubeGeometry(curve, 100, radius, 24, false);
+      const startCapGeometry = getCapGeometry(curve, 0, tubeGeometry);
+      const endCapGeometry = getCapGeometry(curve, 1, tubeGeometry);
+
+      return [tubeGeometry, startCapGeometry, endCapGeometry];
+    }
+
     default:
       console.warn(`Geometry type: ${type} not found`);
       return null;
@@ -405,24 +211,55 @@ function generateGeometry(type, params) {
   }
 }
 
-function generatePartsGeometries(parts) {
+/**
+ * Generate a mesh for a given part
+ * @param { string } name - the name to be assigned to the mesh object
+ * @param { object } part - the bim part data
+ * @param { Material } material
+ * @param { number } translateZ
+ * @param { number } translateY
+ * @return { Mesh }
+ */
+function generateMesh(name, part, material, translateZ, translateY) {
+  const geometry = generateGeometry(part.type, part);
+
+  const hasMultipleGeometries = Array.isArray(geometry);
+  const mainGeometry = hasMultipleGeometries ? geometry[0] : geometry;
+
+  // Use BufferGeometry.translate rather than Object3d.position as
+  // translate is better suited for one-time operations i.e. initial positioning
+  mainGeometry.translate(0, translateZ, translateY);
+
+  const mainMesh = new Mesh(mainGeometry, material);
+
+  // If there are additional geometries then generate meshes for them and add them to the main mesh
+  if (hasMultipleGeometries) {
+    geometry.slice(1).forEach((geometryItem) => {
+      const meshItem = new Mesh(geometryItem, material);
+      mainMesh.add(meshItem);
+    });
+  }
+
+  return mainMesh;
+}
+
+/**
+ * Generate meshes for specified parts
+ * @param { array } parts -
+ * @param { Material } material
+ * @return { Mesh[] }
+ */
+function generateParts(parts, material) {
   return Object.keys(parts).map((key) => {
     const part = parts[key];
 
     const positions = [];
     if (Array.isArray(part.origin)) {
       part.origin.forEach(({ y, z }) => {
-        positions.push({
-          geometry: generateGeometry(part.type, part).translate(0, z, y),
-          name: key,
-        });
+        positions.push(generateMesh(key, part, material, z, y));
       });
     } else {
-      positions.push({
-        geometry: generateGeometry(part.type, part).translate(0, part.origin.z, part.origin.y),
-        name: key,
-      });
-
+      positions.push(generateMesh(key, part, material, part.origin.z, part.origin.y));
     }
 
     return positions;
@@ -432,7 +269,23 @@ function generatePartsGeometries(parts) {
 export default defineEntity({
   name: 'bim',
   parameters: {
-    bimData: { default: defaultBim },
+    bimData: {
+      default: {
+        log: { high: ['box'] },
+        parts: {
+          box: {
+            type: 'cuboid',
+            min_point: { x: -0.0245, y: 0.0, z: -0.03 },
+            max_point: { x: 0.0245, y: 0.3, z: 0.0 },
+            origin: [
+              {
+                x: 0, y: 0, z: 0, alpha: 0, beta: 0, gamma: 0,
+              },
+            ],
+          },
+        },
+      },
+    },
     log: { name: 'Log', default: 'high' },
     color: { name: 'Colour', type: 'color', default: '#6666cc' },
     opacity: { name: 'Opacity', type: 'number', precision: 0.05, default: 1 },
@@ -442,16 +295,8 @@ export default defineEntity({
 
     const filteredParts = pick(bimData.parts, bimData.log[params.log]);
 
-    const geometries = generatePartsGeometries(filteredParts);
     const material = createMaterial(color, opacity);
-
-    const meshes = geometries.map(({ name, geometry }) => {
-      const mesh = new Mesh(geometry, material);
-
-      mesh.name = name;
-
-      return mesh;
-    });
+    const meshes = generateParts(filteredParts, material);
 
     const obj3d = new Object3D();
     obj3d.add(...meshes);

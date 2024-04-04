@@ -1,52 +1,19 @@
 import {
-  BufferGeometry,
   Mesh,
   TubeGeometry,
-  Vector3,
 } from 'three';
 import { createMaterial, updateMaterial } from '../utils/material';
 import {
   create3dPath,
   createPolyCurve,
   replaceGeometry,
+  getCapGeometry,
 } from '../utils/geometry';
 import { defineEntity } from '../defineEntity';
 
 
 const START = 0;
 const END = 1;
-
-/**
- * Generate the geometry for a tube cap
- * Based on https://jsfiddle.net/prisoner849/yueLpdb2/
- * @param curve
- * @param { number } t - 0 (start) or 1 (end)
- * @param tubeGeometry - the geometry of the tube to be capped
- * @return { BufferGeometry }
- */
-function getCapGeometry(curve, t, tubeGeometry) {
-  const pos = tubeGeometry.attributes.position;
-  const steps = tubeGeometry.parameters.tubularSegments;
-  const segments = tubeGeometry.parameters.radialSegments;
-
-  const points = [curve.getPoint(t)];
-
-  const startIndex = t === START ? 0 : (segments + 1) * steps;
-  const maxIndex = t === START ? segments : pos.count - 1;
-
-  for (let i = startIndex; i <= maxIndex; i++) {
-    points.push(new Vector3().fromBufferAttribute(pos, i));
-  }
-
-  const pointsGeometry = new BufferGeometry().setFromPoints(points);
-  const index = [];
-  for (let i = 1; i < pointsGeometry.attributes.position.count - 1; i++) {
-    index.push(0, i + 1, i);
-  }
-  pointsGeometry.setIndex(index);
-
-  return pointsGeometry;
-}
 
 export default defineEntity({
   name: 'cylindricalPath',

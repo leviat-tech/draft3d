@@ -231,6 +231,7 @@ function generateMesh(name, part, material, translateZ, translateY) {
   mainGeometry.translate(0, translateZ, translateY);
 
   const mainMesh = new Mesh(mainGeometry, material);
+  mainMesh.name = name;
 
   // If there are additional geometries then generate meshes for them and add them to the main mesh
   if (hasMultipleGeometries) {
@@ -255,8 +256,9 @@ function generateParts(parts, material) {
 
     const positions = [];
     if (Array.isArray(part.origin)) {
-      part.origin.forEach(({ y, z }) => {
-        positions.push(generateMesh(key, part, material, z, y));
+      part.origin.forEach(({ y, z }, i) => {
+        const name = [key, i].join('_');
+        positions.push(generateMesh(name, part, material, z, y));
       });
     } else {
       positions.push(generateMesh(key, part, material, part.origin.z, part.origin.y));

@@ -213,14 +213,14 @@
       ],
       "length": 0.3,
       "cutout": {},
-      "origin": {
+      "origin": [{
         "x": 0,
         "y": 0,
         "z": 0,
         "alpha": 0,
         "beta": 0,
         "gamma": 0
-      }
+      }]
     },
     "anchors": {
       "type": "revolution",

@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.10.1](https://github.com/leviat-tech/draft3d/compare/v1.10.0...v1.10.1) (2024-04-05)
+
+
+* bim entity ([c8d3d69](https://github.com/leviat-tech/draft3d/commit/c8d3d691c84f31f024bc77e2ecc0cf23ff11e525))
+
 ## [1.10.0](https://github.com/leviat-tech/draft3d/compare/v1.9.0...v1.10.0) (2024-04-05)
 
 

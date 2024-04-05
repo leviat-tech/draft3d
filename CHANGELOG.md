@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [1.10.0](https://github.com/leviat-tech/draft3d/compare/v1.9.0...v1.10.0) (2024-04-05)
+
+
+* add rebar type to bim entity ([8366afa](https://github.com/leviat-tech/draft3d/commit/8366afa22c4a26c068eafab1026cef65860023e2))
+* **main:** release 1.9.0 ([#188](https://github.com/leviat-tech/draft3d/issues/188)) ([b95e61e](https://github.com/leviat-tech/draft3d/commit/b95e61e32e47fc495b665dcb1dba7a79b6cf7b5b))
+* release please edits ([#195](https://github.com/leviat-tech/draft3d/issues/195)) ([1d1f686](https://github.com/leviat-tech/draft3d/commit/1d1f686bea69fba639f4ee01bb3112d6c4b14984))
+* remove large default data object from bim entity ([d638ccb](https://github.com/leviat-tech/draft3d/commit/d638ccb4e254f3f91dccdab08b7d4e0ebc1f346e))
+
 ## [1.9.0](https://github.com/leviat-tech/draft3d/compare/v1.8.0...v1.9.0) (2024-03-27)
 
 

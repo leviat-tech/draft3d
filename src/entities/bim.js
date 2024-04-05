@@ -257,7 +257,7 @@ function generateParts(parts, material) {
     const positions = [];
     if (Array.isArray(part.origin)) {
       part.origin.forEach(({ y, z }, i) => {
-        const name = [key, i].join('_');
+        const name = part.origin.length === 1 ? key : [key, i].join('_');
         positions.push(generateMesh(name, part, material, z, y));
       });
     } else {

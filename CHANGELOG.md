@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.10.2](https://github.com/leviat-tech/draft3d/compare/v1.10.1...v1.10.2) (2024-04-05)
+
+
+* **bim:** don't index name if origin has single item ([08764dd](https://github.com/leviat-tech/draft3d/commit/08764ddb1f7e30c0dbd54c74bd4237ca82d3474a))
+
 ## [1.10.1](https://github.com/leviat-tech/draft3d/compare/v1.10.0...v1.10.1) (2024-04-05)
 
 

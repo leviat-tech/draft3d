@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.10.3](https://github.com/leviat-tech/draft3d/compare/v1.10.2...v1.10.3) (2024-04-18)
+
+
+* orientation of bim.parts.anchors (type: I, extrusion) with rotation angles ([5af0cf8](https://github.com/leviat-tech/draft3d/commit/5af0cf872d662082dc386611c3de76a3fc1d1d38))
+
 ## [1.10.2](https://github.com/leviat-tech/draft3d/compare/v1.10.1...v1.10.2) (2024-04-05)
 
 

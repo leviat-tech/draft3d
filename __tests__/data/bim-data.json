@@ -217,9 +217,13 @@
         "x": 0,
         "y": 0,
         "z": 0,
-        "alpha": 0,
-        "beta": 0,
-        "gamma": 0
+        "rotation": [
+          {
+            "alpha": 0,
+            "beta": 0,
+            "gamma": 0
+          }
+        ]
       }]
     },
     "anchors": {
@@ -297,17 +301,25 @@
           "x": 0,
           "y": 0.035,
           "z": 0,
-          "alpha": 0,
-          "beta": 0,
-          "gamma": 0
+          "rotation": [
+            {
+              "alpha": 0,
+              "beta": 0,
+              "gamma": 0
+            }
+          ]
         },
         {
           "x": 0,
           "y": 0.265,
           "z": 0,
-          "alpha": 0,
-          "beta": 0,
-          "gamma": 0
+          "rotation": [
+            {
+              "alpha": 0,
+              "beta": 0,
+              "gamma": 0
+            }
+          ]
         }
       ]
     },
@@ -318,9 +330,13 @@
         "x": 0,
         "y": 0,
         "z": 0,
-        "alpha": 0,
-        "beta": 0,
-        "gamma": 0
+        "rotation": [
+          {
+            "alpha": 0,
+            "beta": 0,
+            "gamma": 0
+          }
+        ]
       }
     },
     "channel_bounding_box": {
@@ -340,9 +356,13 @@
           "x": 0,
           "y": 0,
           "z": 0,
-          "alpha": 0,
-          "beta": 0,
-          "gamma": 0
+          "rotation": [
+            {
+              "alpha": 0,
+              "beta": 0,
+              "gamma": 0
+            }
+          ]
         }
       ]
     },
@@ -363,17 +383,25 @@
           "x": 0,
           "y": 0.035,
           "z": 0,
-          "alpha": 0,
-          "beta": 0,
-          "gamma": 0
+          "rotation": [
+            {
+              "alpha": 0,
+              "beta": 0,
+              "gamma": 0
+            }
+          ]
         },
         {
           "x": 0,
           "y": 0.265,
           "z": 0,
-          "alpha": 0,
-          "beta": 0,
-          "gamma": 0
+          "rotation": [
+            {
+              "alpha": 0,
+              "beta": 0,
+              "gamma": 0
+            }
+          ]
         }
       ]
     }

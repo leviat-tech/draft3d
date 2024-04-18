@@ -96,7 +96,9 @@ function onFileChange(e) {
   reader.onload = function (e) {
     const json = JSON.parse(e.target.result);
     const parts = json[0].bim.parts;
-    params.value.parts = json[0].bim.parts;
+    const log = json[0].bim.log;
+    params.value.bimData.parts = parts;
+    params.value.bimData.log = log;
   };
 
   // Read in the image file as a data URL.

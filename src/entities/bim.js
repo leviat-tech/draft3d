@@ -216,11 +216,13 @@ function generateGeometry(type, params) {
  * @param { string } name - the name to be assigned to the mesh object
  * @param { object } part - the bim part data
  * @param { Material } material
+ * @param { number } translateX
  * @param { number } translateZ
  * @param { number } translateY
+ * @param { object } rotation - rotation angles { alpha, beta, gamma }
  * @return { Mesh }
  */
-function generateMesh(name, part, material, translateZ, translateY) {
+function generateMesh(name, part, material, translateX, translateZ, translateY, rotation) {
   const geometry = generateGeometry(part.type, part);
 
   const hasMultipleGeometries = Array.isArray(geometry);
@@ -228,7 +230,8 @@ function generateMesh(name, part, material, translateZ, translateY) {
 
   // Use BufferGeometry.translate rather than Object3d.position as
   // translate is better suited for one-time operations i.e. initial positioning
-  mainGeometry.translate(0, translateZ, translateY);
+  mainGeometry.rotateY(rotation.alpha);
+  mainGeometry.translate(translateX, translateZ, translateY);
 
   const mainMesh = new Mesh(mainGeometry, material);
   mainMesh.name = name;
@@ -256,12 +259,14 @@ function generateParts(parts, material) {
 
     const positions = [];
     if (Array.isArray(part.origin)) {
-      part.origin.forEach(({ y, z }, i) => {
+      part.origin.forEach(({ x, y, z, rotation }, i) => {
         const name = part.origin.length === 1 ? key : [key, i].join('_');
-        positions.push(generateMesh(name, part, material, z, y));
+        positions.push(generateMesh(name, part, material, -x, z, y, rotation[0]));
       });
     } else {
-      positions.push(generateMesh(key, part, material, part.origin.z, part.origin.y));
+      positions.push(
+        generateMesh(key, part, material, -part.origin.x, part.origin.z, part.origin.y, part.origin.rotation),
+      );
     }
 
     return positions;
@@ -281,7 +286,12 @@ export default defineEntity({
             max_point: { x: 0.0245, y: 0.3, z: 0.0 },
             origin: [
               {
-                x: 0, y: 0, z: 0, alpha: 0, beta: 0, gamma: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                rotation: [
+                  { alpha: 1.5708, beta: 0, gamma: 0 },
+                ],
               },
             ],
           },

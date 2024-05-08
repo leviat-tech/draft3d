@@ -1,6 +1,4 @@
-[
   {
-    "bim": {
       "insertion_points": {
         "insertion_box": {
           "type": "cuboid",
@@ -449,6 +447,4 @@
         "ifc_export_type": "",
         "ifc_description": ""
       }
-    }
   }
-]

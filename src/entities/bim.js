@@ -1,7 +1,7 @@
 import { pick } from 'lodash-es';
 
 import {
-  BufferGeometry, LatheGeometry, Mesh, Object3D, Path, TubeGeometry,
+  LatheGeometry, Mesh, Object3D, Path, TubeGeometry,
 } from 'three';
 import Bend from '@crhio/bend';
 
@@ -108,14 +108,15 @@ export function findExtrusionPath(profile) {
         sortedProfile[index - 2],
         sortedProfile[index - 1],
         sortedProfile[index],
-        sortedProfile[index + 1],
+        // if pt[last] is arc_end_point, so pt[index+1] is out of range, and since pt[last] = pt[0] -> item4 is pt[1]
+        index + 1 >= sortedProfile.length ? sortedProfile[1] : sortedProfile[index + 1],
       );
 
       const arcY = getArcY(
         sortedProfile[index - 2],
         sortedProfile[index - 1],
         sortedProfile[index],
-        sortedProfile[index + 1],
+        index + 1 >= sortedProfile.length ? sortedProfile[1] : sortedProfile[index + 1],
         arcX,
       );
 
@@ -231,6 +232,8 @@ function generateMesh(name, part, material, translateX, translateZ, translateY, 
   // Use BufferGeometry.translate rather than Object3d.position as
   // translate is better suited for one-time operations i.e. initial positioning
   mainGeometry.rotateY(rotation.alpha);
+  mainGeometry.rotateX(rotation.beta);
+  mainGeometry.rotateZ(rotation.gamma);
   mainGeometry.translate(translateX, translateZ, translateY);
 
   const mainMesh = new Mesh(mainGeometry, material);
@@ -239,6 +242,10 @@ function generateMesh(name, part, material, translateX, translateZ, translateY, 
   // If there are additional geometries then generate meshes for them and add them to the main mesh
   if (hasMultipleGeometries) {
     geometry.slice(1).forEach((geometryItem) => {
+      geometryItem.rotateY(rotation.alpha);
+      geometryItem.rotateX(rotation.beta);
+      geometryItem.rotateZ(rotation.gamma);
+      geometryItem.translate(translateX, translateZ, translateY);
       const meshItem = new Mesh(geometryItem, material);
       mainMesh.add(meshItem);
     });

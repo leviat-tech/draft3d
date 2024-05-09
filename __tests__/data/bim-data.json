@@ -1,444 +1,450 @@
-{
-  "insertion_points": {
-    "insertion_box": {
-      "type": "cuboid",
-      "min_point": {
-        "x": -0.019,
-        "y": 0.0,
-        "z": -0.081
-      },
-      "max_point": {
-        "x": 0.019,
-        "y": 0.3,
-        "z": 0.0
-      }
-    },
-    "available_points": {
-      "z_min": {
-        "y_min": {
-          "x_min": false,
-          "x_mid": false,
-          "x_max": false
-        },
-        "y_mid": {
-          "x_min": false,
-          "x_mid": false,
-          "x_max": false
-        },
-        "y_max": {
-          "x_min": false,
-          "x_mid": false,
-          "x_max": false
-        }
-      },
-      "z_mid": {
-        "y_min": {
-          "x_min": false,
-          "x_mid": false,
-          "x_max": false
-        },
-        "y_mid": {
-          "x_min": false,
-          "x_mid": false,
-          "x_max": false
-        },
-        "y_max": {
-          "x_min": false,
-          "x_mid": false,
-          "x_max": false
-        }
-      },
-      "z_max": {
-        "y_min": {
-          "x_min": true,
-          "x_mid": true,
-          "x_max": true
-        },
-        "y_mid": {
-          "x_min": false,
-          "x_mid": false,
-          "x_max": false
-        },
-        "y_max": {
-          "x_min": true,
-          "x_mid": true,
-          "x_max": true
-        }
-      },
-      "default_point": [
-        "z_max",
-        "y_min",
-        "x_mid"
-      ]
-    }
-  },
-  "parts": {
-    "channel": {
-      "type": "extrusion",
-      "profile": [
-        {
-          "x": 0.0245,
-          "y": 0.15,
-          "z": -0.03,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.0245,
-          "y": 0.15,
-          "z": 0.0,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.01048,
-          "y": 0.15,
-          "z": 0.0,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.01048,
-          "y": 0.15,
-          "z": -0.00652,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.01207,
-          "y": 0.15,
-          "z": -0.00774,
-          "type": "arc_end_point"
-        },
-        {
-          "x": 0.01959,
-          "y": 0.15,
-          "z": -0.0034,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.02137,
-          "y": 0.15,
-          "z": -0.00432,
-          "type": "arc_end_point"
-        },
-        {
-          "x": 0.02137,
-          "y": 0.15,
-          "z": -0.02557,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.02007,
-          "y": 0.15,
-          "z": -0.02687,
-          "type": "arc_end_point"
-        },
-        {
-          "x": -0.02007,
-          "y": 0.15,
-          "z": -0.02687,
-          "type": "polyline_point"
-        },
-        {
-          "x": -0.02137,
-          "y": 0.15,
-          "z": -0.02557,
-          "type": "arc_end_point"
-        },
-        {
-          "x": -0.02137,
-          "y": 0.15,
-          "z": -0.00432,
-          "type": "polyline_point"
-        },
-        {
-          "x": -0.01959,
-          "y": 0.15,
-          "z": -0.0034,
-          "type": "arc_end_point"
-        },
-        {
-          "x": -0.01207,
-          "y": 0.15,
-          "z": -0.00774,
-          "type": "polyline_point"
-        },
-        {
-          "x": -0.01048,
-          "y": 0.15,
-          "z": -0.00652,
-          "type": "arc_end_point"
-        },
-        {
-          "x": -0.01048,
-          "y": 0.15,
-          "z": -0.00652,
-          "type": "polyline_point"
-        },
-        {
-          "x": -0.01048,
-          "y": 0.15,
-          "z": 0.0,
-          "type": "polyline_point"
-        },
-        {
-          "x": -0.0245,
-          "y": 0.15,
-          "z": 0.0,
-          "type": "polyline_point"
-        },
-        {
-          "x": -0.0245,
-          "y": 0.15,
-          "z": -0.03,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.0245,
-          "y": 0.15,
-          "z": -0.03,
-          "type": "polyline_point"
-        }
-      ],
-      "path": [
-        {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.0,
-          "y": 0.3,
-          "z": 0.0,
-          "type": "polyline_point"
-        }
-      ],
-      "length": 0.3,
-      "cutout": {},
-      "origin": [{
-        "x": 0,
-        "y": 0,
-        "z": 0,
-        "rotation": [
-          {
-            "alpha": 0,
-            "beta": 0,
-            "gamma": 0
+  {
+      "insertion_points": {
+        "insertion_box": {
+          "type": "cuboid",
+          "min_point": {
+            "x": -0.019,
+            "y": 0.0,
+            "z": -0.081
+          },
+          "max_point": {
+            "x": 0.019,
+            "y": 0.3,
+            "z": 0.0
           }
-        ]
-      }]
-    },
-    "anchors": {
-      "type": "revolution",
-      "profile": [
-        {
-          "x": 0.01235,
-          "y": 0.0,
-          "z": -0.03,
-          "type": "polyline_point"
         },
-        {
-          "x": 0.005,
-          "y": 0.0,
-          "z": -0.0342,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.005,
-          "y": 0.0,
-          "z": -0.107,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.01,
-          "y": 0.0,
-          "z": -0.1098,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.0109,
-          "y": 0.0,
-          "z": -0.1098,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.0109,
-          "y": 0.0,
-          "z": -0.112,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.0,
-          "y": 0.0,
-          "z": -0.112,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.0,
-          "y": 0.0,
-          "z": -0.03,
-          "type": "polyline_point"
-        },
-        {
-          "x": 0.01235,
-          "y": 0.0,
-          "z": -0.03,
-          "type": "polyline_point"
+        "available_points": {
+          "z_min": {
+            "y_min": {
+              "x_min": false,
+              "x_mid": false,
+              "x_max": false
+            },
+            "y_mid": {
+              "x_min": false,
+              "x_mid": false,
+              "x_max": false
+            },
+            "y_max": {
+              "x_min": false,
+              "x_mid": false,
+              "x_max": false
+            }
+          },
+          "z_mid": {
+            "y_min": {
+              "x_min": false,
+              "x_mid": false,
+              "x_max": false
+            },
+            "y_mid": {
+              "x_min": false,
+              "x_mid": false,
+              "x_max": false
+            },
+            "y_max": {
+              "x_min": false,
+              "x_mid": false,
+              "x_max": false
+            }
+          },
+          "z_max": {
+            "y_min": {
+              "x_min": true,
+              "x_mid": true,
+              "x_max": true
+            },
+            "y_mid": {
+              "x_min": false,
+              "x_mid": false,
+              "x_max": false
+            },
+            "y_max": {
+              "x_min": true,
+              "x_mid": true,
+              "x_max": true
+            }
+          },
+          "default_point": [
+            "z_max",
+            "y_min",
+            "x_mid"
+          ]
         }
-      ],
-      "axis_origin": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
       },
-      "axis_direction": [
-        0,
-        0,
-        1
-      ],
-      "sweep_angle": 6.283185307,
-      "cutout": {},
-      "origin": [
-        {
-          "x": 0,
-          "y": 0.035,
-          "z": 0,
-          "rotation": [
+      "parts": {
+        "channel": {
+          "type": "extrusion",
+          "profile": [
             {
-              "alpha": 0,
-              "beta": 0,
-              "gamma": 0
+              "x": 0.0245,
+              "y": 0.15,
+              "z": -0.03,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.0245,
+              "y": 0.15,
+              "z": 0.0,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.01048,
+              "y": 0.15,
+              "z": 0.0,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.01048,
+              "y": 0.15,
+              "z": -0.00652,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.01207,
+              "y": 0.15,
+              "z": -0.00774,
+              "type": "arc_end_point"
+            },
+            {
+              "x": 0.01959,
+              "y": 0.15,
+              "z": -0.0034,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.02137,
+              "y": 0.15,
+              "z": -0.00432,
+              "type": "arc_end_point"
+            },
+            {
+              "x": 0.02137,
+              "y": 0.15,
+              "z": -0.02557,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.02007,
+              "y": 0.15,
+              "z": -0.02687,
+              "type": "arc_end_point"
+            },
+            {
+              "x": -0.02007,
+              "y": 0.15,
+              "z": -0.02687,
+              "type": "polyline_point"
+            },
+            {
+              "x": -0.02137,
+              "y": 0.15,
+              "z": -0.02557,
+              "type": "arc_end_point"
+            },
+            {
+              "x": -0.02137,
+              "y": 0.15,
+              "z": -0.00432,
+              "type": "polyline_point"
+            },
+            {
+              "x": -0.01959,
+              "y": 0.15,
+              "z": -0.0034,
+              "type": "arc_end_point"
+            },
+            {
+              "x": -0.01207,
+              "y": 0.15,
+              "z": -0.00774,
+              "type": "polyline_point"
+            },
+            {
+              "x": -0.01048,
+              "y": 0.15,
+              "z": -0.00652,
+              "type": "arc_end_point"
+            },
+            {
+              "x": -0.01048,
+              "y": 0.15,
+              "z": -0.00652,
+              "type": "polyline_point"
+            },
+            {
+              "x": -0.01048,
+              "y": 0.15,
+              "z": 0.0,
+              "type": "polyline_point"
+            },
+            {
+              "x": -0.0245,
+              "y": 0.15,
+              "z": 0.0,
+              "type": "polyline_point"
+            },
+            {
+              "x": -0.0245,
+              "y": 0.15,
+              "z": -0.03,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.0245,
+              "y": 0.15,
+              "z": -0.03,
+              "type": "polyline_point"
+            }
+          ],
+          "path": [
+            {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.0,
+              "y": 0.3,
+              "z": 0.0,
+              "type": "polyline_point"
+            }
+          ],
+          "length": 0.3,
+          "cutout": {},
+          "origin": [
+            {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "rotation": [
+                {
+                  "alpha": 0,
+                  "beta": 0,
+                  "gamma": 0
+                }
+              ]
             }
           ]
         },
-        {
-          "x": 0,
-          "y": 0.265,
-          "z": 0,
-          "rotation": [
+        "anchors": {
+          "type": "revolution",
+          "profile": [
             {
-              "alpha": 0,
-              "beta": 0,
-              "gamma": 0
+              "x": 0.01235,
+              "y": 0.0,
+              "z": -0.03,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.005,
+              "y": 0.0,
+              "z": -0.0342,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.005,
+              "y": 0.0,
+              "z": -0.107,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.01,
+              "y": 0.0,
+              "z": -0.1098,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.0109,
+              "y": 0.0,
+              "z": -0.1098,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.0109,
+              "y": 0.0,
+              "z": -0.112,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -0.112,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -0.03,
+              "type": "polyline_point"
+            },
+            {
+              "x": 0.01235,
+              "y": 0.0,
+              "z": -0.03,
+              "type": "polyline_point"
+            }
+          ],
+          "axis_origin": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "axis_direction": [
+            0,
+            0,
+            1
+          ],
+          "sweep_angle": 6.283185307,
+          "cutout": {},
+          "origin": [
+            {
+              "x": 0,
+              "y": 0.035,
+              "z": 0,
+              "rotation": [
+                {
+                  "alpha": 0,
+                  "beta": 0,
+                  "gamma": 0
+                }
+              ]
+            },
+            {
+              "x": 0,
+              "y": 0.265,
+              "z": 0,
+              "rotation": [
+                {
+                  "alpha": 0,
+                  "beta": 0,
+                  "gamma": 0
+                }
+              ]
+            }
+          ]
+        },
+        "rebars": {
+          "type": "rebar",
+          "path_bend_code": "6 d 6 s 40 l 45 w 30 l -90 w 30 l 90 w 30 l 90 w 30 l",
+          "rebar_function": false,
+          "origin": [
+            {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "rotation": [
+                {
+                  "alpha": 0,
+                  "beta": 0,
+                  "gamma": 0
+                }
+              ]
+            }
+          ]
+        },
+        "channel_bounding_box": {
+          "type": "cuboid",
+          "min_point": {
+            "x": -0.0245,
+            "y": 0.0,
+            "z": -0.03
+          },
+          "max_point": {
+            "x": 0.0245,
+            "y": 0.3,
+            "z": 0.0
+          },
+          "origin": [
+            {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "rotation": [
+                {
+                  "alpha": 0,
+                  "beta": 0,
+                  "gamma": 0
+                }
+              ]
+            }
+          ]
+        },
+        "anchors_bounding_box": {
+          "type": "cuboid",
+          "min_point": {
+            "x": -0.01235,
+            "y": -0.01235,
+            "z": -0.03
+          },
+          "max_point": {
+            "x": 0.01235,
+            "y": 0.01235,
+            "z": -0.0112
+          },
+          "origin": [
+            {
+              "x": 0,
+              "y": 0.035,
+              "z": 0,
+              "rotation": [
+                {
+                  "alpha": 0,
+                  "beta": 0,
+                  "gamma": 0
+                }
+              ]
+            },
+            {
+              "x": 0,
+              "y": 0.265,
+              "z": 0,
+              "rotation": [
+                {
+                  "alpha": 0,
+                  "beta": 0,
+                  "gamma": 0
+                }
+              ]
             }
           ]
         }
-      ]
-    },
-    "rebars": {
-      "type": "rebar",
-      "path_bend_code": "6 d 6 s 40 l 45 w 30 l -90 w 30 l 90 w 30 l 90 w 30 l",
-      "origin": {
-        "x": 0,
-        "y": 0,
-        "z": 0,
-        "rotation": [
-          {
-            "alpha": 0,
-            "beta": 0,
-            "gamma": 0
-          }
+      },
+      "log": {
+        "high": [
+          "channel",
+          "anchors",
+          "rebars"
+        ],
+        "medium": [
+          "channel_bounding_box",
+          "anchors_bounding_box"
+        ],
+        "low": [
+          "channel_bounding_box",
+          "anchors_bounding_box"
         ]
+      },
+      "styles": {
+        "common": [
+          "bounding_box",
+          "channel_bounding_box",
+          "anchors_bounding_box"
+        ],
+        "steel": [
+          "channel",
+          "anchors",
+          "rebars"
+        ]
+      },
+      "classification": {
+        "uniclass2015_code": "Pr_20_85_84_84",
+        "uniclass2015_description": "Stainless steel cast-in channels",
+        "omniclass_code": "23-13 23 11 17",
+        "omniclass_description": "Mechanical Fasteners for Metal Structures",
+        "ifc_export_as": "IfcMechanicalFastener",
+        "ifc_export_type": "",
+        "ifc_description": ""
       }
-    },
-    "channel_bounding_box": {
-      "type": "cuboid",
-      "min_point": {
-        "x": -0.0245,
-        "y": 0.0,
-        "z": -0.03
-      },
-      "max_point": {
-        "x": 0.0245,
-        "y": 0.3,
-        "z": 0.0
-      },
-      "origin": [
-        {
-          "x": 0,
-          "y": 0,
-          "z": 0,
-          "rotation": [
-            {
-              "alpha": 0,
-              "beta": 0,
-              "gamma": 0
-            }
-          ]
-        }
-      ]
-    },
-    "anchors_bounding_box": {
-      "type": "cuboid",
-      "min_point": {
-        "x": -0.01235,
-        "y": -0.01235,
-        "z": -0.03
-      },
-      "max_point": {
-        "x": 0.01235,
-        "y": 0.01235,
-        "z": -0.0112
-      },
-      "origin": [
-        {
-          "x": 0,
-          "y": 0.035,
-          "z": 0,
-          "rotation": [
-            {
-              "alpha": 0,
-              "beta": 0,
-              "gamma": 0
-            }
-          ]
-        },
-        {
-          "x": 0,
-          "y": 0.265,
-          "z": 0,
-          "rotation": [
-            {
-              "alpha": 0,
-              "beta": 0,
-              "gamma": 0
-            }
-          ]
-        }
-      ]
-    }
-  },
-  "log": {
-    "high": [
-      "channel",
-      "anchors",
-      "rebars"
-    ],
-    "medium": [
-      "channel_bounding_box",
-      "anchors_bounding_box"
-    ],
-    "low": [
-      "channel_bounding_box",
-      "anchors_bounding_box"
-    ]
-  },
-  "styles": {
-    "common": [
-      "bounding_box",
-      "channel_bounding_box",
-      "anchors_bounding_box"
-    ],
-    "steel": [
-      "channel",
-      "anchors"
-    ]
-  },
-  "classification": {
-    "uniclass2015_code": "Pr_20_85_84_84",
-    "uniclass2015_description": "Stainless steel cast-in channels",
-    "omniclass_code": "23-13 23 11 17",
-    "omniclass_description": "Mechanical Fasteners for Metal Structures",
-    "ifc_export_as": "IfcMechanicalFastener",
-    "ifc_export_type": "",
-    "ifc_description": ""
   }
-}

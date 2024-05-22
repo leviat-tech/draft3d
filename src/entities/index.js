@@ -6,6 +6,7 @@ import cylinder from './cylinder';
 import polygon3d from './polygon3d';
 import alignedDim from './alignedDim';
 import polycurve3d from './polycurve3d';
+import polyarccurve3d from './polyarccurve3d';
 import cylindricalPath from './cylindricalPath';
 import cylindricalArrow from './cylindricalArrow';
 import roundedCylindricalRect from './roundedCylindricalRect';
@@ -22,6 +23,7 @@ export {
   polygon3d,
   alignedDim,
   polycurve3d,
+  polyarccurve3d,
   cylindricalPath,
   cylindricalArrow,
   roundedCylindricalRect,

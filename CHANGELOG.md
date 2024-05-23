@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.11.0](https://github.com/leviat-tech/draft3d/compare/v1.10.4...v1.11.0) (2024-05-23)
+
+
+* Polyarccurve3d ([#210](https://github.com/leviat-tech/draft3d/issues/210)) ([02475e7](https://github.com/leviat-tech/draft3d/commit/02475e75404cd2059b85ecb94e654064b6940ed7))
+
 ## [1.10.4](https://github.com/leviat-tech/draft3d/compare/v1.10.3...v1.10.4) (2024-05-09)
 
 

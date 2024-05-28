@@ -94,6 +94,66 @@ export function dim3(width = 0, height = 0, depth = 1) {
   return { width, height, depth };
 }
 
+export function calculateArcCenter(startPoint, endPoint, bulge) {
+  // Calculate the midpoint
+  const midX = (startPoint.x + endPoint.x) / 2;
+  const midY = (startPoint.y + endPoint.y) / 2;
+
+  // Calculate the distance between start and end points
+  const dx = endPoint.x - startPoint.x;
+  const dy = endPoint.y - startPoint.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+
+  // Calculate the sagitta of the arc
+  const s = 0.5 * distance * Math.abs(bulge);
+
+  // Calculate the sagitta of the arc
+  const radius = (distance * distance) / (8 * s) + s / 2;
+
+  // Calculate the unit normal vector
+  const nx = dx / distance;
+  const ny = dy / distance;
+
+  // Calculate the center
+  const dir = (bulge < 0 && bulge > -1) || bulge > 1 ? -1 : 1;
+  const centerX = midX + dir * Math.sqrt(radius * radius - distance * distance * 0.25) * (-ny);
+  const centerY = midY + dir * Math.sqrt(radius * radius - distance * distance * 0.25) * nx;
+
+  return { x: centerX, y: centerY, r: radius };
+}
+
+export function calculateArcAngles(startPoint, endPoint, center) {
+  let startAngle = Math.atan2(startPoint.y - center.y, startPoint.x - center.x);
+  let endAngle = Math.atan2(endPoint.y - center.y, endPoint.x - center.x);
+
+  startAngle = startAngle < 0 ? startAngle + 2 * Math.PI : startAngle;
+  endAngle = endAngle < 0 ? endAngle + 2 * Math.PI : endAngle;
+
+  return { startAngle, endAngle };
+}
+
+export function createPolyArcCurve(vertex) {
+  const curvePath = new Shape();
+
+  vertex.forEach((v, i) => {
+    const [x1, y1, bulge1] = v;
+    const [x2, y2] = i + 1 < vertex.length ? vertex[i + 1] : vertex[0];
+    const start = new Vector3(x1, y1, 0);
+    const end = new Vector3(x2, y2, 0);
+    if (i === 0) curvePath.moveTo(x1, y1);
+    if (bulge1 !== 0) {
+      const center = calculateArcCenter(start, end, bulge1);
+      const { startAngle, endAngle } = calculateArcAngles(start, end, center);
+      const clockwise = bulge1 < 0;
+      curvePath.absarc(center.x, center.y, center.r, startAngle, endAngle, clockwise);
+    } else {
+      curvePath.lineTo(x2, y2);
+    }
+  });
+
+  return curvePath;
+}
+
 export function createPolyCurve(path) {
   const curvePath = new Shape();
 
@@ -188,13 +248,13 @@ export function getCapGeometry(curve, t, tubeGeometry) {
   const startIndex = t === start ? 0 : (segments + 1) * steps;
   const maxIndex = t === start ? segments : pos.count - 1;
 
-  for (let i = startIndex; i <= maxIndex; i++) {
+  for (let i = startIndex; i <= maxIndex; i += 1) {
     points.push(new Vector3().fromBufferAttribute(pos, i));
   }
 
   const pointsGeometry = new BufferGeometry().setFromPoints(points);
   const index = [];
-  for (let i = 1; i < pointsGeometry.attributes.position.count - 1; i++) {
+  for (let i = 1; i < pointsGeometry.attributes.position.count - 1; i += 1) {
     index.push(0, i + 1, i);
   }
   pointsGeometry.setIndex(index);

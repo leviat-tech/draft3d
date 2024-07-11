@@ -3,6 +3,7 @@ import { ConeGeometry, CylinderGeometry, Mesh, Object3D } from 'three';
 import { createMaterial, updateMaterial } from '../utils/material';
 import { defineEntity } from '../defineEntity';
 
+
 const radialSegments = 32;
 
 export default defineEntity({
@@ -27,7 +28,7 @@ export default defineEntity({
     cylinder.material.visible = false;
     cone.material.visible = false;
 
-    requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
       cylinder.position.y += length / 2;
       cone.position.y += length;
 
@@ -51,7 +52,7 @@ export default defineEntity({
     cylinder.geometry = new CylinderGeometry(radius, radius, length, radialSegments);
     cone.geometry = new ConeGeometry(radius * 2, coneHeight, radialSegments);
 
-    requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
       cone.position.set(0, 0, 0);
       cylinder.position.set(0, 0, 0);
 

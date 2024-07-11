@@ -1,4 +1,4 @@
-import { pick } from 'lodash-es';
+import { filter, omit, pick } from 'lodash-es';
 
 import {
   LatheGeometry, Mesh, Object3D, Path, TubeGeometry,
@@ -309,13 +309,23 @@ export default defineEntity({
     color: { name: 'Colour', type: 'color', default: '#6666cc' },
     opacity: { name: 'Opacity', type: 'number', precision: 0.05, default: 1 },
   },
+  formatParams(params) {
+    const { bimData, log } = params;
+
+    const parts = bimData.log ? pick(bimData.parts, bimData.log[log]) : bimData.parts;
+
+    return {
+      ...params,
+      bimData: {
+        parts,
+      },
+    };
+  },
   render(params) {
     const { bimData, color, opacity } = params;
 
-    const filteredParts = pick(bimData.parts, bimData.log[params.log]);
-
     const material = createMaterial(color, opacity);
-    const meshes = generateParts(filteredParts, material);
+    const meshes = generateParts(bimData.parts, material);
 
     const obj3d = new Object3D();
     obj3d.add(...meshes);

@@ -1,4 +1,4 @@
-import { omit } from 'lodash-es'
+import { flatMap, omit } from 'lodash-es';
 
 import { Object3D, Vector3 } from 'three';
 import draft3d from './draft3d';
@@ -6,6 +6,7 @@ import draft3d from './draft3d';
 // eslint-disable-next-line no-unused-vars
 import LayerSet from './utils/LayerSet';
 import { updateMaterial } from './utils/material';
+
 
 class Entity {
   /**
@@ -94,13 +95,14 @@ class Entity {
 
     // If the render function calls this.addFeature then object3d is stored on the instance
     if (!this.object3d) {
-      throw new Error(`Error rendering feature: ${this.name}. 
+      throw new Error(`Error rendering feature: ${this.name}.
           An Object3D must either be returned the render config method,
           or attached to the instance by calling
           this.addFeature or this.addFeatureTo`);
     }
 
     this.object3d.name = this.name;
+    this.object3d.getEntity = () => this;
 
     this.layerSet?.addToLayer(formattedParams.layer, [this.object3d, ...this.object3d.children]);
 
@@ -137,8 +139,7 @@ class Entity {
    */
   updateParams(newParams) {
     const mergedParams = { ...this.params, ...newParams };
-    const shouldUpdate =
-      JSON.stringify(omit(mergedParams, ['threeEntities'])) !== JSON.stringify(omit(this.params, ['threeEntities']));
+    const shouldUpdate = JSON.stringify(omit(mergedParams, ['threeEntities'])) !== JSON.stringify(omit(this.params, ['threeEntities']));
 
     if (!shouldUpdate) return;
 
@@ -168,10 +169,10 @@ class Entity {
 
   /**
    *
-   * @param {Object3D} object3d
+   * @param {Object3D | ThreeScene } parent
    */
-  addTo(object3d) {
-    if (!object3d) {
+  addTo(parent) {
+    if (!parent) {
       return;
     }
 
@@ -179,7 +180,7 @@ class Entity {
       this.object3d = new Object3D();
     }
 
-    object3d.add(this.object3d);
+    parent.add(this.object3d);
     this.parent = this.object3d.parent;
   }
 
@@ -245,6 +246,7 @@ class Entity {
    * }} addFeatureParams
    *
    * @param {string} arrayName
+   * @param {string} arrayNameisEntity
    * @param {string} type
    * @param {addFeatureParams} params
    * @returns {Entity}
@@ -274,13 +276,19 @@ class Entity {
     this.object3d.visible = isVisible;
   }
 
+  get isVisible() {
+    if (this.object3d.visible === false) return false;
+
+    return this.layerSet.getLayerByName(this.params.layer).visible;
+  }
+
   static getParams(definedParameters, userParams) {
     const defaults = Object.entries(definedParameters).reduce(
       (params, [name, param]) => ({
         ...params,
         [name]: param.default ?? param,
       }),
-      {}
+      {},
     );
 
     return { ...defaults, ...userParams };
@@ -358,6 +366,33 @@ class Entity {
 
   destroy() {
     console.log("I'm dead.");
+  }
+
+  get isBaseEntity() {
+    return !!draft3d.entities[this.name];
+  }
+
+  toJSON() {
+    const { features, name } = this;
+    const uiParams = ['isDraggable', 'isInteractive', 'layer'];
+    const params = omit(this.formatParams(this.params), uiParams);
+
+    if (this.isBaseEntity) {
+      return { name, params };
+    }
+
+    const flattenedFeatures = flatMap(Object.values(features));
+
+    return {
+      name,
+      params: {
+        position: params.position || [0, 0, 0],
+        rotation: params.rotation || [0, 0, 0],
+      },
+      children: flattenedFeatures.reduce((visibleFeatures, feature) => (feature.isVisible
+        ? [...visibleFeatures, feature.toJSON()]
+        : visibleFeatures), []),
+    };
   }
 }
 

@@ -1,22 +1,20 @@
 import {
+  AmbientLight,
+  ColorManagement,
+  DirectionalLight as Light,
+  LinearSRGBColorSpace,
+  Object3D,
+  Raycaster,
   Scene,
   Vector2,
-  Raycaster,
-  AmbientLight,
   WebGLRenderer,
-  ColorManagement,
-  LinearSRGBColorSpace,
-  DirectionalLight as Light,
 } from 'three';
+import { filter } from 'lodash-es';
 
 import LayerSet from './utils/LayerSet';
-import {
-  createCamera,
-  createOrthographicCamera,
-  calculatePlanView,
-  planControls,
-  freeControls,
-} from './utils/camera';
+import { calculatePlanView, createCamera, createOrthographicCamera, freeControls, planControls, } from './utils/camera';
+
+import draft3d from './draft3d';
 
 const defaultLights = {
   intensity: 0.5,
@@ -65,6 +63,7 @@ class ThreeScene {
   initialize(el, config) {
     const { use2DCamera, camera, controls, light, axisIndicator = {} } = config;
 
+    this.config = config;
     this.el = el;
     this.canvas = ThreeScene.createCanvas(el);
 
@@ -185,6 +184,11 @@ class ThreeScene {
       alpha: true,
       antialias: true,
     };
+
+    if (this.config.glContext) {
+      rendererConfig.context = this.config.glContext;
+    }
+
     const renderer = new WebGLRenderer(rendererConfig);
     renderer.setPixelRatio(window.devicePixelRatio);
     enableAnimation && this.startAnimation(renderer, scene, camera);
@@ -194,7 +198,7 @@ class ThreeScene {
 
   startAnimation(renderer, scene, camera) {
     const animate = () => {
-      this.animationFrame = requestAnimationFrame(animate);
+      this.animationFrame = window.requestAnimationFrame(animate);
       renderer.render(scene, camera);
     };
 
@@ -610,6 +614,62 @@ class ThreeScene {
     copy.putImageData(trimmed, margin, margin);
 
     return copy.canvas;
+  }
+
+  reduceEntities(callback) {
+    const reduceObject = (object) => object.children.reduce((data, child) => {
+      if (child.type === 'Group') {
+        return [...data,  ...reduceObject(child)];
+      }
+
+      // console.log(object, child.getEntity);
+
+      const entity = child.getEntity?.();
+
+      return entity ? [...data, callback(entity)] : data;
+    }, []);
+
+    return reduceObject(this.originalScene);
+  }
+
+  clear() {
+    filter(this.originalScene.children, { type: 'Group' }).forEach((item) => item.removeFromParent());
+
+    this.originalScene.children.forEach(child => {
+      if (child.getEntity) {
+        child.removeFromParent();
+      }
+    });
+  }
+
+  loadJSON(sceneJSON) {
+    const renderItem = (item, parent) => {
+
+      // Render base entity
+      if (!item.children) {
+        const entity = draft3d.entities[item.name](item.params);
+        return entity.addTo(parent);
+      }
+
+      const object3d = new Object3D();
+      parent.add(object3d);
+
+      const { position, rotation } = item.params;
+      object3d.rotation.fromArray(rotation);
+      object3d.position.fromArray(position);
+
+      item.children.forEach(child => renderItem(child, object3d));
+    }
+
+    sceneJSON.entities.forEach(item => renderItem(item, this.originalScene));
+
+  }
+
+  toJSON() {
+    return {
+      config: this.config,
+      entities: this.reduceEntities(entity => entity.toJSON())
+    };
   }
 }
 

@@ -12,6 +12,7 @@
 const draft3d = {
   entities: {},
   features: {},
+  scene: null,
   get repository() {
     return { ...this.entities, ...this.features };
   },

@@ -277,7 +277,7 @@ class Entity {
   }
 
   get isVisible() {
-    if (this.object3d.visible === false) return false;
+    if (this.object3d.visible === false || this.params.opacity === 0) return false;
 
     return this.layerSet.getLayerByName(this.params.layer).visible;
   }
@@ -383,15 +383,22 @@ class Entity {
 
     const flattenedFeatures = flatMap(Object.values(features));
 
+    const children = flattenedFeatures.reduce((visibleFeatures, feature) => {
+      const featureJson = feature.toJSON();
+      return feature.isVisible && featureJson
+        ? [...visibleFeatures, featureJson]
+        : visibleFeatures;
+    }, []);
+
+    if (children.length === 0) return null;
+
     return {
       name,
+      children,
       params: {
         position: params.position || [0, 0, 0],
         rotation: params.rotation || [0, 0, 0],
       },
-      children: flattenedFeatures.reduce((visibleFeatures, feature) => (feature.isVisible
-        ? [...visibleFeatures, feature.toJSON()]
-        : visibleFeatures), []),
     };
   }
 }

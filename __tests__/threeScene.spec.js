@@ -1,9 +1,10 @@
 import { PerspectiveCamera, Scene } from 'three';
 import { describe, it, expect, vi } from 'vitest';
 
+import { setupVitestCanvasMock } from 'vi-canvas-mock';
 import ThreeScene from '@/ThreeScene';
 import LayerSet from '@/utils/LayerSet';
-import { setupVitestCanvasMock } from 'vi-canvas-mock';
+import setup from './utils/setup';
 
 
 function checkAxisIndicatorDefaultState(scene) {
@@ -16,10 +17,11 @@ function checkAxisIndicatorDefaultState(scene) {
 }
 
 describe('Three scene', () => {
-  beforeEach(()=>{
+  beforeEach(() => {
     vi.clearAllMocks();
     setupVitestCanvasMock();
-  })
+    setup();
+  });
   it('should create scene', () => {
     const scene = new ThreeScene();
 
@@ -48,7 +50,7 @@ describe('Three scene', () => {
   });
 
   it('should create axis indicator', async () => {
-    
+
     const scene = new ThreeScene();
     const el = document.createElement('canvas');
 
@@ -56,20 +58,7 @@ describe('Three scene', () => {
       addEventListener() { },
     };
 
-    //HTMLCanvasElement.prototype.getContext = vi.fn();
-
-    vi.mock('three', async () => {
-      const THREE = await vi.importActual('three');
-      return {
-        ...THREE,
-        WebGLRenderer: vi.fn().mockReturnValue({
-          domElement: document.createElement('div'), // create a fake div
-          setSize: vi.fn(),
-          render: vi.fn(),
-          setPixelRatio: vi.fn(),
-        }),
-      };
-    });
+    // HTMLCanvasElement.prototype.getContext = vi.fn();
 
     vi.spyOn(scene, 'updateAxisIndicator').mockImplementation(() => { });
 

@@ -1,4 +1,3 @@
-import { setupVitestCanvasMock } from 'vi-canvas-mock';
 import { Object3D } from 'three';
 import { difference } from 'lodash-es';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
@@ -16,12 +15,11 @@ describe.each(namedEntitites)('$name entity', ({ entity }) => {
   beforeEach(() => {
     vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => cb());
     vi.clearAllMocks();
-    setupVitestCanvasMock();
   });
 
   it('should contain mandatory properties', () => {
     const mandatoryKeys = ['name', 'parameters', 'render'];
-    const optionalKeys = ['update'];
+    const optionalKeys = ['update', 'formatParams'];
     const allowedKeys = [...mandatoryKeys, ...optionalKeys];
     const entityKeys = Object.keys(entity.config);
 

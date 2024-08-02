@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.12.0](https://github.com/leviat-tech/draft3d/compare/v1.11.0...v1.12.0) (2024-08-02)
+
+
+* convert scene to and load from JSON ([3c4c8d3](https://github.com/leviat-tech/draft3d/commit/3c4c8d33c2141c31e63d68e80555423012e5fca8))
+* split static and interactive scenes ([bea7165](https://github.com/leviat-tech/draft3d/commit/bea7165e94ca134644b654c7b79a2b9536fbecef))
+
 ## [1.11.0](https://github.com/leviat-tech/draft3d/compare/v1.10.4...v1.11.0) (2024-05-23)
 
 

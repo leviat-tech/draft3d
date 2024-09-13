@@ -608,65 +608,7 @@
                       ]
                     ],
                     "cutouts": [
-                      {
-                        "metadata": {
-                          "version": 4.6,
-                          "type": "Object",
-                          "generator": "Object3D.toJSON"
-                        },
-                        "geometries": [
-                          {
-                            "uuid": "b3d8f8e5-6751-46fc-bb87-2484a71ebe2b",
-                            "type": "BoxGeometry",
-                            "width": 0.02810000086426735,
-                            "height": 0.030400000342726708,
-                            "depth": 0.3500999940395355,
-                            "widthSegments": 1,
-                            "heightSegments": 1,
-                            "depthSegments": 1
-                          }
-                        ],
-                        "materials": [
-                          {
-                            "uuid": "ad6d6179-317e-4e4b-8bb4-76377ca2e942",
-                            "type": "MeshBasicMaterial",
-                            "color": 16777215,
-                            "reflectivity": 1,
-                            "refractionRatio": 0.98,
-                            "blendColor": 0
-                          }
-                        ],
-                        "object": {
-                          "uuid": "2c1a3463-8862-4365-92d4-d16fdef0e565",
-                          "type": "Mesh",
-                          "layers": 1,
-                          "matrix": [
-                            1,
-                            0,
-                            0,
-                            0,
-                            0,
-                            1,
-                            0,
-                            0,
-                            0,
-                            0,
-                            1,
-                            0,
-                            0,
-                            0,
-                            0,
-                            1
-                          ],
-                          "up": [
-                            0,
-                            1,
-                            0
-                          ],
-                          "geometry": "b3d8f8e5-6751-46fc-bb87-2484a71ebe2b",
-                          "material": "ad6d6179-317e-4e4b-8bb4-76377ca2e942"
-                        }
-                      }
+                      [2, 2, 2]
                     ]
                   }
                 },

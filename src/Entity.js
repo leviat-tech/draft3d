@@ -1,6 +1,7 @@
 import { flatMap, omit } from 'lodash-es';
 
-import { Object3D, Vector3 } from 'three';
+import { BoxGeometry, Mesh, MeshBasicMaterial, Object3D, Vector3 } from 'three';
+import { CSG } from 'three-csg-ts';
 import draft3d from './draft3d';
 
 // eslint-disable-next-line no-unused-vars
@@ -90,7 +91,7 @@ class Entity {
     const object3d = this.render.call(this, formattedParams);
 
     if (object3d) {
-      this.object3d = object3d;
+      this.object3d = this._renderCutouts(object3d, formattedParams.cutouts);
     }
 
     // If the render function calls this.addFeature then object3d is stored on the instance
@@ -118,6 +119,24 @@ class Entity {
     }
 
     this.isInitialRenderComplete = true;
+  }
+
+  _renderCutouts(object3d, cutouts) {
+    if (!cutouts || cutouts.length === 0) {
+      return object3d;
+    }
+
+    return cutouts.reduce((result, cutoutBox) => {
+      const cutoutGeometry = new BoxGeometry(...cutoutBox);
+      const cutoutMesh = new Mesh(cutoutGeometry, new MeshBasicMaterial());
+
+      result.updateMatrix();
+      cutoutMesh.updateMatrix();
+
+      result = CSG.subtract(result, cutoutMesh);
+
+      return result;
+    }, object3d);
   }
 
   _clear() {

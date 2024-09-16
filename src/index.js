@@ -15,9 +15,7 @@ async function jsonToImage(data) {
   const scene = new StaticScene(data.config);
   scene.loadJSON(data.entities);
 
-  // await new Promise(resolve => setTimeout(resolve, 2000));
-
-  return scene.renderToImage({ contain: true });
+  return scene.renderToImage({ crop: true });
 }
 
 export default draft3d;

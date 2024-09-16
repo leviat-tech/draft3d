@@ -133,7 +133,7 @@ class BaseScene {
 
     const options = Object.assign(defaultOptions, userOptions);
 
-+    this.renderer.setSize(width, height);
+    this.renderer.setSize(width, height);
     this.render();
 
     const dataUrl = this.canvas.toDataURL(options);

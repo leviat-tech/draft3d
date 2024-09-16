@@ -34,8 +34,6 @@ export default class StaticScene extends BaseScene {
   renderToImage(userOptions, width = 1200, height = 1200) {
     this.renderer.setSize(width, height);
 
-    console.log(this.renderer.domElement.width);
-
     return super.renderToImage(userOptions, width, height);
   }
 }

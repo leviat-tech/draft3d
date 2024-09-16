@@ -55,7 +55,7 @@ describe('Entity', () => {
     }
   });
 
-  it('shoud create Entity with unformatted params', () => {
+  it('should create Entity with unformatted params', () => {
     const spyOnRender = vi.spyOn(baseConfig, 'render');
     const spyOnAddToLayer = vi.spyOn(layerSet, 'addToLayer');
 

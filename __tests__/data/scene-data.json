@@ -1,0 +1,1325 @@
+{
+  "config": {
+    "axisIndicator": {
+      "isEnabled": true
+    },
+    "camera": {
+      "fov": 12,
+      "near": 0.1,
+      "far": 1000,
+      "position": {
+        "x": 4,
+        "y": 3.5,
+        "z": 4
+      }
+    },
+    "controls": {
+      "target": [
+        0,
+        0,
+        0
+      ],
+      "panSpeed": 1,
+      "rotateSpeed": 1,
+      "zoomToCursor": true
+    },
+    "light": {
+      "intensity": 0.5,
+      "directionalLights": [
+        [
+          2,
+          3,
+          1
+        ],
+        [
+          -2,
+          3,
+          -1
+        ]
+      ]
+    }
+  },
+  "entities": [
+    {
+      "name": "root",
+      "params": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      "children": [
+        {
+          "name": "bracket",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "children": []
+        },
+        {
+          "name": "channel",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "children": [
+            {
+              "name": "bim",
+              "params": {
+                "position": [
+                  0,
+                  -0.0001,
+                  -0.175
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "bimData": {
+                  "parts": {
+                    "channel": {
+                      "type": "extrusion",
+                      "profile": [
+                        {
+                          "x": 0.006,
+                          "y": 0,
+                          "z": 0,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0.006,
+                          "y": 0,
+                          "z": -0.00225,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0.01075,
+                          "y": 0,
+                          "z": -0.00225,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0.01175,
+                          "y": 0,
+                          "z": -0.00325,
+                          "type": "arc_end_point"
+                        },
+                        {
+                          "x": 0.01175,
+                          "y": 0,
+                          "z": -0.012,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0.01075,
+                          "y": 0,
+                          "z": -0.013,
+                          "type": "arc_end_point"
+                        },
+                        {
+                          "x": -0.01075,
+                          "y": 0,
+                          "z": -0.013,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": -0.01175,
+                          "y": 0,
+                          "z": -0.012,
+                          "type": "arc_end_point"
+                        },
+                        {
+                          "x": -0.01175,
+                          "y": 0,
+                          "z": -0.00325,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": -0.01075,
+                          "y": 0,
+                          "z": -0.00225,
+                          "type": "arc_end_point"
+                        },
+                        {
+                          "x": -0.006,
+                          "y": 0,
+                          "z": -0.00225,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": -0.006,
+                          "y": 0,
+                          "z": 0,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": -0.01075,
+                          "y": 0,
+                          "z": 0,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": -0.014,
+                          "y": 0,
+                          "z": -0.00325,
+                          "type": "arc_end_point"
+                        },
+                        {
+                          "x": -0.014,
+                          "y": 0,
+                          "z": -0.012,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": -0.01075,
+                          "y": 0,
+                          "z": -0.01525,
+                          "type": "arc_end_point"
+                        },
+                        {
+                          "x": 0.01075,
+                          "y": 0,
+                          "z": -0.01525,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0.014,
+                          "y": 0,
+                          "z": -0.012,
+                          "type": "arc_end_point"
+                        },
+                        {
+                          "x": 0.014,
+                          "y": 0,
+                          "z": -0.00325,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0.01075,
+                          "y": 0,
+                          "z": 0,
+                          "type": "arc_end_point"
+                        },
+                        {
+                          "x": 0.006,
+                          "y": 0,
+                          "z": 0,
+                          "type": "polyline_point"
+                        }
+                      ],
+                      "path": [
+                        {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0,
+                          "y": 0.1,
+                          "z": 0,
+                          "type": "polyline_point"
+                        }
+                      ],
+                      "length": 0.35,
+                      "cutout": [],
+                      "origin": [
+                        {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "rotation": [
+                            {
+                              "alpha": 0,
+                              "beta": 0,
+                              "gamma": 0
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "anchors": {
+                      "type": "revolution",
+                      "profile": [
+                        {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0.009,
+                          "y": 0,
+                          "z": 0,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0.003,
+                          "y": 0,
+                          "z": -0.0028,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0.003,
+                          "y": 0,
+                          "z": -0.0308,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0.00445,
+                          "y": 0,
+                          "z": -0.03225,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0.006,
+                          "y": 0,
+                          "z": -0.03225,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0.006,
+                          "y": 0,
+                          "z": -0.03475,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0,
+                          "y": 0,
+                          "z": -0.03475,
+                          "type": "polyline_point"
+                        },
+                        {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "type": "polyline_point"
+                        }
+                      ],
+                      "axis_origin": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                      },
+                      "axis_direction": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 1
+                      },
+                      "sweep_angle": 6.283185307,
+                      "cutout": [],
+                      "origin": [
+                        {
+                          "x": 0,
+                          "y": 0.035,
+                          "z": -0.01525,
+                          "rotation": [
+                            {
+                              "alpha": 0,
+                              "beta": 0,
+                              "gamma": 0
+                            }
+                          ]
+                        },
+                        {
+                          "x": 0,
+                          "y": 0.17500000000000002,
+                          "z": -0.01525,
+                          "rotation": [
+                            {
+                              "alpha": 0,
+                              "beta": 0,
+                              "gamma": 0
+                            }
+                          ]
+                        },
+                        {
+                          "x": 0,
+                          "y": 0.31500000000000006,
+                          "z": -0.01525,
+                          "rotation": [
+                            {
+                              "alpha": 0,
+                              "beta": 0,
+                              "gamma": 0
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                "log": "high",
+                "color": "#3e3366",
+                "opacity": 1
+              }
+            },
+            {
+              "name": "alignedDim",
+              "params": {
+                "position": [
+                  0.15,
+                  0,
+                  0.175
+                ],
+                "rotation": [
+                  0,
+                  90,
+                  0
+                ],
+                "textSize": 0.03,
+                "color": "#000000",
+                "length": 0.35,
+                "prefix": "",
+                "suffix": "",
+                "extension": 0.08
+              }
+            }
+          ]
+        },
+        {
+          "name": "slab",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "children": [
+            {
+              "name": "slabDimensions",
+              "params": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              "children": [
+                {
+                  "name": "alignedDim",
+                  "params": {
+                    "position": [
+                      0.15,
+                      -0.2,
+                      -0.325
+                    ],
+                    "rotation": [
+                      0,
+                      135,
+                      90
+                    ],
+                    "textSize": 0.03,
+                    "color": "#000000",
+                    "length": 0.2,
+                    "prefix": "",
+                    "suffix": "",
+                    "extension": 0.08,
+                    "name": "thickness"
+                  }
+                },
+                {
+                  "name": "alignedDim",
+                  "params": {
+                    "position": [
+                      0.15,
+                      0,
+                      0.325
+                    ],
+                    "rotation": [
+                      0,
+                      90,
+                      0
+                    ],
+                    "textSize": 0.03,
+                    "color": "#000000",
+                    "length": 0.15,
+                    "prefix": "",
+                    "suffix": "",
+                    "extension": 0.08,
+                    "name": "e1"
+                  }
+                },
+                {
+                  "name": "alignedDim",
+                  "params": {
+                    "position": [
+                      0.15,
+                      0,
+                      -0.175
+                    ],
+                    "rotation": [
+                      0,
+                      90,
+                      0
+                    ],
+                    "textSize": 0.03,
+                    "color": "#000000",
+                    "length": 0.15,
+                    "prefix": "",
+                    "suffix": "",
+                    "extension": 0.08,
+                    "name": "e2"
+                  }
+                },
+                {
+                  "name": "alignedDim",
+                  "params": {
+                    "position": [
+                      0,
+                      0,
+                      0.325
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "textSize": 0.03,
+                    "color": "#000000",
+                    "length": 0.15,
+                    "prefix": "",
+                    "suffix": "",
+                    "extension": 0.08,
+                    "name": "c11"
+                  }
+                },
+                {
+                  "name": "alignedDim",
+                  "params": {
+                    "position": [
+                      -0.15,
+                      0,
+                      0.325
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "textSize": 0.03,
+                    "color": "#000000",
+                    "length": 0.15,
+                    "prefix": "",
+                    "suffix": "",
+                    "extension": 0.08,
+                    "name": "c12"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "slabElement",
+              "params": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              "children": [
+                {
+                  "name": "polycurve3d",
+                  "params": {
+                    "position": [
+                      -0.0002,
+                      -0.0002
+                    ],
+                    "rotation": [
+                      90,
+                      0,
+                      0
+                    ],
+                    "depth": 0.2,
+                    "color": "#8ea9db",
+                    "opacity": 0.5,
+                    "path": [
+                      [
+                        0.15,
+                        0.325
+                      ],
+                      [
+                        0.15,
+                        -0.325
+                      ],
+                      [
+                        0.15,
+                        -0.325
+                      ],
+                      [
+                        -0.15,
+                        -0.325
+                      ],
+                      [
+                        -0.15,
+                        -0.325
+                      ],
+                      [
+                        -0.15,
+                        0.325
+                      ],
+                      [
+                        -0.15,
+                        0.325
+                      ],
+                      [
+                        0.15,
+                        0.325
+                      ]
+                    ],
+                    "cutouts": [
+                      [2, 2, 2]
+                    ]
+                  }
+                },
+                {
+                  "name": "polycurve3d",
+                  "params": {
+                    "position": [
+                      -0.001,
+                      0,
+                      0
+                    ],
+                    "rotation": [
+                      90,
+                      0,
+                      0
+                    ],
+                    "depth": 0.2,
+                    "color": "#ffee00",
+                    "opacity": 0,
+                    "path": [
+                      [
+                        -0.15,
+                        -0.325
+                      ],
+                      [
+                        -0.15,
+                        0.325
+                      ]
+                    ],
+                    "cutouts": [],
+                    "property": "c12",
+                    "name": "topContinousEdge"
+                  }
+                },
+                {
+                  "name": "polycurve3d",
+                  "params": {
+                    "position": [
+                      0,
+                      0,
+                      0.001
+                    ],
+                    "rotation": [
+                      90,
+                      0,
+                      0
+                    ],
+                    "depth": 0.2,
+                    "color": "#ffee00",
+                    "opacity": 0,
+                    "path": [
+                      [
+                        -0.15,
+                        0.325
+                      ],
+                      [
+                        0.15,
+                        0.325
+                      ]
+                    ],
+                    "cutouts": [],
+                    "property": "e1",
+                    "name": "leftContinousEdge"
+                  }
+                },
+                {
+                  "name": "polycurve3d",
+                  "params": {
+                    "position": [
+                      0,
+                      0,
+                      -0.001
+                    ],
+                    "rotation": [
+                      90,
+                      0,
+                      0
+                    ],
+                    "depth": 0.2,
+                    "color": "#ffee00",
+                    "opacity": 0,
+                    "path": [
+                      [
+                        0.15,
+                        -0.325
+                      ],
+                      [
+                        -0.15,
+                        -0.325
+                      ]
+                    ],
+                    "cutouts": [],
+                    "property": "e2",
+                    "name": "rightContinousEdge"
+                  }
+                },
+                {
+                  "name": "polycurve3d",
+                  "params": {
+                    "position": [
+                      0.001,
+                      0,
+                      0
+                    ],
+                    "rotation": [
+                      90,
+                      0,
+                      0
+                    ],
+                    "depth": 0.2,
+                    "color": "#ffee00",
+                    "opacity": 0,
+                    "path": [
+                      [
+                        0.15,
+                        0.325
+                      ],
+                      [
+                        0.15,
+                        -0.325
+                      ]
+                    ],
+                    "cutouts": [],
+                    "property": "c11",
+                    "name": "bottomContinousEdge"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "bolt",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "children": [
+            {
+              "name": "boltItem",
+              "params": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              "children": [
+                {
+                  "name": "polycurve3d",
+                  "params": {
+                    "position": [
+                      -0.01175,
+                      -0.00225,
+                      0.143
+                    ],
+                    "rotation": [
+                      -180,
+                      0,
+                      0
+                    ],
+                    "depth": 0.016,
+                    "color": "#3e3366",
+                    "opacity": 1,
+                    "path": [
+                      [
+                        0,
+                        0.0005
+                      ],
+                      [
+                        0.0005,
+                        0,
+                        0,
+                        0
+                      ],
+                      [
+                        0.023,
+                        0
+                      ],
+                      [
+                        0.0235,
+                        0.0005,
+                        0.0235,
+                        0
+                      ],
+                      [
+                        0.0235,
+                        0.0045000000000000005
+                      ],
+                      [
+                        0.023,
+                        0.005,
+                        0.0235,
+                        0.005
+                      ],
+                      [
+                        0.01205,
+                        0.008
+                      ],
+                      [
+                        0.01145,
+                        0.008,
+                        0.01175,
+                        0.008
+                      ],
+                      [
+                        0.0005,
+                        0.005
+                      ],
+                      [
+                        0,
+                        0.0045000000000000005,
+                        0,
+                        0.005
+                      ]
+                    ],
+                    "cutouts": [],
+                    "visible": true
+                  }
+                },
+                {
+                  "name": "cylinder",
+                  "params": {
+                    "position": [
+                      0,
+                      0.017750000000000002,
+                      0.13499999999999998
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "radius": 0.006,
+                    "radiusTop": 2,
+                    "radiusBottom": 2,
+                    "segments": 24,
+                    "length": 0.04,
+                    "color": "#3e3366",
+                    "opacity": 1,
+                    "visible": true
+                  }
+                },
+                {
+                  "name": "alignedDim",
+                  "params": {
+                    "position": [
+                      0.014,
+                      0.0001,
+                      0.175
+                    ],
+                    "rotation": [
+                      0,
+                      90,
+                      0
+                    ],
+                    "textSize": 0.02,
+                    "color": "#000000",
+                    "length": 0.04,
+                    "prefix": "",
+                    "suffix": null,
+                    "extension": 0.035,
+                    "visible": true
+                  }
+                },
+                {
+                  "name": "loads",
+                  "params": {
+                    "position": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  "children": [
+                    {
+                      "name": "designLoads",
+                      "params": {
+                        "position": [
+                          0,
+                          0,
+                          0
+                        ],
+                        "rotation": [
+                          0,
+                          0,
+                          0
+                        ]
+                      },
+                      "children": [
+                        {
+                          "name": "xLoad",
+                          "params": {
+                            "position": [
+                              0,
+                              0,
+                              0
+                            ],
+                            "rotation": [
+                              0,
+                              0,
+                              0
+                            ]
+                          },
+                          "children": [
+                            {
+                              "name": "cylindricalArrowWithClickableText",
+                              "params": {
+                                "position": [
+                                  0,
+                                  0.028,
+                                  0.12699999999999997
+                                ],
+                                "rotation": [
+                                  -90,
+                                  0,
+                                  0
+                                ],
+                                "text": "0",
+                                "length": 0.025,
+                                "color": "#ff0000",
+                                "textSize": 0.015,
+                                "radius": 0.0015,
+                                "coneHeight": 0.008,
+                                "circleRadius": 0.01,
+                                "circledArrowConeHeight": 0.05,
+                                "coneRadius": 0.03,
+                                "ellipseCurveRadius": 0.1,
+                                "rotateZAngle": 174,
+                                "positionX": 0.015,
+                                "positionZ": 0.096,
+                                "textColor": "black",
+                                "textPosition": [
+                                  0,
+                                  0.04,
+                                  0
+                                ]
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "name": "yLoad",
+                          "params": {
+                            "position": [
+                              0,
+                              0,
+                              0
+                            ],
+                            "rotation": [
+                              0,
+                              0,
+                              0
+                            ]
+                          },
+                          "children": [
+                            {
+                              "name": "cylindricalArrowWithClickableText",
+                              "params": {
+                                "position": [
+                                  -0.04,
+                                  0.028,
+                                  0.13499999999999998
+                                ],
+                                "rotation": [
+                                  0,
+                                  0,
+                                  -90
+                                ],
+                                "text": "0",
+                                "length": 0.025,
+                                "color": "#008000",
+                                "textSize": 0.015,
+                                "radius": 0.0015,
+                                "coneHeight": 0.008,
+                                "circleRadius": 0.01,
+                                "circledArrowConeHeight": 0.05,
+                                "coneRadius": 0.03,
+                                "ellipseCurveRadius": 0.1,
+                                "rotateZAngle": 174,
+                                "positionX": 0.015,
+                                "positionZ": 0.096,
+                                "textColor": "black",
+                                "textPosition": [
+                                  0,
+                                  -0.015,
+                                  0
+                                ]
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "name": "zLoad",
+                          "params": {
+                            "position": [
+                              0,
+                              0,
+                              0
+                            ],
+                            "rotation": [
+                              0,
+                              0,
+                              0
+                            ]
+                          },
+                          "children": [
+                            {
+                              "name": "cylindricalArrowWithClickableText",
+                              "params": {
+                                "position": [
+                                  0,
+                                  0.038,
+                                  0.13499999999999998
+                                ],
+                                "rotation": [
+                                  0,
+                                  0,
+                                  0
+                                ],
+                                "text": "0",
+                                "length": 0.025,
+                                "color": "#0000ff",
+                                "textSize": 0.015,
+                                "radius": 0.0015,
+                                "coneHeight": 0.008,
+                                "circleRadius": 0.01,
+                                "circledArrowConeHeight": 0.05,
+                                "coneRadius": 0.03,
+                                "ellipseCurveRadius": 0.1,
+                                "rotateZAngle": 174,
+                                "positionX": 0.015,
+                                "positionZ": 0.096,
+                                "textColor": "black",
+                                "textPosition": [
+                                  0,
+                                  0.04,
+                                  0
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "alignedDim",
+              "params": {
+                "position": [
+                  0.014,
+                  0.0001,
+                  0.135
+                ],
+                "rotation": [
+                  0,
+                  90,
+                  0
+                ],
+                "textSize": 0.02,
+                "color": "#000000",
+                "length": 0.31,
+                "prefix": "",
+                "suffix": null,
+                "extension": 0.035,
+                "visible": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "polycurve3d",
+      "params": {
+        "position": [
+          -0.001,
+          0,
+          0
+        ],
+        "rotation": [
+          90,
+          0,
+          0
+        ],
+        "depth": 0.2,
+        "color": "#ffee00",
+        "opacity": 0,
+        "path": [
+          [
+            -0.15,
+            -0.325
+          ],
+          [
+            -0.15,
+            0.325
+          ]
+        ],
+        "cutouts": [],
+        "property": "c12",
+        "name": "topContinousEdge"
+      }
+    },
+    {
+      "name": "polycurve3d",
+      "params": {
+        "position": [
+          0,
+          0,
+          0.001
+        ],
+        "rotation": [
+          90,
+          0,
+          0
+        ],
+        "depth": 0.2,
+        "color": "#ffee00",
+        "opacity": 0,
+        "path": [
+          [
+            -0.15,
+            0.325
+          ],
+          [
+            0.15,
+            0.325
+          ]
+        ],
+        "cutouts": [],
+        "property": "e1",
+        "name": "leftContinousEdge"
+      }
+    },
+    {
+      "name": "polycurve3d",
+      "params": {
+        "position": [
+          0,
+          0,
+          -0.001
+        ],
+        "rotation": [
+          90,
+          0,
+          0
+        ],
+        "depth": 0.2,
+        "color": "#ffee00",
+        "opacity": 0,
+        "path": [
+          [
+            0.15,
+            -0.325
+          ],
+          [
+            -0.15,
+            -0.325
+          ]
+        ],
+        "cutouts": [],
+        "property": "e2",
+        "name": "rightContinousEdge"
+      }
+    },
+    {
+      "name": "polycurve3d",
+      "params": {
+        "position": [
+          0.001,
+          0,
+          0
+        ],
+        "rotation": [
+          90,
+          0,
+          0
+        ],
+        "depth": 0.2,
+        "color": "#ffee00",
+        "opacity": 0,
+        "path": [
+          [
+            0.15,
+            0.325
+          ],
+          [
+            0.15,
+            -0.325
+          ]
+        ],
+        "cutouts": [],
+        "property": "c11",
+        "name": "bottomContinousEdge"
+      }
+    },
+    {
+      "name": "cylinder",
+      "params": {
+        "position": [
+          0,
+          0.017750000000000002,
+          0.13499999999999998
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "radius": 0.006,
+        "radiusTop": 2,
+        "radiusBottom": 2,
+        "segments": 24,
+        "length": 0.04,
+        "color": "#3e3366",
+        "opacity": 1,
+        "visible": true
+      }
+    },
+    {
+      "name": "polycurve3d",
+      "params": {
+        "position": [
+          -0.01175,
+          -0.00225,
+          0.143
+        ],
+        "rotation": [
+          -180,
+          0,
+          0
+        ],
+        "depth": 0.016,
+        "color": "#3e3366",
+        "opacity": 1,
+        "path": [
+          [
+            0,
+            0.0005
+          ],
+          [
+            0.0005,
+            0,
+            0,
+            0
+          ],
+          [
+            0.023,
+            0
+          ],
+          [
+            0.0235,
+            0.0005,
+            0.0235,
+            0
+          ],
+          [
+            0.0235,
+            0.0045000000000000005
+          ],
+          [
+            0.023,
+            0.005,
+            0.0235,
+            0.005
+          ],
+          [
+            0.01205,
+            0.008
+          ],
+          [
+            0.01145,
+            0.008,
+            0.01175,
+            0.008
+          ],
+          [
+            0.0005,
+            0.005
+          ],
+          [
+            0,
+            0.0045000000000000005,
+            0,
+            0.005
+          ]
+        ],
+        "cutouts": [],
+        "visible": true
+      }
+    }
+  ]
+}

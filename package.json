@@ -1,14 +1,10 @@
 {
   "name": "@crhio/draft3d",
-  "version": "1.11.0",
+  "version": "1.12.1",
   "description": "A functional toolkit for drawing and flexing 3D parametric drawings",
   "bin": "src/cli.js",
   "scripts": {
     "render": "./src/cli.js",
-    "build": "rollup --config",
-    "build-app": "rollup --config && npm install --prefix ./app && npm run build --prefix ./app",
-    "build-electron-app": "rollup --config && npm run electron-build --prefix ./app",
-    "build:watch": "chokidar \"src/**/*.js\" --initial -c \"rollup --config\"",
     "test": "vitest run",
     "test:watch": "vitest",
     "coverage": "vitest --coverage --ui --watch=true",
@@ -19,7 +15,6 @@
   "dependencies": {
     "@crhio/bend": "^0.0.16",
     "lodash-es": "^4.17.21",
-    "three": "^0.161.0",
     "three-csg-ts": "^3.1.13",
     "three-spritetext": "^1.8.2"
   },
@@ -37,6 +32,9 @@
     "svg-parser": "^2.0.4",
     "vi-canvas-mock": "^1.0.0",
     "vitest": "^0.32.2"
+  },
+  "peerDependencies": {
+    "three": "^0.161.0"
   },
   "files": [
     "src"

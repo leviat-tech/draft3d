@@ -24,6 +24,10 @@ class LayerSet {
     this.layers.push(newLayer);
   }
 
+  getLayerByName(name) {
+    return this.layers.find((layer) => layer.name === name);
+  }
+
   getLayerId(name) {
     return this.layers.filter((a) => a.name === name)[0]?.id;
   }

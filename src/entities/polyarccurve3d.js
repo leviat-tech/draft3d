@@ -1,6 +1,5 @@
 import { Mesh } from 'three';
 
-import { CSG } from 'three-csg-ts';
 import { configureInteractivity } from '../utils/helpers';
 import { createMaterial } from '../utils/material';
 import { createExtrudeGeometry, createPolyArcCurve } from '../utils/geometry';
@@ -30,7 +29,7 @@ export default defineEntity({
     cutouts: { name: 'Cutouts', default: [] },
   },
   render(params) {
-    const { depth, color, opacity, path, cutouts } = params;
+    const { depth, color, opacity, path } = params;
 
     const shape = createPolyArcCurve(path);
     const material = createMaterial(color, opacity);
@@ -38,19 +37,8 @@ export default defineEntity({
 
     const mesh = new Mesh(geometry, material);
 
-    const result = cutouts?.reduce((acc, cutout) => {
-      if (cutout && cutout?.isMesh) {
-        acc.updateMatrix();
-        cutout.updateMatrix();
+    configureInteractivity(mesh, params);
 
-        acc = CSG.subtract(acc, cutout);
-
-        return acc;
-      }
-    }, mesh) || mesh;
-
-    configureInteractivity(result, params);
-
-    return result;
+    return mesh;
   },
 });

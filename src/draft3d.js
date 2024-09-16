@@ -1,5 +1,3 @@
-import ThreeScene from './ThreeScene';
-
 /**
  * @typedef {{
  *   config: {
@@ -14,7 +12,7 @@ import ThreeScene from './ThreeScene';
 const draft3d = {
   entities: {},
   features: {},
-  scene: new ThreeScene(),
+  scene: null,
   get repository() {
     return { ...this.entities, ...this.features };
   },

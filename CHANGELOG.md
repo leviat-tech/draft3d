@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [1.12.1](https://github.com/leviat-tech/draft3d/compare/v1.12.0...v1.12.1) (2024-09-16)
+
+
+* define cutouts using box arrays instead of meshes ([cd1ece7](https://github.com/leviat-tech/draft3d/commit/cd1ece74c887837a8316d3a70ddf04f7a09c3a7e))
+* generated image ratio ([25f342c](https://github.com/leviat-tech/draft3d/commit/25f342cfb66f051cca46f7c81a8bf4ed0502e53c))
+* remove log ([8ab5803](https://github.com/leviat-tech/draft3d/commit/8ab5803551c890f28953ff0fa3a68a301c1357d1))
+
 ## [1.12.0](https://github.com/leviat-tech/draft3d/compare/v1.11.0...v1.12.0) (2024-08-02)
 
 

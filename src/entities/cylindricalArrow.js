@@ -21,20 +21,12 @@ export default defineEntity({
     const cylinderGeometry = new CylinderGeometry(radius, radius, length, radialSegments);
     const coneGeometry = new ConeGeometry(radius * 2, coneHeight, radialSegments);
 
+    cylinderGeometry.translate(0, length / 2, 0);
+    coneGeometry.translate(0, length, 0);
+
     const material = createMaterial(color, 1);
     const cylinder = new Mesh(cylinderGeometry, material);
     const cone = new Mesh(coneGeometry, material);
-
-    cylinder.material.visible = false;
-    cone.material.visible = false;
-
-    window.requestAnimationFrame(() => {
-      cylinder.position.y += length / 2;
-      cone.position.y += length;
-
-      cylinder.material.visible = true;
-      cone.material.visible = true;
-    });
 
     object3D.add(cylinder);
     object3D.add(cone);
@@ -50,14 +42,10 @@ export default defineEntity({
 
     cylinder.geometry.dispose();
     cylinder.geometry = new CylinderGeometry(radius, radius, length, radialSegments);
+    cylinder.geometry.translate(0, length / 2, 0);
+
     cone.geometry = new ConeGeometry(radius * 2, coneHeight, radialSegments);
+    cone.geometry.translate(0, length, 0);
 
-    window.requestAnimationFrame(() => {
-      cone.position.set(0, 0, 0);
-      cylinder.position.set(0, 0, 0);
-
-      cylinder.position.y += length / 2;
-      cone.position.y = length;
-    });
   },
 });

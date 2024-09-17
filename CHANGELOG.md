@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.12.3](https://github.com/leviat-tech/draft3d/compare/v1.12.2...v1.12.3) (2024-09-17)
+
+
+* error in params serializer ([38c995a](https://github.com/leviat-tech/draft3d/commit/38c995abc8f2e7f5f5af59f64563ea853c3858a7))
+
 ## [1.12.2](https://github.com/leviat-tech/draft3d/compare/v1.12.1...v1.12.2) (2024-09-17)
 
 

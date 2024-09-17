@@ -322,8 +322,6 @@ class BaseScene {
       object3d.name = item.name;
       parent.add(object3d);
 
-      item.params.position = undefined;
-
       const {
         position = [0, 0, 0],
         rotation = [0, 0, 0]

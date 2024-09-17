@@ -401,7 +401,7 @@ class Entity {
     const serializedParams = omitBy(formattedParams, (val, key) => {
       // Don't serialise ui params
       if (uiParams.includes(key)) {
-        return false;
+        return true;
       }
 
       // Don't serialize default position/rotation params
@@ -409,7 +409,7 @@ class Entity {
         return isEqual(val, defaultPosition);
       }
 
-      return true;
+      return false;
     });
 
     if (this.isBaseEntity) {

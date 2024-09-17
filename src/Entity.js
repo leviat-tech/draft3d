@@ -1,4 +1,4 @@
-import { flatMap, omit } from 'lodash-es';
+import { flatMap, isEqual, omit, omitBy, pick } from 'lodash-es';
 
 import { BoxGeometry, Mesh, MeshBasicMaterial, Object3D, Vector3 } from 'three';
 import { CSG } from 'three-csg-ts';
@@ -394,10 +394,26 @@ class Entity {
   toJSON() {
     const { features, name } = this;
     const uiParams = ['isDraggable', 'isInteractive', 'layer'];
-    const params = omit(this.formatParams(this.params), uiParams);
+    const positionParams = ['position', 'rotation'];
+    const formattedParams = this.formatParams(this.params);
+    const defaultPosition = [0, 0, 0];
+
+    const serializedParams = omitBy(formattedParams, (val, key) => {
+      // Don't serialise ui params
+      if (uiParams.includes(key)) {
+        return false;
+      }
+
+      // Don't serialize default position/rotation params
+      if (positionParams.includes(key)) {
+        return isEqual(val, defaultPosition);
+      }
+
+      return true;
+    });
 
     if (this.isBaseEntity) {
-      return { name, params };
+      return { name, params: serializedParams };
     }
 
     const flattenedFeatures = flatMap(Object.values(features));
@@ -411,14 +427,11 @@ class Entity {
 
     if (children.length === 0) return null;
 
-    return {
-      name,
-      children,
-      params: {
-        position: params.position || [0, 0, 0],
-        rotation: params.rotation || [0, 0, 0],
-      },
-    };
+    const objectJSON = { name, children };
+    const params = pick(serializedParams, positionParams);
+    const hasPositionParams = Object.keys(positionParams.length > 0);
+
+    return (hasPositionParams) ? { ...objectJSON, params } : objectJSON;
   }
 }
 

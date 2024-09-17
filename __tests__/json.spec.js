@@ -24,6 +24,25 @@ describe('JSON import and export', () => {
     expect(json.params.rotation[1]).toBe(3);
   });
 
+  it('does not export default position and rotation params', () => {
+    const boxWithDefaultParams = entities.box();
+    const boxWithRotation = entities.box({ rotation: [1, 2, 3] });
+    const boxWithPosition = entities.box({ position: [4, 5, 6] });
+
+    const jsonDefault = boxWithDefaultParams.toJSON();
+    const jsonRotation = boxWithRotation.toJSON();
+    const jsonPosition = boxWithPosition.toJSON();
+
+    expect(jsonDefault.params.position).toBeUndefined();
+    expect(jsonDefault.params.rotation).toBeUndefined();
+
+    expect(jsonRotation.params.rotation).toEqual([1, 2, 3]);
+    expect(jsonRotation.params.position).toBeUndefined();
+
+    expect(jsonPosition.params.position).toEqual([4, 5, 6]);
+    expect(jsonPosition.params.rotation).toBeUndefined();
+  });
+
   it('exports a scene to JSON', () => {
     const scene = new ThreeScene();
     const box = entities.box({

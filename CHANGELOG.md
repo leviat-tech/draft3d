@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.12.2](https://github.com/leviat-tech/draft3d/compare/v1.12.1...v1.12.2) (2024-09-17)
+
+
+* arrows missing when rendering to image ([c7243eb](https://github.com/leviat-tech/draft3d/commit/c7243eb463cf22169ebd340f5be34bfe5dc98ebc))
+* remove line used for debugging ([0a3ed9c](https://github.com/leviat-tech/draft3d/commit/0a3ed9c0867a58861e382a51a500372a011cbb26))
+
 ## [1.12.1](https://github.com/leviat-tech/draft3d/compare/v1.12.0...v1.12.1) (2024-09-16)
 
 

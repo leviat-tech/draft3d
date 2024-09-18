@@ -322,10 +322,11 @@ class BaseScene {
       object3d.name = item.name;
       parent.add(object3d);
 
+      const  { params = {} } = item;
       const {
         position = [0, 0, 0],
         rotation = [0, 0, 0]
-      } = item.params;
+      } = params;
 
       object3d.rotation.fromArray(rotation);
       object3d.position.fromArray(position);

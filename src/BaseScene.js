@@ -183,7 +183,7 @@ class BaseScene {
           options.encoderOptions,
         );
 
-        container.removeChild(img);
+        container.remove();
 
         resolve(croppedDataURL);
       };

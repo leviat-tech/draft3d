@@ -46,7 +46,6 @@ class ThreeScene extends BaseScene {
     };
     this.activeObject = null;
     this.animationFrame = null;
-    this.layerSet = new LayerSet();
     this.camera = createCamera(camera);
     this.layerSet.addCamera(this.camera);
     this.controls = freeControls(this.camera, this.canvas, controls);

@@ -8,6 +8,7 @@ import {
   WebGLRenderer,
 } from 'three';
 import { filter } from 'lodash-es';
+import LayerSet from './utils/LayerSet';
 import draft3d from './draft3d';
 
 
@@ -27,6 +28,7 @@ class BaseScene {
     this.config = config;
     this.originalScene = new Scene();
     this.lights = this.createLight(light);
+    this.layerSet = new LayerSet();
     this.canvas = canvas || BaseScene.createCanvas();
     this.renderer = this.createRenderer(this.canvas);
     BaseScene.instance = this;

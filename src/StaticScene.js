@@ -9,6 +9,7 @@ export default class StaticScene extends BaseScene {
     const { camera } = config;
 
     this.camera = createOrthographicCamera(camera);
+    this.layerSet.addCamera(this.camera);
     this.renderer = this.createRenderer(this.canvas);
   }
 

@@ -161,8 +161,10 @@ class BaseScene {
       // Create an image to draw onto the canvas
       const container = document.createElement('div');
       Object.assign(container.style, {
-        position: 'absolute',
+        position: 'fixed',
         zIndex: -1,
+        top: 0,
+        left: 0,
         opacity: 0,
       });
       document.body.append(container);

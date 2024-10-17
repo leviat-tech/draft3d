@@ -8,6 +8,7 @@ import {
   WebGLRenderer,
 } from 'three';
 import { filter } from 'lodash-es';
+import LayerSet from './utils/LayerSet';
 import draft3d from './draft3d';
 
 
@@ -27,6 +28,7 @@ class BaseScene {
     this.config = config;
     this.originalScene = new Scene();
     this.lights = this.createLight(light);
+    this.layerSet = new LayerSet();
     this.canvas = canvas || BaseScene.createCanvas();
     this.renderer = this.createRenderer(this.canvas);
     BaseScene.instance = this;
@@ -159,8 +161,10 @@ class BaseScene {
       // Create an image to draw onto the canvas
       const container = document.createElement('div');
       Object.assign(container.style, {
-        position: 'absolute',
+        position: 'fixed',
         zIndex: -1,
+        top: 0,
+        left: 0,
         opacity: 0,
       });
       document.body.append(container);
@@ -183,7 +187,7 @@ class BaseScene {
           options.encoderOptions,
         );
 
-        container.removeChild(img);
+        container.remove();
 
         resolve(croppedDataURL);
       };
@@ -322,7 +326,12 @@ class BaseScene {
       object3d.name = item.name;
       parent.add(object3d);
 
-      const { position, rotation } = item.params;
+      const  { params = {} } = item;
+      const {
+        position = [0, 0, 0],
+        rotation = [0, 0, 0]
+      } = params;
+
       object3d.rotation.fromArray(rotation);
       object3d.position.fromArray(position);
 

@@ -1,6 +1,29 @@
 # Changelog
 
 
+## [1.12.5](https://github.com/leviat-tech/draft3d/compare/v1.12.4...v1.12.5) (2024-09-24)
+
+
+* add layerSet to base scene ([dbc068c](https://github.com/leviat-tech/draft3d/commit/dbc068c4b317b976ad1dcecbd258466e23d8f414))
+* layout shift when generating images ([8187977](https://github.com/leviat-tech/draft3d/commit/818797799f606a4ecadaace16adc9d8c3794902f))
+* minor improvements to image rendering ([576ffae](https://github.com/leviat-tech/draft3d/commit/576ffae80c69bdc4685361814f9d6ef29d4852b6))
+
+## [1.12.4](https://github.com/leviat-tech/draft3d/compare/v1.12.3...v1.12.4) (2024-09-18)
+
+
+* error in params deserializer ([4e86c4e](https://github.com/leviat-tech/draft3d/commit/4e86c4e628499873536bef17417f0ddc8993af22))
+
+## [1.12.3](https://github.com/leviat-tech/draft3d/compare/v1.12.2...v1.12.3) (2024-09-17)
+
+
+* error in params serializer ([38c995a](https://github.com/leviat-tech/draft3d/commit/38c995abc8f2e7f5f5af59f64563ea853c3858a7))
+
+## [1.12.2](https://github.com/leviat-tech/draft3d/compare/v1.12.1...v1.12.2) (2024-09-17)
+
+
+* arrows missing when rendering to image ([c7243eb](https://github.com/leviat-tech/draft3d/commit/c7243eb463cf22169ebd340f5be34bfe5dc98ebc))
+* remove line used for debugging ([0a3ed9c](https://github.com/leviat-tech/draft3d/commit/0a3ed9c0867a58861e382a51a500372a011cbb26))
+
 ## [1.12.1](https://github.com/leviat-tech/draft3d/compare/v1.12.0...v1.12.1) (2024-09-16)
 
 

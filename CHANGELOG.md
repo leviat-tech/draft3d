@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.12.7](https://github.com/leviat-tech/draft3d/compare/v1.12.6...v1.12.7) (2024-11-19)
+
+
+* unbind event handlers on destroy ([52ef8f8](https://github.com/leviat-tech/draft3d/commit/52ef8f8188c8a650fb2b115523f0627d63f922ea))
+
 ## [1.12.6](https://github.com/leviat-tech/draft3d/compare/v1.12.5...v1.12.6) (2024-11-19)
 
 

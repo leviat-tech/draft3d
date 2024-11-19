@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.12.6](https://github.com/leviat-tech/draft3d/compare/v1.12.5...v1.12.6) (2024-11-19)
+
+
+* cancel animation on destroy ([29a7ba1](https://github.com/leviat-tech/draft3d/commit/29a7ba18f210b29492ee15931184da04f983c61c))
+
 ## [1.12.5](https://github.com/leviat-tech/draft3d/compare/v1.12.4...v1.12.5) (2024-09-24)
 
 

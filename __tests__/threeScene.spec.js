@@ -27,7 +27,6 @@ describe('Three scene', () => {
 
     checkAxisIndicatorDefaultState(scene);
 
-    expect(scene.animationFrame).toBeNull();
     expect(scene.layerSet).toBeInstanceOf(LayerSet);
     expect(scene.originalScene).toBeInstanceOf(Scene);
   });
@@ -68,5 +67,18 @@ describe('Three scene', () => {
     expect(scene.axisIndicator.camera).toBeInstanceOf(PerspectiveCamera);
     expect(scene.axisIndicator.canvas).toBeInstanceOf(HTMLCanvasElement);
     expect(scene.axisIndicator.renderer).not.toBe(null);
+  });
+
+  it('should stop animating when destroyed', async () => {
+    const scene = new ThreeScene();
+    const el = document.createElement('div');
+
+    scene.initialize(el);
+
+    expect(scene.isAnimating).toBe(true);
+
+    scene.destroy();
+
+    expect(scene.isAnimating).toBe(false);
   });
 });

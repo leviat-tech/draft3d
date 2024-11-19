@@ -69,16 +69,25 @@ describe('Three scene', () => {
     expect(scene.axisIndicator.renderer).not.toBe(null);
   });
 
-  it('should stop animating when destroyed', async () => {
+  it('should stop animating and remove event handlers when destroyed', async () => {
     const scene = new ThreeScene();
     const el = document.createElement('div');
+    const resizeHandlerSpy = vi.spyOn(scene, 'onResize');
 
     scene.initialize(el);
 
+    window.dispatchEvent(new Event('resize'));
+    window.dispatchEvent(new Event('resize'));
+
     expect(scene.isAnimating).toBe(true);
+    expect(resizeHandlerSpy).toHaveBeenCalledTimes(3);
 
     scene.destroy();
 
+    window.dispatchEvent(new Event('resize'));
+
     expect(scene.isAnimating).toBe(false);
+    expect(resizeHandlerSpy).toHaveBeenCalledTimes(3);
+
   });
 });

@@ -327,9 +327,11 @@ class ThreeScene extends BaseScene {
   }
 
   destroy() {
+    this.stopAnimation();
+    this.unbindEvents();
+
     super.destroy();
 
-    this.stopAnimation();
   }
 }
 

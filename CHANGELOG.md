@@ -1,6 +1,16 @@
 # Changelog
 
 
+## [1.12.7](https://github.com/leviat-tech/draft3d/compare/v1.12.6...v1.12.7) (2024-11-19)
+
+
+* unbind event handlers on destroy ([52ef8f8](https://github.com/leviat-tech/draft3d/commit/52ef8f8188c8a650fb2b115523f0627d63f922ea))
+
+## [1.12.6](https://github.com/leviat-tech/draft3d/compare/v1.12.5...v1.12.6) (2024-11-19)
+
+
+* cancel animation on destroy ([29a7ba1](https://github.com/leviat-tech/draft3d/commit/29a7ba18f210b29492ee15931184da04f983c61c))
+
 ## [1.12.5](https://github.com/leviat-tech/draft3d/compare/v1.12.4...v1.12.5) (2024-09-24)
 
 

@@ -5,7 +5,6 @@ import {
   Vector2,
 } from 'three';
 
-import LayerSet from './utils/LayerSet';
 import { createCamera, freeControls } from './utils/camera';
 
 import BaseScene from './BaseScene';
@@ -37,6 +36,8 @@ class ThreeScene extends BaseScene {
     super(config);
     const { camera, controls } = config;
 
+    this.isAnimating = false;
+
     this.axisIndicator = {
       isEnabled: false,
       scene: null,
@@ -45,7 +46,6 @@ class ThreeScene extends BaseScene {
       renderer: null,
     };
     this.activeObject = null;
-    this.animationFrame = null;
     this.camera = createCamera(camera);
     this.layerSet.addCamera(this.camera);
     this.controls = freeControls(this.camera, this.canvas, controls);
@@ -65,12 +65,20 @@ class ThreeScene extends BaseScene {
   }
 
   startAnimation() {
+    this.isAnimating = true;
+
     const animate = () => {
-      this.animationFrame = window.requestAnimationFrame(animate);
+      if (!this.isAnimating) return;
+
+      window.requestAnimationFrame(animate);
       this.render();
     };
 
     animate();
+  }
+
+  stopAnimation() {
+    this.isAnimating = false;
   }
 
   /**
@@ -316,6 +324,14 @@ class ThreeScene extends BaseScene {
 
       return [...interactiveChildren, ...this.getInteractiveChildren(child)];
     }, []);
+  }
+
+  destroy() {
+    this.stopAnimation();
+    this.unbindEvents();
+
+    super.destroy();
+
   }
 }
 

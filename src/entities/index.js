@@ -1,6 +1,7 @@
 import box from './box';
 import bim from './bim';
 import line from './line';
+import circle from './circle';
 import axes from './axes';
 import cylinder from './cylinder';
 import polygon3d from './polygon3d';
@@ -18,6 +19,7 @@ export {
   box,
   bim,
   line,
+  circle,
   axes,
   cylinder,
   polygon3d,

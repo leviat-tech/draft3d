@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.13.0](https://github.com/leviat-tech/draft3d/compare/v1.12.7...v1.13.0) (2024-11-21)
+
+
+* add entity circle ([e75ea60](https://github.com/leviat-tech/draft3d/commit/e75ea601af86a0cd96f74ddf7c04fc192749d244))
+
 ## [1.12.7](https://github.com/leviat-tech/draft3d/compare/v1.12.6...v1.12.7) (2024-11-19)
 
 

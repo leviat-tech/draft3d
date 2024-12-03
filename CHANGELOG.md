@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.13.1](https://github.com/leviat-tech/draft3d/compare/v1.13.0...v1.13.1) (2024-12-03)
+
+
+* add sprite text element ([#231](https://github.com/leviat-tech/draft3d/issues/231)) ([62125fc](https://github.com/leviat-tech/draft3d/commit/62125fc7c4d733ee3bd0783d33a233ce08046e5f))
+
 ## [1.13.0](https://github.com/leviat-tech/draft3d/compare/v1.12.7...v1.13.0) (2024-11-21)
 
 

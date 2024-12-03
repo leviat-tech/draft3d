@@ -5,6 +5,7 @@ import circle from './circle';
 import axes from './axes';
 import cylinder from './cylinder';
 import polygon3d from './polygon3d';
+import spriteText from './spriteText';
 import alignedDim from './alignedDim';
 import polycurve3d from './polycurve3d';
 import polyarccurve3d from './polyarccurve3d';
@@ -23,6 +24,7 @@ export {
   axes,
   cylinder,
   polygon3d,
+  spriteText,
   alignedDim,
   polycurve3d,
   polyarccurve3d,

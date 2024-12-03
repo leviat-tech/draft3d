@@ -8,7 +8,7 @@ export default defineEntity({
     color: { name: 'Colour', type: 'color', default: 'red' },
     opacity: { name: 'Opacity', type: 'number', precision: 0.05, default: 1 },
     startPoint: { name: 'startPoint' },
-    endPoint: { name: 'startPoint' },
+    endPoint: { name: 'endPoint' },
   },
   render(params) {
     const { length, color, opacity, startPoint, endPoint } = params;

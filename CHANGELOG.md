@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.13.3](https://github.com/leviat-tech/draft3d/compare/v1.13.2...v1.13.3) (2024-12-04)
+
+
+* add polyline3d entity ([#235](https://github.com/leviat-tech/draft3d/issues/235)) ([29ff941](https://github.com/leviat-tech/draft3d/commit/29ff9414e3ee40909fec40cc4778c624ad6f11bd))
+
 ## [1.13.2](https://github.com/leviat-tech/draft3d/compare/v1.13.1...v1.13.2) (2024-12-04)
 
 

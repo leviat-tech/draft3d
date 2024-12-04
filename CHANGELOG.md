@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.13.2](https://github.com/leviat-tech/draft3d/compare/v1.13.1...v1.13.2) (2024-12-04)
+
+
+* draw line from points ([61289a7](https://github.com/leviat-tech/draft3d/commit/61289a7de080047c26566db8b886cdb16abeb21e))
+* names ([1024d3e](https://github.com/leviat-tech/draft3d/commit/1024d3e42912b4a2e9d5e4e7de254e81057ba4ad))
+
 ## [1.13.1](https://github.com/leviat-tech/draft3d/compare/v1.13.0...v1.13.1) (2024-12-03)
 
 

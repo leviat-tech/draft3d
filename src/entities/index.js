@@ -7,6 +7,7 @@ import cylinder from './cylinder';
 import polygon3d from './polygon3d';
 import spriteText from './spriteText';
 import alignedDim from './alignedDim';
+import polyline3d from './polyline3d';
 import polycurve3d from './polycurve3d';
 import polyarccurve3d from './polyarccurve3d';
 import cylindricalPath from './cylindricalPath';
@@ -26,6 +27,7 @@ export {
   polygon3d,
   spriteText,
   alignedDim,
+  polyline3d,
   polycurve3d,
   polyarccurve3d,
   cylindricalPath,

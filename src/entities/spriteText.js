@@ -1,8 +1,7 @@
-import { Object3D } from 'three';
-
 import { createSpriteText } from '../utils/geometry';
 import { configureInteractivity } from '../utils/helpers';
 import { defineEntity } from '../defineEntity';
+
 
 export function getTextValue({ text, prefix, suffix, formatter }) {
   const lengthAsString = formatter(text) || text;
@@ -22,15 +21,12 @@ export default defineEntity({
     textSize: { name: 'Text Size', precision: 0.01, default: 0.1 },
   },
   render(params) {
-    const root = new Object3D();
-
     const textValue = getTextValue(params);
 
     const textObject = createSpriteText(textValue, params.textSize, params.color);
 
-    root.add(textObject);
     configureInteractivity(textObject, params);
 
-    return root;
+    return textObject;
   },
 });

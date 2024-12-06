@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.13.4](https://github.com/leviat-tech/draft3d/compare/v1.13.3...v1.13.4) (2024-12-06)
+
+
+* return text ([9a3dd82](https://github.com/leviat-tech/draft3d/commit/9a3dd823d304e8191ad09cd6c51bc48c0c1bea1e))
+
 ## [1.13.3](https://github.com/leviat-tech/draft3d/compare/v1.13.2...v1.13.3) (2024-12-04)
 
 

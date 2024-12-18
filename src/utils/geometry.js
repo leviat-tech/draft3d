@@ -217,13 +217,14 @@ export function replaceGeometry(object3d, newGeometry) {
   object3d.geometry = newGeometry;
 }
 
-export function createSpriteText(label, textSize, color) {
+export function createSpriteText(label, textSize, color, rotation = 0, backgroundColor = '') {
   const spriteText = new SpriteText(label, textSize, color);
   spriteText.renderOrder = 999;
   spriteText.material.depthTest = false;
   spriteText.material.depthWrite = false;
   spriteText.material.visible = true;
-  spriteText.backgroundColor = false;
+  spriteText.backgroundColor = backgroundColor;
+  spriteText.material.rotation = rotation;
   spriteText.fontFace = 'Lucida Console, MS Mono, sans-serif';
 
   return spriteText;

@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.13.5](https://github.com/leviat-tech/draft3d/compare/v1.13.4...v1.13.5) (2024-12-18)
+
+
+* enable to set background and rotation of spriteText ([#239](https://github.com/leviat-tech/draft3d/issues/239)) ([869cd04](https://github.com/leviat-tech/draft3d/commit/869cd042c59562199080594627218f97eb8007f6))
+
 ## [1.13.4](https://github.com/leviat-tech/draft3d/compare/v1.13.3...v1.13.4) (2024-12-06)
 
 

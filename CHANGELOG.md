@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.13.6](https://github.com/leviat-tech/draft3d/compare/v1.13.5...v1.13.6) (2024-12-18)
+
+
+* rename 'rotation' to 'texrRotation' for spriteText ([#241](https://github.com/leviat-tech/draft3d/issues/241)) ([6cee734](https://github.com/leviat-tech/draft3d/commit/6cee734668841a0edb44131e8e18a80d6b0ef07b))
+
 ## [1.13.5](https://github.com/leviat-tech/draft3d/compare/v1.13.4...v1.13.5) (2024-12-18)
 
 

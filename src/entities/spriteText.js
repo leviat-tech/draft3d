@@ -19,14 +19,14 @@ export default defineEntity({
     formatter: { name: 'Formatter', default: () => {} },
     color: { name: 'Colour', type: 'color', default: '#000000' },
     textSize: { name: 'Text Size', precision: 0.01, default: 0.1 },
-    backgroundColor: { name: 'Backround Colour', type: 'color', default: '#f0f0f0' },
-    rotation: { name: 'Rotation', default: 0 },
+    backgroundColor: { name: 'Backround Colour', type: 'color', default: '' },
+    textRotation: { name: 'Rotation', default: 0 },
   },
   render(params) {
     const textValue = getTextValue(params);
 
     const textObject = createSpriteText(
-      textValue, params.textSize, params.color, params.rotation, params.backgroundColor,
+      textValue, params.textSize, params.color, params.textRotation, params.backgroundColor,
     );
 
     configureInteractivity(textObject, params);

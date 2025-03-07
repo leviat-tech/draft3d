@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.13.7](https://github.com/leviat-tech/draft3d/compare/v1.13.6...v1.13.7) (2025-03-07)
+
+
+* bim translation ([#243](https://github.com/leviat-tech/draft3d/issues/243)) ([9b9be5c](https://github.com/leviat-tech/draft3d/commit/9b9be5cc3e3a487fb7af5dd34e1e8641c657ed18))
+
 ## [1.13.6](https://github.com/leviat-tech/draft3d/compare/v1.13.5...v1.13.6) (2024-12-18)
 
 

@@ -1,15 +1,12 @@
-import { filter, omit, pick } from 'lodash-es';
+import { pick } from 'lodash-es';
 
-import {
-  LatheGeometry, Mesh, Object3D, Path, TubeGeometry,
-} from 'three';
+import { LatheGeometry, Mesh, Object3D, Path, TubeGeometry } from 'three';
 import Bend from '@crhio/bend';
 
 import { configureInteractivity } from '../utils/helpers';
 import { createMaterial } from '../utils/material';
 import { defineEntity } from '../defineEntity';
 import { createExtrudeGeometry, createPolyCurve, getCapGeometry } from '../utils/geometry';
-
 
 function getArcX(item1, item2, item3, item4) {
   const pt1 = (item3.x * item4.z - item4.x * item3.z) * (item2.x - item1.x);
@@ -66,9 +63,10 @@ function profileDataSplice(params) {
 
   paramsCopy.forEach((item, index) => {
     if (item.type === 'arc_end_point') {
-      if (paramsCopy[index + 1].x === item.x
-        && paramsCopy[index + 1].y === item.y
-        && paramsCopy[index + 1].z === item.z
+      if (
+        paramsCopy[index + 1].x === item.x &&
+        paramsCopy[index + 1].y === item.y &&
+        paramsCopy[index + 1].z === item.z
       ) {
         deleteIndices.push(index + 1);
       }
@@ -208,7 +206,6 @@ function generateGeometry(type, params) {
     default:
       console.warn(`Geometry type: ${type} not found`);
       return null;
-
   }
 }
 
@@ -231,10 +228,10 @@ function generateMesh(name, part, material, translateX, translateZ, translateY, 
 
   // Use BufferGeometry.translate rather than Object3d.position as
   // translate is better suited for one-time operations i.e. initial positioning
-  mainGeometry.rotateY(rotation.alpha);
-  mainGeometry.rotateX(rotation.beta);
-  mainGeometry.rotateZ(rotation.gamma);
-  mainGeometry.translate(translateX, translateZ, translateY);
+  mainGeometry.rotateY(rotation?.alpha || 0);
+  mainGeometry.rotateX(rotation?.beta || 0);
+  mainGeometry.rotateZ(rotation?.gamma || 0);
+  mainGeometry.translate(translateX || 0, translateZ || 0, translateY || 0);
 
   const mainMesh = new Mesh(mainGeometry, material);
   mainMesh.name = name;
@@ -261,23 +258,33 @@ function generateMesh(name, part, material, translateX, translateZ, translateY, 
  * @return { Mesh[] }
  */
 function generateParts(parts, material) {
-  return Object.keys(parts).map((key) => {
-    const part = parts[key];
+  return Object.keys(parts)
+    .map((key) => {
+      const part = parts[key];
 
-    const positions = [];
-    if (Array.isArray(part.origin)) {
-      part.origin.forEach(({ x, y, z, rotation }, i) => {
-        const name = part.origin.length === 1 ? key : [key, i].join('_');
-        positions.push(generateMesh(name, part, material, -x, z, y, rotation[0]));
-      });
-    } else {
-      positions.push(
-        generateMesh(key, part, material, -part.origin.x, part.origin.z, part.origin.y, part.origin.rotation),
-      );
-    }
+      const positions = [];
+      if (Array.isArray(part.origin)) {
+        part.origin.forEach(({ x, y, z, rotation }, i) => {
+          const name = part.origin.length === 1 ? key : [key, i].join('_');
+          positions.push(generateMesh(name, part, material, -x, z, y, rotation[0]));
+        });
+      } else {
+        positions.push(
+          generateMesh(
+            key,
+            part,
+            material,
+            -part.origin?.x,
+            part.origin?.z,
+            part.origin?.y,
+            part.origin?.rotation,
+          ),
+        );
+      }
 
-    return positions;
-  }).flat();
+      return positions;
+    })
+    .flat();
 }
 
 export default defineEntity({
@@ -296,9 +303,7 @@ export default defineEntity({
                 x: 0,
                 y: 0,
                 z: 0,
-                rotation: [
-                  { alpha: 1.5708, beta: 0, gamma: 0 },
-                ],
+                rotation: [{ alpha: 1.5708, beta: 0, gamma: 0 }],
               },
             ],
           },

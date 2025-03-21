@@ -9,6 +9,7 @@ const config = {
         bottom: 0,
         left: '2rem',
       },
+      leftHandCoord: false,
     },
     camera: {
       fov: 50,

@@ -44,6 +44,7 @@ class ThreeScene extends BaseScene {
       canvas: null,
       camera: null,
       renderer: null,
+      leftHandCoord: config.axisIndicator.leftHandCoord,
     };
     this.activeObject = null;
     this.camera = createCamera(camera);
@@ -94,11 +95,12 @@ class ThreeScene extends BaseScene {
     if (!axisIndicatorConfig?.isEnabled) return;
 
     this.axisIndicator.isEnabled = true;
+    this.axisIndicator.leftHandCoord = axisIndicatorConfig.leftHandCoord;
 
     const scene = new Scene();
     const ambientLight = new AmbientLight('#ffffff', 1);
     scene.add(ambientLight);
-    const axes = await ThreeScene.renderAxesEntity();
+    const axes = await ThreeScene.renderAxesEntity(this.axisIndicator);
     axes.addTo(scene);
 
     const camera = createCamera(axisIndicatorCameraConfig);
@@ -155,7 +157,7 @@ class ThreeScene extends BaseScene {
     return canvas;
   }
 
-  static async renderAxesEntity() {
+  static async renderAxesEntity(axisIndicator) {
     // Use dynamic import to prevent circular dependencies
     const axesModule = await import('./entities/axes');
 
@@ -168,6 +170,7 @@ class ThreeScene extends BaseScene {
       zAxisLength: axisLength,
       textSize: 1,
       position: [0, 0, 0],
+      leftHandCoord: axisIndicator.leftHandCoord,
     });
   }
 

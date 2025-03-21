@@ -44,7 +44,7 @@ class ThreeScene extends BaseScene {
       canvas: null,
       camera: null,
       renderer: null,
-      leftHandCoord: config.axisIndicator.leftHandCoord,
+      leftHandCoord: config.axisIndicator?.leftHandCoord || false,
     };
     this.activeObject = null;
     this.camera = createCamera(camera);

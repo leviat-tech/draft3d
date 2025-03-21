@@ -1,7 +1,8 @@
 {
   "config": {
     "axisIndicator": {
-      "isEnabled": true
+      "isEnabled": true,
+      "leftHandCoord": false
     },
     "camera": {
       "fov": 12,

@@ -53,16 +53,16 @@ const createXAxis = (xAxisLength, textSize, color, headLength, headWidth) => {
   return { xAxis, xAxisLabel };
 };
 
-const createYAxis = (yAxisLength, textSize, color, headLength, headWidth) => {
+const createYAxis = (yAxisLength, textSize, color, headLength, headWidth, leftHandCoord) => {
   const yAxis = createArrow(
-    new Vector3(-1, 0, 0),
+    leftHandCoord ? new Vector3(1, 0, 0) : new Vector3(-1, 0, 0),
     yAxisLength,
     color,
     headLength,
-    headWidth
+    headWidth,
   );
   const yAxisLabel = createSpriteText('Y', textSize, color);
-  yAxisLabel.position.x = -yAxisLength - 0.1;
+  yAxisLabel.position.x = leftHandCoord ? yAxisLength + 0.1 : -yAxisLength - 0.1;
 
   return { yAxis, yAxisLabel };
 };
@@ -97,9 +97,12 @@ export default defineEntity({
     zColor: { name: 'Z color', default: COLORS.BLUE },
     headLength: { name: 'Head length', default: DEFAULT_HEAD_LENGTH },
     headWidth: { name: 'Head width', default: DEFAULT_HEAD_WIDTH },
+    leftHandCoord: { name: 'Left hand coord', default: false },
   },
   render(params) {
-    const { textSize, xColor, yColor, zColor, headLength, headWidth } = params;
+    const {
+      textSize, xColor, yColor, zColor, headLength, headWidth, leftHandCoord,
+    } = params;
     const { xAxisLength, yAxisLength, zAxisLength } = createAxesLength(params);
 
     const root = new Object3D();
@@ -116,7 +119,8 @@ export default defineEntity({
       textSize,
       yColor,
       headLength,
-      headWidth
+      headWidth,
+      leftHandCoord,
     );
     const { zAxis, zAxisLabel } = createZAxis(
       zAxisLength,
@@ -149,7 +153,7 @@ export default defineEntity({
       xAxisLabel.position.x -= xAxisLabel.geometry.boundingSphere.center.x;
       xAxisLabel.rotateY(-halfPI);
 
-      yAxisLabel.position.x = -calculateLength(yAxisLength);
+      yAxisLabel.position.x = leftHandCoord? calculateLength(yAxisLength) : -calculateLength(yAxisLength);
       yAxisLabel.position.z -= yAxisLabel.geometry.boundingSphere.center.x;
       yAxisLabel.rotateY(-halfPI);
 

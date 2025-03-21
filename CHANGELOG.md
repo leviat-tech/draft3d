@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.13.8](https://github.com/leviat-tech/draft3d/compare/v1.13.7...v1.13.8) (2025-03-21)
+
+
+* add configuration to enable drawing of the left hand coordinat… ([#245](https://github.com/leviat-tech/draft3d/issues/245)) ([86ad0f0](https://github.com/leviat-tech/draft3d/commit/86ad0f0abc000b8a3a5a856b3df4ec78b66015f7))
+
 ## [1.13.7](https://github.com/leviat-tech/draft3d/compare/v1.13.6...v1.13.7) (2025-03-07)
 
 

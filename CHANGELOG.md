@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [1.13.9](https://github.com/leviat-tech/draft3d/compare/v1.13.8...v1.13.9) (2025-04-29)
+
+
+* add bim editor to dev app ([f44fb16](https://github.com/leviat-tech/draft3d/commit/f44fb163890707e79fb5f651cb0935e59b70c59d))
+* add missing example file ([d6aa674](https://github.com/leviat-tech/draft3d/commit/d6aa6747085b40df7d82dbd62fdec10ddb3f75ab))
+* update README ([c822690](https://github.com/leviat-tech/draft3d/commit/c8226904c14f090476678a93e131f06da49fe5df))
+
 ## [1.13.8](https://github.com/leviat-tech/draft3d/compare/v1.13.7...v1.13.8) (2025-03-21)
 
 

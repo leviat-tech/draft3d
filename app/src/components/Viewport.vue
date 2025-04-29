@@ -1,8 +1,9 @@
 <template>
   <div ref="el" class="viewport z-10">
     <Entity
-      v-if="entity"
+      v-if="entity && scene"
       :key="entity?.name"
+      :scene="scene"
       :params="params"
       :entity="entity"
     />
@@ -79,15 +80,19 @@ const filteredParameters = computed(() => {
     'onMouseOver',
   ];
 
+  if (!parameterConfig.value) return null;
+
   return Object.fromEntries(
     Object.entries(parameterConfig.value).filter(([key]) => !paramsToOmit.includes(key)),
   );
 });
 
 watch(entity, (newEntity) => {
+  if (!newEntity) return;
+
   parameterConfig.value = entities[newEntity].config.parameters;
   params.value = castParameters(parameterConfig.value);
-});
+}, { immediate: true });
 
 function onFileChange(e) {
   const file = e.target.files[0];

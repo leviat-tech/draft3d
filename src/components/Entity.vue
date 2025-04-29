@@ -4,31 +4,38 @@
 
 
 import draft3d from 'draft3d';
-import { computed, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { cloneDeep } from 'lodash-es';
 import { destroyObject } from '../utils/helpers';
 
 
 const props = defineProps({
+  scene: { type: Object, default: {} },
   entity: { type: String, default: '' },
   params: { type: Object, default: {} },
 });
 
 const params = computed(() => cloneDeep(props.params));
 const entityName = computed(() => props.entity);
-let entity = draft3d.entities[props.entity](cloneDeep(props.params));
-entity.addTo(draft3d.scene);
+let entity;
+
+function createEntity() {
+  entity = draft3d.entities[props.entity](params.value, props.scene.layerSet);
+  entity.addTo(props.scene);
+}
+
 
 watch(params, (val) => {
   const newParams = cloneDeep(val);
-  entity.updateParams(newParams);
+  entity?.updateParams(newParams);
+  console.log(entity);
+  entity.addTo(props.scene);
 }, { deep: true });
 
-watch(entityName, (name) => {
-  destroyObject(entity.object3d);
-  entity = draft3d.entities[name](props.params);
-  entity.addTo(draft3d.scene);
-});
+watch(entityName, () => {
+  if (entity) destroyObject(entity.object3d);
+  createEntity();
+}, { immediate: true });
 
 </script>
 

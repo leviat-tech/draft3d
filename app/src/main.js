@@ -1,20 +1,22 @@
 import { createApp } from 'vue';
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import store from './store.js';
 
 import Layout from './components/Layout.vue';
 import App from './App.vue';
 
 import './assets/styles/tailwind.css';
+import Bim from './components/Bim.vue';
 
 
 const routes = [
-  { path: '/', component: Layout },
+  { path: '/bim', component: Bim },
   { path: '/entity/:entity', component: Layout },
+  { path: '/', component: Layout },
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 });
 

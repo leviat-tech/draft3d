@@ -2,6 +2,12 @@
 
 ## Running the local development app
 
+Ensure the dependencies are installed in the root folder
+```
+npm i
+```
+
+Then install the app dependencies and run the app
 ```
 cd app
 npm i

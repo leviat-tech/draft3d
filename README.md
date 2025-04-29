@@ -2,7 +2,10 @@
 
 ## Running the local development app
 
-Ensure the dependencies are installed in the root folder
+Ensure you 
+
+
+Install the root dependencies
 ```
 npm i
 ```
